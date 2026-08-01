@@ -1,0 +1,19 @@
+{
+  "Login": {
+    "title": "Prijava"
+  },
+  "Admin": {
+    "title": "Nadzorna plošča"
+  },
+  "Bookings": {
+    "title": "Rezervacije"
+  },
+  "Booking": {
+    "title": "Podrobnosti rezervacije"
+  },
+  "Common": {
+    "language": "Jezik",
+    "slovenian": "Slovenščina",
+    "english": "Angleščina"
+  }
+}

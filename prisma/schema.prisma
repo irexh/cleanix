@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id              String   @id @default(cuid())
+  fullName        String
+  email           String
+  phone           String
+  address         String
+  city            String
+  propertyType    String
+  propertySize    String
+  bathrooms       Int
+  extras          String
+  selectedDate    String
+  selectedTime    String
+  totalPrice      Int
+  notes           String?
+  paymentStatus   String   @default("PENDING")
+  bookingStatus   String   @default("PENDING")
+  stripeSessionId String?  @unique
+  createdAt       DateTime @default(now())
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("CUSTOMER")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

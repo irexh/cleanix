@@ -1,0 +1,19 @@
+{
+  "Login": {
+    "title": "Login"
+  },
+  "Admin": {
+    "title": "Dashboard"
+  },
+  "Bookings": {
+    "title": "Bookings"
+  },
+  "Booking": {
+    "title": "Booking Details"
+  },
+  "Common": {
+    "language": "Language",
+    "slovenian": "Slovenian",
+    "english": "English"
+  }
+}
