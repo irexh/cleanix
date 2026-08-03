@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const services = [
   {
     number: "01",
@@ -38,15 +40,22 @@ export default function Home() {
   return (
     <main>
       <header className="site-header">
-        <a href="#domov" className="brand" aria-label="Cleanix domov">
-          <span className="brand-mark">✦</span>
-          cleanix
+        <a href="#domov" className="brand" aria-label="Čisto domov">
+          <Image
+            src="/images/cisto-logo-transparent.png"
+            alt="Čisto logo"
+            width={38}
+            height={38}
+            className="brand-logo"
+          />
+          <span>Čisto</span>
         </a>
 
         <nav className="desktop-nav" aria-label="Glavna navigacija">
           <a href="#kako-deluje">Kako deluje</a>
           <a href="#storitve">Storitve</a>
-          <a href="#o-nas">Zakaj Cleanix</a>
+          <a href="/business">Čisto Biznis</a>
+          <a href="#o-nas">Zakaj Čisto</a>
         </nav>
 
         <a className="header-cta" href="/booking">
@@ -56,26 +65,22 @@ export default function Home() {
 
       <section className="hero" id="domov">
         <div className="hero-copy">
-          <p className="eyebrow">
-            <span /> PROFESIONALNO ČIŠČENJE DOMA
-          </p>
+          <p className="hero-animate-kicker">PROFESIONALNO ČIŠČENJE DOMA</p>
 
-          <h1>
-            Več časa za <em>lepe</em> stvari.
-          </h1>
+          <h1 className="hero-animate-title">Več časa za lepe stvari.</h1>
 
-          <p className="hero-text">
+          <p className="hero-animate-text">
             Zanesljivo čiščenje doma po vaši meri. Izberite termin, mi pa
             poskrbimo, da bo vaš dom zasijal.
           </p>
 
-          <div className="hero-actions">
-            <a className="primary-button" href="#narocilo">
+          <div className="hero-actions hero-animate-actions">
+            <a className="primary-button" href="/booking">
               Naroči čiščenje <span>→</span>
             </a>
 
-            <a className="text-link" href="#kako-deluje">
-              Poglej, kako deluje <span>↓</span>
+            <a className="text-link" href="#kako-poteka">
+              Poglej, kako poteka <span>↓</span>
             </a>
           </div>
 
@@ -96,28 +101,14 @@ export default function Home() {
         </div>
 
         <div className="hero-art" aria-hidden="true">
-          <div className="sun" />
-          <div className="plant">
-            <b />
-            <b />
-            <b />
-            <b />
-          </div>
-          <div className="spark s1">✦</div>
-          <div className="spark s2">✦</div>
-          <div className="spark s3">·</div>
-
-          <div className="cleaner">
-            <div className="cleaner-head" />
-            <div className="cleaner-body" />
-            <div className="cleaner-arm" />
-            <div className="spray">
-              <span />
-            </div>
-          </div>
-
-          <div className="floor" />
-          <p className="art-label">ČISTO. PREPROSTO. VAŠE.</p>
+          <Image
+            src="/images/cisto-home-hero.png"
+            alt="Čisto ekipa pri čiščenju doma"
+            fill
+            className="hero-art-image"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            priority
+          />
         </div>
       </section>
 
@@ -129,9 +120,56 @@ export default function Home() {
           <h2>Naročite v manj kot minuti.</h2>
         </div>
 
-        <a className="book-button" href="#kako-deluje">
+        <a className="book-button" href="/booking">
           Začni rezervacijo <span>→</span>
         </a>
+      </section>
+
+      <section className="process-section" id="kako-poteka">
+        <div className="section-intro">
+          <p className="eyebrow">
+            <span /> KAKO POTEKA
+          </p>
+          <h2>
+            Preprost postopek od povpraševanja do <br />
+            <em>brezhibno čistega doma.</em>
+          </h2>
+        </div>
+
+        <div className="process-grid">
+          <article className="process-card">
+            <p className="process-number">01</p>
+            <h3>Oddate povpraševanje</h3>
+            <p>Izberete storitev, termin in osnovne podatke za vaš obisk.</p>
+          </article>
+
+          <article className="process-card">
+            <p className="process-number">02</p>
+            <h3>Potrdimo podrobnosti</h3>
+            <p>
+              Pregledamo vašo zahtevo in po potrebi uskladimo dodatne
+              informacije.
+            </p>
+          </article>
+
+          <article className="process-card">
+            <p className="process-number">03</p>
+            <h3>Prihod ekipe</h3>
+            <p>
+              Ob dogovorjenem času pride zanesljiva ekipa z vso potrebno
+              opremo.
+            </p>
+          </article>
+
+          <article className="process-card">
+            <p className="process-number">04</p>
+            <h3>Uživajte v čistem domu</h3>
+            <p>
+              Vi pa imate več časa za pomembnejše stvari, medtem ko mi
+              poskrbimo za brezhiben rezultat.
+            </p>
+          </article>
+        </div>
       </section>
 
       <section className="steps" id="kako-deluje">
@@ -189,7 +227,7 @@ export default function Home() {
             Čisto po <em>vaše.</em>
           </h2>
           <p className="intro-copy">
-            Naj bo to reden obisk ali temeljita osvežitev — izberite pomoč, ki
+            Naj bo to reden obisk ali temeljita osvežitev, izberite pomoč, ki
             jo potrebujete danes.
           </p>
         </div>
@@ -201,7 +239,7 @@ export default function Home() {
               <div className="service-icon">✦</div>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
-              <a href="#narocilo">
+              <a href="/booking">
                 Preverite več <span>→</span>
               </a>
             </article>
@@ -223,7 +261,7 @@ export default function Home() {
 
         <div className="trust-copy">
           <p className="eyebrow">
-            <span /> ZAKAJ CLEANIX
+            <span /> ZAKAJ ČISTO
           </p>
           <h2>
             Dober občutek se začne <em>doma.</em>
@@ -250,19 +288,10 @@ export default function Home() {
       <section className="bottom-cta">
         <p>PRIPRAVLJENI NA VEČ PROSTEGA ČASA?</p>
         <h2>Naj vaš dom zasije.</h2>
-        <a href="#narocilo" className="light-button">
+        <a href="/booking" className="light-button">
           Naroči čiščenje <span>→</span>
         </a>
       </section>
-
-      <footer>
-        <a className="brand" href="#domov">
-          <span className="brand-mark">✦</span>
-          cleanix
-        </a>
-        <p>Čist dom. Mirna glava.</p>
-        <span>© 2026 Cleanix</span>
-      </footer>
     </main>
   );
 }

@@ -67,7 +67,7 @@ export default async function AdminPage({searchParams}: AdminPageProps) {
           <div>
             <a href="/" className="brand">
               <span className="brand-mark">✦</span>
-              cleanix
+              čisto
             </a>
             <h1 className="mt-6 text-4xl font-bold">Nadzorna plosca</h1>
             <p className="mt-2 text-[#5d716a]">

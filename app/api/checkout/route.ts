@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
             currency: "eur",
             unit_amount: Math.round(Number(totalPrice) * 100),
             product_data: {
-              name: "Cleanix Cleaning Service"
+              name: "Čisto Cleaning Service"
             }
           }
         }
