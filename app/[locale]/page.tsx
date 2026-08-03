@@ -40,22 +40,22 @@ export default function Home() {
   return (
     <main>
       <header className="site-header">
-        <a href="#domov" className="brand" aria-label="Čisto domov">
+        <a href="#domov" className="brand" aria-label="cleanix domov">
           <Image
             src="/images/cisto-logo-transparent.png"
-            alt="Čisto logo"
+            alt="cleanix logo"
             width={38}
             height={38}
             className="brand-logo"
           />
-          <span>Čisto</span>
+          <span>cleanix</span>
         </a>
 
         <nav className="desktop-nav" aria-label="Glavna navigacija">
           <a href="#kako-deluje">Kako deluje</a>
           <a href="#storitve">Storitve</a>
-          <a href="/business">Čisto Biznis</a>
-          <a href="#o-nas">Zakaj Čisto</a>
+          <a href="/business">cleanix Biznis</a>
+          <a href="#o-nas">Zakaj cleanix</a>
         </nav>
 
         <a className="header-cta" href="/booking">
@@ -103,7 +103,7 @@ export default function Home() {
         <div className="hero-art" aria-hidden="true">
           <Image
             src="/images/cisto-home-hero.png"
-            alt="Čisto ekipa pri čiščenju doma"
+            alt="cleanix ekipa pri čiščenju doma"
             fill
             className="hero-art-image"
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -224,7 +224,7 @@ export default function Home() {
             <span /> NAŠE STORITVE
           </p>
           <h2>
-            Čisto po <em>vaše.</em>
+            cleanix po <em>vaše.</em>
           </h2>
           <p className="intro-copy">
             Naj bo to reden obisk ali temeljita osvežitev, izberite pomoč, ki
@@ -261,7 +261,7 @@ export default function Home() {
 
         <div className="trust-copy">
           <p className="eyebrow">
-            <span /> ZAKAJ ČISTO
+            <span /> ZAKAJ CLEANIX
           </p>
           <h2>
             Dober občutek se začne <em>doma.</em>

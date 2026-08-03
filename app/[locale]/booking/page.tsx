@@ -5,15 +5,15 @@ export default function BookingPage() {
   return (
     <main className="min-h-screen bg-[#f6f9ff] py-12">
       <div className="mx-auto mb-10 flex max-w-7xl items-center justify-between px-6">
-        <a href="/" className="brand" aria-label="Čisto domov">
+        <a href="/" className="brand" aria-label="cleanix domov">
           <Image
             src="/images/cisto-logo.png"
-            alt="Čisto logo"
+            alt="cleanix logo"
             width={38}
             height={38}
             className="brand-logo"
           />
-          <span>Čisto</span>
+          <span>cleanix</span>
         </a>
 
         <a href="/" className="text-link">

@@ -6,20 +6,20 @@ export default function SiteFooter() {
       <div className="site-footer-shell">
         <div className="site-footer-top">
           <div className="site-footer-brand-block">
-            <a href="/" className="brand" aria-label="Čisto domov">
+            <a href="/" className="brand" aria-label="cleanix domov">
               <Image
                 src="/images/cisto-logo-transparent.png"
-                alt="Čisto logo"
+                alt="cleanix logo"
                 width={38}
                 height={38}
                 className="brand-logo"
               />
-              <span>Čisto</span>
+              <span>cleanix</span>
             </a>
 
             <div className="mt-3">
               <a href="/business" className="text-link">
-                Čisto Biznis
+                cleanix Biznis
               </a>
             </div>
 
@@ -40,7 +40,7 @@ export default function SiteFooter() {
               <p className="site-footer-title">Kontakt</p>
               <div className="site-footer-links">
                 <a href="tel:069665229">069 665 229</a>
-                <a href="mailto:info@cisto.si">info@cisto.si</a>
+                <a href="mailto:info@cleanix.si">info@cleanix.si</a>
                 <span>Ljubljana, Slovenija</span>
               </div>
             </section>
@@ -50,7 +50,7 @@ export default function SiteFooter() {
               <div className="site-footer-links">
                 <a href="/">Domov</a>
                 <a href="/booking">Rezervacija</a>
-                <a href="/business">Čisto Biznis</a>
+                <a href="/business">cleanix Biznis</a>
                 <a href="/contact">Kontakt</a>
                 <a href="/about">O nas</a>
               </div>
@@ -68,7 +68,7 @@ export default function SiteFooter() {
         </div>
 
         <div className="site-footer-bottom">
-          <p>© 2026 Čisto. Vse pravice pridržane.</p>
+          <p>© 2026 cleanix. Vse pravice pridržane.</p>
 
           <div className="site-footer-bottom-links">
             <a href="/privacy">Zasebnost</a>

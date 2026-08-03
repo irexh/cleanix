@@ -33,7 +33,7 @@ export default function BusinessPage() {
       <section className="px-6 py-16">
         <div className="mx-auto max-w-7xl">
           <p className="eyebrow">
-            <span /> ČISTO BIZNIS
+            <span /> CLEANIX BIZNIS
           </p>
 
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
@@ -67,7 +67,7 @@ export default function BusinessPage() {
             <div className="overflow-hidden rounded-[36px] bg-white shadow-xl">
               <Image
                 src="/images/cisto-biznis-hero.png"
-                alt="Čisto Biznis - čisti in sodobni poslovni prostori"
+                alt="cleanix Biznis - čisti in sodobni poslovni prostori"
                 width={1734}
                 height={1156}
                 className="h-full w-full object-cover"
@@ -193,7 +193,7 @@ export default function BusinessPage() {
       <section className="px-6 py-16">
         <div className="mx-auto max-w-7xl rounded-[36px] bg-[#2f6fe4] p-10 text-center text-white shadow-sm">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.14em] text-[#dce8ff]">
-            ČISTO BIZNIS
+            CLEANIX BIZNIS
           </p>
           <h2 className="mx-auto max-w-3xl text-4xl font-bold">
             Potrebujete zanesljivo čiščenje za svoje podjetje?
