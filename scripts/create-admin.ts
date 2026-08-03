@@ -1,38 +1,35 @@
 import "dotenv/config";
-import { PrismaClient } from "@prisma/client";
+import {PrismaClient} from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+const adminEmail = "info@cleanix.si";
+const adminPassword = "Ljubljana1";
+
 async function main() {
-  const email = "admin@cleanix.com";
-  const password = "Admin123!";
+  const hashedPassword = await bcrypt.hash(adminPassword, 12);
 
-  const existingUser = await prisma.user.findUnique({
+  const admin = await prisma.user.upsert({
     where: {
-      email,
+      email: adminEmail
     },
-  });
-
-  if (existingUser) {
-    console.log("✅ Admin already exists.");
-    return;
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  await prisma.user.create({
-    data: {
-      name: "Administrator",
-      email,
+    update: {
       password: hashedPassword,
+      role: "ADMIN",
+      name: "cleanix admin"
     },
+    create: {
+      email: adminEmail,
+      password: hashedPassword,
+      role: "ADMIN",
+      name: "cleanix admin"
+    }
   });
 
-  console.log("✅ Admin created successfully!");
-  console.log("--------------------------------");
-  console.log(`Email: ${email}`);
-  console.log(`Password: ${password}`);
+  console.log("Admin user created or updated:");
+  console.log(admin.email);
+  console.log(admin.role);
 }
 
 main()
