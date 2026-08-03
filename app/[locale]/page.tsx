@@ -4,17 +4,23 @@ const services = [
   {
     number: "01",
     title: "Redno čiščenje",
-    text: "Urejen dom vsak teden, na 14 dni ali takrat, ko vam najbolj ustreza."
+    text: "Redno vzdrževanje urejenega doma vsak teden, na 14 dni ali enkrat mesečno.",
+    href: "/storitve/redno-ciscenje",
+    status: "active"
   },
   {
     number: "02",
     title: "Generalno čiščenje",
-    text: "Temeljita osvežitev doma pred vselitvijo, po prenovi ali ob posebni priložnosti."
+    text: "Bolj temeljito čiščenje doma, ko potrebujete dodatno osvežitev prostora.",
+    href: "/storitve/generalno-ciscenje",
+    status: "active"
   },
   {
     number: "03",
     title: "Pomoč v gospodinjstvu",
-    text: "Pranje, likanje in druga drobna opravila za bolj preprost vsakdan."
+    text: "Kmalu na voljo.",
+    href: "",
+    status: "soon"
   }
 ];
 
@@ -239,9 +245,14 @@ export default function Home() {
               <div className="service-icon">✦</div>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
-              <a href="/booking">
-                Preverite več <span>→</span>
-              </a>
+
+              {service.status === "soon" ? (
+                <span className="soon-badge">KMALU</span>
+              ) : (
+                <a href={service.href}>
+                  Preverite več <span>→</span>
+                </a>
+              )}
             </article>
           ))}
         </div>

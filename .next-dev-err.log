@@ -1,0 +1,50 @@
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+[browser] Image with src "/images/cisto-logo-transparent.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+⨯ ./app/[locale]/page.tsx
+Error:   x Expected ',', got ':'
+    ,-[C:\Users\nailc\Desktop\cleanix\cleanix-app\app\[locale]\page.tsx:17:1]
+ 14 |   {
+ 15 |     number: "03",
+ 16 |     title: "Pomoč v gospodinjstvu",
+ 17 |     text: text: "Kmalu na voljo."
+    :               ^
+ 18 |   }
+ 19 | ];
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/[locale]/page.tsx
+[browser] ./app/[locale]/page.tsx
+Error:   x Expected ',', got ':'
+    ,-[C:\Users\nailc\Desktop\cleanix\cleanix-app\app\[locale]\page.tsx:17:1]
+ 14 |   {
+ 15 |     number: "03",
+ 16 |     title: "Pomoč v gospodinjstvu",
+ 17 |     text: text: "Kmalu na voljo."
+    :               ^
+ 18 |   }
+ 19 | ];
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/[locale]/page.tsx 
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies

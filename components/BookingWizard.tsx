@@ -29,7 +29,6 @@ const extrasList = [
   "Čiščenje hladilnika",
   "Čiščenje oken",
   "Balkon",
-  "Likanje"
 ];
 
 const frequencyOptions = [

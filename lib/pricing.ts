@@ -13,7 +13,6 @@ const extraPrices: Record<string, number> = {
   "Čiščenje hladilnika": 15,
   "Čiščenje oken": 20,
   Balkon: 15,
-  Likanje: 23
 };
 
 export function calculatePrice(

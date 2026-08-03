@@ -387,3 +387,16 @@ em { font-family: Georgia, serif; font-weight: 400; }
   animation: fadeUpSoft 0.9s ease-out forwards;
   animation-delay: 0.65s;
 }
+.soon-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  margin-top: 18px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #123b7a;
+  padding: 9px 13px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}

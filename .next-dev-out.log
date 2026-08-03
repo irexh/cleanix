@@ -1,0 +1,29 @@
+▲ Next.js 16.2.12 (webpack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.145:3000
+- Environments: .env.local, .env
+✓ Ready in 2.8s
+
+○ Compiling proxy ...
+○ Compiling /[locale] ...
+ GET / 200 in 65s (next.js: 58s, proxy.ts: 1759ms, generate-params: 6.3s, application-code: 4.8s)
+ GET / 200 in 13.0s (next.js: 6.8s, proxy.ts: 3.9s, generate-params: 6.7s, application-code: 2.2s)
+ GET / 200 in 2.7s (next.js: 159ms, proxy.ts: 70ms, generate-params: 80ms, application-code: 2.5s)
+○ Compiling /[locale]/booking ...
+ GET /booking 200 in 13.3s (next.js: 11.9s, proxy.ts: 55ms, generate-params: 3.8s, application-code: 1361ms)
+ GET / 200 in 4.7s (next.js: 879ms, proxy.ts: 216ms, generate-params: 343ms, application-code: 3.6s)
+ GET / 200 in 727ms (next.js: 72ms, proxy.ts: 71ms, generate-params: 29ms, application-code: 583ms)
+ GET /booking 200 in 527ms (next.js: 81ms, proxy.ts: 61ms, generate-params: 35ms, application-code: 384ms)
+ GET /booking 200 in 787ms (next.js: 81ms, proxy.ts: 45ms, generate-params: 36ms, application-code: 661ms)
+ GET / 200 in 2.5s (next.js: 1138ms, proxy.ts: 106ms, generate-params: 77ms, application-code: 1275ms)
+ GET / 200 in 586ms (next.js: 63ms, proxy.ts: 60ms, generate-params: 911µs, application-code: 462ms)
+ GET /booking 200 in 3.3s (next.js: 1047ms, proxy.ts: 64ms, generate-params: 63ms, application-code: 2.2s)
+ GET / 200 in 1543ms (next.js: 181ms, proxy.ts: 68ms, generate-params: 76ms, application-code: 1293ms)
+ GET /booking 200 in 674ms (next.js: 46ms, proxy.ts: 70ms, generate-params: 111µs, application-code: 558ms)
+ GET /booking 200 in 3.2s (next.js: 1040ms, proxy.ts: 1052ms, generate-params: 80ms, application-code: 1127ms)
+ GET / 200 in 3.3s (next.js: 479ms, proxy.ts: 33ms, generate-params: 78ms, application-code: 2.8s)
+ GET / 200 in 10.1s (next.js: 549ms, proxy.ts: 8.0s, generate-params: 32ms, application-code: 1641ms)
+ GET / 200 in 771ms (next.js: 144ms, proxy.ts: 96ms, generate-params: 139µs, application-code: 531ms)
+ GET / 200 in 1219ms (next.js: 395ms, proxy.ts: 41ms, generate-params: 25ms, application-code: 783ms)
+ GET / 200 in 1406ms (next.js: 386ms, proxy.ts: 40ms, generate-params: 38ms, application-code: 980ms)
+ GET / 200 in 470ms (next.js: 44ms, proxy.ts: 50ms, generate-params: 134µs, application-code: 375ms)
