@@ -9,14 +9,14 @@ const handleI18nRouting = createMiddleware(routing);
 export default async function proxy(request: NextRequest) {
   const {pathname} = request.nextUrl;
 
-  if (pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/admin") || pathname.startsWith("/sl/admin")) {
     const token = await getToken({
       req: request,
       secret: process.env.AUTH_SECRET
     });
 
     if (!token) {
-      return NextResponse.redirect(new URL("/login", request.url));
+      return NextResponse.redirect(new URL("/sl/login", request.url));
     }
 
     if (token.role !== "ADMIN") {
