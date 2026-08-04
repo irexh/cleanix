@@ -77,7 +77,9 @@ export default function Home() {
 
           <p className="hero-animate-text">
             Zanesljivo čiščenje doma po vaši meri. Izberite termin, mi pa
-            poskrbimo, da bo vaš dom zasijal.
+            poskrbimo,
+            <br />
+            da bo vaš dom zasijal.
           </p>
 
           <div className="hero-actions hero-animate-actions">

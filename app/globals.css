@@ -15,12 +15,13 @@ a { color: inherit; text-decoration: none; }
 .header-cta span { margin-left: 8px; }
 .header-cta:hover { background: var(--ink); color: #fff; }
 
-.hero { min-height: 580px; padding: 85px clamp(24px, 9vw, 150px) 82px; display: grid; grid-template-columns: 1.06fr .94fr; align-items: center; gap: 50px; overflow: hidden; background: var(--cream); }
+.hero { min-height: 580px; padding: 85px clamp(24px, 9vw, 150px) 82px; display: grid; grid-template-columns: minmax(680px, 1.05fr) .95fr; align-items: center; gap: 0; overflow: hidden; background: var(--cream); position: relative; }
 .eyebrow { font-size: 11px; letter-spacing: 1.5px; font-weight: 800; margin: 0 0 20px; color: #467a6d; }
 .eyebrow span { width: 21px; height: 2px; display: inline-block; vertical-align: middle; background: var(--coral); margin-right: 8px; }
 h1,h2,h3,p { margin-top: 0; }
 h1,h2 { letter-spacing: -2.5px; line-height: 1.04; }
 h1 { font-size: clamp(48px, 5.4vw, 78px); max-width: 610px; margin-bottom: 25px; }
+.hero h1 { max-width: 760px; }
 em { font-family: Georgia, serif; font-weight: 400; }
 .hero-text { color: #5d716a; max-width: 480px; font-size: 17px; line-height: 1.65; }
 .hero-actions { display: flex; gap: 29px; align-items: center; margin: 34px 0 51px; }
@@ -39,14 +40,28 @@ em { font-family: Georgia, serif; font-weight: 400; }
 .rating strong span{color:#e5a23f;font-size:11px;letter-spacing:1px;margin-left:6px}
 .rating p{font-size:11px;color:#71837d;margin:2px 0 0}
 
+.hero-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-copy .hero-animate-text {
+  max-width: 720px;
+}
+
 .hero-art {
   height: 440px;
   border-radius: 32px;
-  position: relative;
+  position: absolute;
+  top: 85px;
+  right: max(10px, calc((100vw - 1120px) / 2));
   overflow: hidden;
   align-self: end;
   background: linear-gradient(180deg, #eef5ff 0%, #dfeaff 100%);
   box-shadow: 0 30px 60px rgba(18, 59, 122, 0.12);
+  width: min(58vw, 720px);
+  margin-left: 0;
+  z-index: 1;
 }
 
 .hero-art-image {
@@ -442,7 +457,7 @@ em { font-family: Georgia, serif; font-weight: 400; }
   .desktop-nav{display:none}
   .header-cta{font-size:11px;padding:10px 12px}
   .hero{grid-template-columns:1fr;padding:62px 24px 0;gap:34px}
-  .hero-art{height:330px;margin:0 -24px;border-radius:160px 160px 0 0}
+  .hero-art{height:330px;width:auto;position:relative;top:auto;right:auto;margin:0 -24px;border-radius:160px 160px 0 0}
   .hero-actions{margin-bottom:34px;gap:17px}
   .quick-book{margin:0 16px;padding:28px 20px;display:block}
   .quick-book-heading{margin-bottom:24px}
