@@ -28,26 +28,33 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
       },
 
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        const email = String(credentials?.email ?? "").trim().toLowerCase();
+        const password = String(credentials?.password ?? "");
+
+        if (!email || !password) {
           return null;
         }
 
         const user = await prisma.user.findUnique({
-          where: {email: credentials.email as string}
+          where: {email}
         });
 
         if (!user) {
+          console.log("Admin login failed: user not found", email);
           return null;
         }
 
         const passwordMatch = await bcrypt.compare(
-          credentials.password as string,
+          password,
           user.password
         );
 
         if (!passwordMatch) {
+          console.log("Admin login failed: password mismatch", email);
           return null;
         }
+
+        console.log("Admin login successful", email);
 
         return {
           id: user.id,

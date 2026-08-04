@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-const adminEmail = "info@cleanix.si";
+const adminEmail = "admin@cleanix.si";
 const adminPassword = "Ljubljana1";
 
 async function main() {

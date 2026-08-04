@@ -2,10 +2,8 @@
 
 import {FormEvent, useState} from "react";
 import {signIn} from "next-auth/react";
-import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,20 +14,25 @@ export default function LoginPage() {
     setError("");
     setIsLoading(true);
 
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false
-    });
+    try {
+      const result = await signIn("credentials", {
+        email: email.trim().toLowerCase(),
+        password,
+        redirect: false
+      });
 
-    if (result?.error) {
-      setError("Napačen e-poštni naslov ali geslo.");
+      if (result?.error) {
+        setError("Napačen e-poštni naslov ali geslo.");
+        setIsLoading(false);
+        return;
+      }
+
+      window.location.href = "/sl/admin";
+    } catch (error) {
+      console.error(error);
+      setError("Prijava trenutno ni uspela. Poskusite znova.");
       setIsLoading(false);
-      return;
     }
-
-    router.push("/sl/admin");
-    router.refresh();
   };
 
   return (
