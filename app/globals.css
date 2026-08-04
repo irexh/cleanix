@@ -451,15 +451,16 @@ em { font-family: Georgia, serif; font-weight: 400; }
   .service-detail-hero{padding:48px 24px 34px}
   .service-detail-hero-with-image{grid-template-columns:1fr;min-height:auto}
   .service-detail-visual{min-height:310px;margin:32px -24px 0;border-radius:0}
-  .service-detail-hero-overlay{display:grid}
+  .service-detail-hero-overlay{display:block;min-height:650px;overflow:hidden}
   .service-detail-hero-overlay .service-detail-copy{max-width:760px}
   .service-detail-hero-overlay .service-detail-visual{
-    position:relative;
-    inset:auto;
-    width:auto;
-    min-height:310px;
-    margin:32px -24px 0;
-    opacity:1;
+    position:absolute;
+    inset:auto -80px 22px auto;
+    width:min(112vw, 560px);
+    min-height:360px;
+    margin:0;
+    border-radius:28px;
+    opacity:.5;
   }
   .service-detail-content{grid-template-columns:1fr;padding:0 24px 72px}
   .service-detail-content article{padding:26px 22px}
