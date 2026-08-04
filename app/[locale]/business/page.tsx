@@ -32,22 +32,22 @@ export default function BusinessPage() {
     <main className="min-h-screen bg-[#f6f9ff] text-[#123b7a]">
       <section className="px-6 py-16">
         <div className="mx-auto max-w-7xl">
-          <p className="eyebrow">
+          <p className="eyebrow hero-animate-kicker">
             <span /> CLEANIX BIZNIS
           </p>
 
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
             <div>
-              <h1 className="mb-6 max-w-3xl text-6xl font-bold leading-none">
+              <h1 className="hero-animate-title mb-6 max-w-3xl text-6xl font-bold leading-none">
                 Profesionalno čiščenje za poslovne prostore.
               </h1>
 
-              <p className="max-w-2xl text-xl leading-8 text-[#5d716a]">
+              <p className="hero-animate-text max-w-2xl text-xl leading-8 text-[#5d716a]">
                 Za pisarne, salone, lokale, ordinacije in druge poslovne
                 prostore, kjer sta urejenost in zanesljivost del prvega vtisa.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="hero-animate-actions mt-8 flex flex-wrap gap-4">
                 <a
                   href="/contact"
                   className="rounded-full bg-[#2f6fe4] px-6 py-3 font-bold text-white transition hover:bg-[#215ac0]"
@@ -64,7 +64,7 @@ export default function BusinessPage() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-[36px] bg-white shadow-xl">
+            <div className="business-hero-visual overflow-hidden rounded-[36px] bg-white shadow-xl">
               <Image
                 src="/images/cisto-biznis-hero.png"
                 alt="cleanix Biznis - čisti in sodobni poslovni prostori"

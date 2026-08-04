@@ -543,6 +543,12 @@ em { font-family: Georgia, serif; font-weight: 400; }
   animation-delay: 0.65s;
 }
 
+.business-hero-visual {
+  opacity: 0;
+  animation: fadeUpSoft 0.9s ease-out forwards;
+  animation-delay: 0.8s;
+}
+
 .service-detail-back {
   opacity: 0;
   animation: fadeUpSoft 0.65s ease-out forwards;
