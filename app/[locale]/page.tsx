@@ -274,8 +274,9 @@ export default function Home() {
           <p className="eyebrow">
             <span /> ZAKAJ CLEANIX
           </p>
-          <h2>
-            Dober občutek se začne <em>doma.</em>
+          <h2 className="trust-title">
+            <span>Dober občutek se začne</span>
+            <em>doma.</em>
           </h2>
           <p>
             Čiščenje je osebna stvar. Zato gradimo storitev, ki je prijazna,
