@@ -1,5 +1,9 @@
 import Image from "next/image";
 
+import {getActiveBusinessSale} from "@/lib/sale-pricing";
+
+export const dynamic = "force-dynamic";
+
 const businessServices = [
   "Redno čiščenje pisarn",
   "Čiščenje lokalov in salonov",
@@ -27,13 +31,15 @@ const reasons = [
   }
 ];
 
-export default function BusinessPage() {
+export default async function BusinessPage() {
+  const activeBusinessSale = await getActiveBusinessSale().catch(() => null);
+
   return (
     <main className="min-h-screen bg-[#f6f9ff] text-[#123b7a]">
       <section className="px-6 py-16">
         <div className="mx-auto max-w-7xl">
           <p className="eyebrow hero-animate-kicker">
-            <span /> CLEANIX BIZNIS
+            <span /> CLEANIX BUSINESS
           </p>
 
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
@@ -67,7 +73,7 @@ export default function BusinessPage() {
             <div className="business-hero-visual overflow-hidden rounded-[36px] bg-white shadow-xl">
               <Image
                 src="/images/cisto-biznis-hero.png"
-                alt="cleanix Biznis - čisti in sodobni poslovni prostori"
+                alt="Cleanix Business - čisti in sodobni poslovni prostori"
                 width={1734}
                 height={1156}
                 className="h-full w-full object-cover"
@@ -160,19 +166,26 @@ export default function BusinessPage() {
       </section>
 
       <section className="px-6 py-12">
-        <div className="mx-auto max-w-7xl grid gap-6 lg:grid-cols-2">
-          <div className="rounded-[32px] bg-white p-8 shadow-sm sm:p-10">
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.14em] text-[#5d716a]">
-              AKCIJA
-            </p>
-            <h2 className="mb-4 text-4xl font-bold">
-              Brezplačen prvi ogled prostora.
-            </h2>
-            <p className="max-w-xl leading-8 text-[#5d716a]">
-              Za nova podjetja nudimo brezplačen uvodni ogled prostora in hitro
-              pripravo ponudbe glede na vaše potrebe.
-            </p>
-          </div>
+        <div className={`mx-auto grid max-w-7xl gap-6 ${activeBusinessSale ? "lg:grid-cols-2" : ""}`}>
+          {activeBusinessSale ? (
+            <div className="rounded-[32px] bg-white p-8 shadow-sm sm:p-10">
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.14em] text-[#5d716a]">
+                AKCIJA ZA NOVA PODJETJA
+              </p>
+              <h2 className="mb-4 text-4xl font-bold">
+                Prvi 3 meseci z {activeBusinessSale.salePrice}% popustom.
+              </h2>
+              <p className="max-w-xl leading-8 text-[#5d716a]">
+                Ob sklenitvi 12-mesečnega sodelovanja nudimo prve 3 mesece po
+                posebni akcijski ceni. Popust se obračuna glede na dogovorjeno
+                redno ceno za vaš poslovni prostor.
+              </p>
+              <p className="mt-4 max-w-xl rounded-2xl bg-[#eaf2ff] p-4 text-sm font-semibold leading-7 text-[#123b7a]">
+                V primeru predčasne prekinitve pogodbe se popust za prve 3 mesece
+                obračuna naknadno.
+              </p>
+            </div>
+          ) : null}
 
           <div className="rounded-[32px] bg-[#eaf2ff] p-8 shadow-sm sm:p-10">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.14em] text-[#5d716a]">
@@ -193,7 +206,7 @@ export default function BusinessPage() {
       <section className="px-6 py-16">
         <div className="mx-auto max-w-7xl rounded-[36px] bg-[#2f6fe4] p-10 text-center text-white shadow-sm">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.14em] text-[#dce8ff]">
-            CLEANIX BIZNIS
+            CLEANIX BUSINESS
           </p>
           <h2 className="mx-auto max-w-3xl text-4xl font-bold">
             Potrebujete zanesljivo čiščenje za svoje podjetje?

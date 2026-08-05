@@ -4,7 +4,7 @@ const contentBlocks = [
     text: "Več časa za lepe stvari."
   },
   {
-    title: "Cleanix Biznis",
+    title: "Cleanix Business",
     text: "Profesionalno čiščenje za poslovne prostore."
   },
   {

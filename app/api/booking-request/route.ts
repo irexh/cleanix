@@ -1,11 +1,11 @@
 import {NextRequest, NextResponse} from "next/server";
 
 import {prisma} from "@/lib/prisma";
+import {getBookingPrice} from "@/lib/sale-pricing";
 
 export async function POST(request: NextRequest) {
   try {
     const {
-      totalPrice,
       city,
       propertyType,
       propertySize,
@@ -30,6 +30,15 @@ export async function POST(request: NextRequest) {
       .filter(Boolean)
       .join("\n");
 
+    const calculatedPrice = await getBookingPrice({
+      propertySize,
+      bathrooms: Number(bathrooms),
+      extras: extras ?? [],
+      frequency,
+      duration,
+      selectedDate
+    });
+
     await prisma.booking.create({
       data: {
         fullName,
@@ -43,7 +52,7 @@ export async function POST(request: NextRequest) {
         extras: JSON.stringify(extras ?? []),
         selectedDate,
         selectedTime,
-        totalPrice: Number(totalPrice),
+        totalPrice: calculatedPrice.totalPrice,
         notes: bookingNotes,
         paymentStatus: "PENDING",
         bookingStatus: "PENDING"

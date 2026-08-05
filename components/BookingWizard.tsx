@@ -1,6 +1,6 @@
 "use client";
 
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 
 import {calculatePrice} from "@/lib/pricing";
 
@@ -70,6 +70,8 @@ export default function BookingWizard() {
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [livePrice, setLivePrice] = useState<number | null>(null);
+  const [saleActive, setSaleActive] = useState(false);
   const [error, setError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -77,10 +79,55 @@ export default function BookingWizard() {
   const frequencyLabel =
     frequencyOptions.find((item) => item.value === frequency)?.label ?? "";
 
- const totalPrice = useMemo(
-  () => calculatePrice(propertySize, bathrooms, extras, frequency, duration),
-  [propertySize, bathrooms, extras, frequency, duration]
-);
+  const fallbackPrice = useMemo(
+    () => calculatePrice(propertySize, bathrooms, extras, frequency, duration),
+    [propertySize, bathrooms, extras, frequency, duration]
+  );
+  const totalPrice = livePrice ?? fallbackPrice;
+
+  useEffect(() => {
+    if (!propertySize) {
+      setLivePrice(null);
+      setSaleActive(false);
+      return;
+    }
+
+    const controller = new AbortController();
+
+    async function loadPrice() {
+      try {
+        const response = await fetch("/api/pricing", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          signal: controller.signal,
+          body: JSON.stringify({
+            propertySize,
+            bathrooms,
+            extras,
+            frequency,
+            duration,
+            selectedDate
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          setLivePrice(Number(data.totalPrice));
+          setSaleActive(Boolean(data.saleActive));
+        }
+      } catch {
+        if (!controller.signal.aborted) {
+          setLivePrice(null);
+          setSaleActive(false);
+        }
+      }
+    }
+
+    loadPrice();
+
+    return () => controller.abort();
+  }, [propertySize, bathrooms, extras, frequency, duration, selectedDate]);
 
   const totalSteps = 9;
 
@@ -477,6 +524,11 @@ export default function BookingWizard() {
                 <p className="mt-1 text-4xl font-bold text-[#123b7a]">
                   €{totalPrice}
                 </p>
+                {saleActive ? (
+                  <p className="mt-2 text-sm font-bold text-emerald-700">
+                    Akcijska cena je upoštevana za izbrani datum.
+                  </p>
+                ) : null}
               </div>
 
               {error ? (
@@ -552,6 +604,11 @@ export default function BookingWizard() {
           <div className="mt-4 border-t border-[#5f86cf] pt-5">
             <p className="text-sm text-[#c8dbff]">Predvidena cena na obisk</p>
             <p className="text-3xl font-bold">€{totalPrice}</p>
+            {saleActive ? (
+              <p className="mt-2 text-sm font-bold text-[#baf7d0]">
+                Akcija upoštevana
+              </p>
+            ) : null}
           </div>
         </aside>
       </div>

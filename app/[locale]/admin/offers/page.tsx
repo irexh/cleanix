@@ -16,7 +16,7 @@ export default async function AdminOffersPage() {
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.22em] text-[#4d8dff]">
-              CLEANIX BIZNIS
+              CLEANIX BUSINESS
             </p>
             <h1 className="text-4xl font-extrabold tracking-tight text-[#123b7a] sm:text-5xl">
               Offers

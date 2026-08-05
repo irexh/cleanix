@@ -19,7 +19,7 @@ export default function SiteFooter() {
 
             <div className="mt-3">
               <a href="/business" className="text-link">
-                cleanix Biznis
+                Cleanix Business
               </a>
             </div>
 
@@ -50,7 +50,7 @@ export default function SiteFooter() {
               <div className="site-footer-links">
                 <a href="/">Domov</a>
                 <a href="/booking">Rezervacija</a>
-                <a href="/business">cleanix Biznis</a>
+                <a href="/business">Cleanix Business</a>
                 <a href="/contact">Kontakt</a>
                 <a href="/about">O nas</a>
               </div>

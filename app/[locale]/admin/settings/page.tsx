@@ -4,7 +4,7 @@ const settings = [
   {label: "Območje", value: "Ljubljana"},
   {label: "Online plačilo", value: "Skrito / pripravljeno za kasneje"},
   {label: "Jezik", value: "Slovenščina"},
-  {label: "Glavni fokus", value: "Cleanix Biznis"}
+  {label: "Glavni fokus", value: "Cleanix Business"}
 ];
 
 export default function AdminSettingsPage() {

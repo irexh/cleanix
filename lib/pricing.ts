@@ -1,4 +1,4 @@
-const sizePrices: Record<string, number> = {
+export const sizePrices: Record<string, number> = {
   "Do 40 m²": 55,
   "41–60 m²": 70,
   "61–80 m²": 85,
@@ -7,7 +7,7 @@ const sizePrices: Record<string, number> = {
   "151 m² ali več": 149
 };
 
-const extraPrices: Record<string, number> = {
+export const extraPrices: Record<string, number> = {
   "Globinsko čiščenje": 40,
   "Čiščenje pečice": 15,
   "Čiščenje hladilnika": 15,

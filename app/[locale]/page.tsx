@@ -1,5 +1,9 @@
 import Image from "next/image";
 
+import {getActiveHomepageSales} from "@/lib/sale-pricing";
+
+export const dynamic = "force-dynamic";
+
 const services = [
   {
     number: "01",
@@ -21,6 +25,13 @@ const services = [
     text: "Kmalu na voljo.",
     href: "",
     status: "soon"
+  },
+  {
+    number: "04",
+    title: "Globinsko čiščenje",
+    text: "Globinsko čiščenje kavčev, stolov, sedežev in preprog.",
+    href: "/storitve/globinsko-ciscenje",
+    status: "active"
   }
 ];
 
@@ -42,7 +53,21 @@ const features = [
   }
 ];
 
-export default function Home() {
+function saleFrequencyLabel(frequency: string) {
+  const [baseFrequency, duration] = frequency.split("__");
+  const label =
+    baseFrequency === "ENKRATNO"
+      ? "enkratno čiščenje"
+      : baseFrequency === "NA_DVA_TEDNA"
+        ? "čiščenje na dva tedna"
+        : "mesečno čiščenje";
+
+  return duration ? `${label} · ${duration}` : label;
+}
+
+export default async function Home() {
+  const activeSales = await getActiveHomepageSales().catch(() => []);
+
   return (
     <main>
       <header className="site-header">
@@ -60,13 +85,20 @@ export default function Home() {
         <nav className="desktop-nav" aria-label="Glavna navigacija">
           <a href="#kako-deluje">Kako deluje</a>
           <a href="#storitve">Storitve</a>
-          <a href="/business">cleanix Biznis</a>
+          <a href="/business">Cleanix Business</a>
           <a href="#o-nas">Zakaj cleanix</a>
         </nav>
 
         <a className="header-cta" href="/booking">
           Naroči čiščenje <span>→</span>
         </a>
+
+        {activeSales.length > 0 ? (
+          <a className="sale-gift-link" href="#akcija" aria-label="Poglej akcijo">
+            <span>🎁</span>
+            Akcija
+          </a>
+        ) : null}
       </header>
 
       <section className="hero" id="domov">
@@ -119,6 +151,45 @@ export default function Home() {
           />
         </div>
       </section>
+
+      {activeSales.length > 0 ? (
+        <section className="sale-banner sale-banner-list" id="akcija">
+          <div className="sale-banner-heading">
+            <p className="sale-kicker">AKCIJA</p>
+            <h2>Trenutne akcije za čiščenje doma</h2>
+          </div>
+
+          <div className="sale-card-grid">
+            {activeSales.map((sale) => (
+              <article className="sale-card" key={sale.id}>
+                {sale.serviceKey === "BUSINESS_CONTRACT" ? (
+                  <>
+                    <h3>Cleanix Business · {sale.salePrice}% popust</h3>
+                    <p>
+                      Prvi 3 meseci ob 12-mesečnem sodelovanju
+                      {sale.saleEndsAt ? ` do ${sale.saleEndsAt}` : ""}.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3>
+                      {sale.sizeRange} · samo €{sale.salePrice}
+                    </h3>
+                    <p>
+                      Velja za {saleFrequencyLabel(sale.frequency)}
+                      {sale.saleEndsAt ? ` do ${sale.saleEndsAt}` : ""}.
+                    </p>
+                  </>
+                )}
+              </article>
+            ))}
+          </div>
+
+          <a className="sale-banner-cta" href="/booking">
+            Izkoristi akcijo <span>→</span>
+          </a>
+        </section>
+      ) : null}
 
       <section className="quick-book" id="narocilo">
         <div className="quick-book-heading">
