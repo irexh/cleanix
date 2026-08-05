@@ -10,7 +10,7 @@ import {
   deepCleaningMinimumOrder,
   deepCleaningPrices
 } from "@/lib/deep-cleaning-prices";
-import {prisma} from "@/lib/prisma";
+import {servicePricePrisma} from "@/lib/service-price-prisma";
 
 const sizeOptions = [
   "Do 40 m²",
@@ -53,7 +53,7 @@ function splitFrequency(value: string) {
 export default async function AdminServicesPage() {
   await ensureDefaultServicePrices();
 
-  const prices = await prisma.servicePrice.findMany({
+  const prices = await servicePricePrisma.servicePrice.findMany({
     where: {salePrice: {not: null}},
     orderBy: {updatedAt: "desc"}
   });

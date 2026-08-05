@@ -1,5 +1,5 @@
-import {prisma} from "@/lib/prisma";
 import {sizePrices} from "@/lib/pricing";
+import {servicePricePrisma} from "@/lib/service-price-prisma";
 
 const frequencies = [
   {key: "ENKRATNO", label: "1x enkratno čiščenje"},
@@ -20,7 +20,7 @@ function defaultPriceForFrequency(basePrice: number, frequency: string) {
 }
 
 export async function ensureDefaultServicePrices() {
-  const existingCount = await prisma.servicePrice.count();
+  const existingCount = await servicePricePrisma.servicePrice.count();
 
   if (existingCount > 0) {
     return;
@@ -38,7 +38,7 @@ export async function ensureDefaultServicePrices() {
     }))
   );
 
-  await prisma.servicePrice.createMany({
+  await servicePricePrisma.servicePrice.createMany({
     data,
     skipDuplicates: true
   });

@@ -2,7 +2,7 @@
 
 import {revalidatePath} from "next/cache";
 
-import {prisma} from "@/lib/prisma";
+import {servicePricePrisma} from "@/lib/service-price-prisma";
 
 export async function saveServicePriceAction(formData: FormData) {
   const serviceKey = String(formData.get("serviceKey") ?? "HOME_CLEANING");
@@ -34,7 +34,7 @@ export async function saveServicePriceAction(formData: FormData) {
     throw new Error("Business popust mora biti med 1 in 100");
   }
 
-  await prisma.servicePrice.upsert({
+  await servicePricePrisma.servicePrice.upsert({
     where: {
       serviceKey_propertyType_sizeRange_frequency: {
         serviceKey,
@@ -76,7 +76,7 @@ export async function toggleServicePriceAction(formData: FormData) {
 
   if (!id) throw new Error("Missing price id");
 
-  await prisma.servicePrice.update({
+  await servicePricePrisma.servicePrice.update({
     where: {id},
     data: {isActive}
   });
@@ -92,7 +92,7 @@ export async function deleteServicePriceAction(formData: FormData) {
 
   if (!id) throw new Error("Missing price id");
 
-  await prisma.servicePrice.delete({
+  await servicePricePrisma.servicePrice.delete({
     where: {id}
   });
 

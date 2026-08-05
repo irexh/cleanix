@@ -1,5 +1,5 @@
-import {prisma} from "@/lib/prisma";
 import {calculatePrice, extraPrices} from "@/lib/pricing";
+import {servicePricePrisma} from "@/lib/service-price-prisma";
 
 export function todayIso() {
   return new Date().toISOString().slice(0, 10);
@@ -40,13 +40,13 @@ export async function getBookingPrice({
 }) {
   const priceFrequency = duration ? `${frequency}__${duration}` : frequency;
 
-  const dbPrice = await prisma.servicePrice.findFirst({
+  const dbPrice = await servicePricePrisma.servicePrice.findFirst({
     where: {
       sizeRange: propertySize,
       frequency: priceFrequency,
       isActive: true
     }
-  }) ?? await prisma.servicePrice.findFirst({
+  }) ?? await servicePricePrisma.servicePrice.findFirst({
     where: {
       sizeRange: propertySize,
       frequency,
@@ -90,7 +90,7 @@ export async function getBookingPrice({
 export async function getActiveHomepageSale() {
   const today = todayIso();
 
-  return prisma.servicePrice.findFirst({
+  return servicePricePrisma.servicePrice.findFirst({
     where: {
       serviceKey: "HOME_CLEANING",
       isActive: true,
@@ -109,7 +109,7 @@ export async function getActiveHomepageSale() {
 export async function getActiveHomepageSales() {
   const today = todayIso();
 
-  return prisma.servicePrice.findMany({
+  return servicePricePrisma.servicePrice.findMany({
     where: {
       isActive: true,
       salePrice: {not: null},
@@ -128,7 +128,7 @@ export async function getActiveHomepageSales() {
 export async function getActiveBusinessSale() {
   const today = todayIso();
 
-  return prisma.servicePrice.findFirst({
+  return servicePricePrisma.servicePrice.findFirst({
     where: {
       serviceKey: "BUSINESS_CONTRACT",
       isActive: true,
