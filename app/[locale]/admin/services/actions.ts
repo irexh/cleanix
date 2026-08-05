@@ -2,6 +2,7 @@
 
 import {revalidatePath} from "next/cache";
 
+import {announcementPrisma} from "@/lib/announcement-prisma";
 import {servicePricePrisma} from "@/lib/service-price-prisma";
 
 export async function saveServicePriceAction(formData: FormData) {
@@ -100,4 +101,41 @@ export async function deleteServicePriceAction(formData: FormData) {
   revalidatePath("/sl");
   revalidatePath("/sl/business");
   revalidatePath("/sl/booking");
+}
+
+export async function createAnnouncementAction(formData: FormData) {
+  const title = String(formData.get("title") ?? "").trim();
+  const body = String(formData.get("body") ?? "").trim();
+
+  if (!title || !body) {
+    throw new Error("Title and body are required");
+  }
+
+  if (body.length > 500) {
+    throw new Error("Announcement body can be max 500 characters");
+  }
+
+  await announcementPrisma.announcement.create({
+    data: {
+      title,
+      body,
+      isActive: true
+    }
+  });
+
+  revalidatePath("/sl/admin/services");
+  revalidatePath("/sl");
+}
+
+export async function deleteAnnouncementAction(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+
+  if (!id) throw new Error("Missing announcement id");
+
+  await announcementPrisma.announcement.delete({
+    where: {id}
+  });
+
+  revalidatePath("/sl/admin/services");
+  revalidatePath("/sl");
 }

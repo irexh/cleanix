@@ -55,3 +55,12 @@ model ServicePrice {
 
   @@unique([serviceKey, propertyType, sizeRange, frequency])
 }
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
