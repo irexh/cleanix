@@ -72,3 +72,12 @@ model SiteContent {
   value     String
   updatedAt DateTime @updatedAt
 }
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  title     String
+  src       String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

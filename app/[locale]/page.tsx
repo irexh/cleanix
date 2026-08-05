@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import {getActiveHomepageSales} from "@/lib/sale-pricing";
 import {announcementPrisma} from "@/lib/announcement-prisma";
+import {galleryPrisma} from "@/lib/gallery-prisma";
 import {getSiteContentMap} from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
@@ -76,6 +77,10 @@ export default async function Home() {
     (sale) => sale.serviceKey === "BUSINESS_CONTRACT"
   );
   const announcements = await announcementPrisma.announcement.findMany({
+    where: {isActive: true},
+    orderBy: {createdAt: "desc"}
+  });
+  const galleryImages = await galleryPrisma.galleryImage.findMany({
     where: {isActive: true},
     orderBy: {createdAt: "desc"}
   });
@@ -157,7 +162,7 @@ export default async function Home() {
 
         <div className="hero-art" aria-hidden="true">
           <Image
-            src="/images/cisto-home-hero.png"
+            src={content.home_hero_image}
             alt="cleanix ekipa pri čiščenju doma"
             fill
             className="hero-art-image"
@@ -399,6 +404,32 @@ export default async function Home() {
           ))}
         </div>
       </section>
+
+      {galleryImages.length > 0 ? (
+        <section className="homepage-gallery">
+          <div className="section-intro">
+            <p className="eyebrow">
+              <span /> GALERIJA
+            </p>
+            <h2>Utrinki našega dela.</h2>
+          </div>
+
+          <div className="homepage-gallery-grid">
+            {galleryImages.map((image) => (
+              <article className="homepage-gallery-card" key={image.id}>
+                <Image
+                  src={image.src}
+                  alt={image.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <span>{image.title}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="trust-section" id="o-nas">
         <div className="trust-art" aria-hidden="true">

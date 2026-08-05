@@ -131,6 +131,11 @@ export const defaultSiteContent: SiteContentItem[] = [
     value: "Naroči čiščenje"
   },
   {
+    key: "home_hero_image",
+    label: "Homepage - hero slika",
+    value: "/images/cisto-home-hero.png"
+  },
+  {
     key: "business_hero_kicker",
     label: "Business - mali naslov",
     value: "CLEANIX BUSINESS"
@@ -145,6 +150,11 @@ export const defaultSiteContent: SiteContentItem[] = [
     label: "Business - opis",
     value:
       "Za pisarne, salone, lokale, ordinacije in druge poslovne prostore, kjer sta urejenost in zanesljivost del prvega vtisa."
+  },
+  {
+    key: "business_hero_image",
+    label: "Business - hero slika",
+    value: "/images/cisto-biznis-hero.png"
   }
 ];
 

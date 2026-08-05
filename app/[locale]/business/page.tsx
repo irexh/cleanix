@@ -73,7 +73,7 @@ export default async function BusinessPage() {
 
             <div className="business-hero-visual overflow-hidden rounded-[36px] bg-white shadow-xl">
               <Image
-                src="/images/cisto-biznis-hero.png"
+                src={content.business_hero_image}
                 alt="Cleanix Business - čisti in sodobni poslovni prostori"
                 width={1734}
                 height={1156}
