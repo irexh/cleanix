@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import {getActiveHomepageSales} from "@/lib/sale-pricing";
+import {announcementPrisma} from "@/lib/announcement-prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -73,6 +74,10 @@ export default async function Home() {
   const businessSales = activeSales.filter(
     (sale) => sale.serviceKey === "BUSINESS_CONTRACT"
   );
+  const announcements = await announcementPrisma.announcement.findMany({
+    where: {isActive: true},
+    orderBy: {createdAt: "desc"}
+  });
 
   return (
     <main>
@@ -219,6 +224,26 @@ export default async function Home() {
           <a className="sale-banner-cta" href="/business">
             Poglej Business <span>→</span>
           </a>
+        </section>
+      ) : null}
+
+      {announcements.length > 0 ? (
+        <section className="announcement-section">
+          <div className="announcement-heading">
+            <p className="eyebrow">
+              <span /> NOVOSTI
+            </p>
+            <h2>Risi in obvestila</h2>
+          </div>
+
+          <div className="announcement-grid">
+            {announcements.map((announcement) => (
+              <article className="announcement-card" key={announcement.id}>
+                <h3>{announcement.title}</h3>
+                <p>{announcement.body}</p>
+              </article>
+            ))}
+          </div>
         </section>
       ) : null}
 

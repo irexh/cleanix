@@ -1,4 +1,6 @@
 import {
+  createAnnouncementAction,
+  deleteAnnouncementAction,
   deleteServicePriceAction,
   saveServicePriceAction,
   toggleServicePriceAction
@@ -10,6 +12,7 @@ import {
   deepCleaningMinimumOrder,
   deepCleaningPrices
 } from "@/lib/deep-cleaning-prices";
+import {announcementPrisma} from "@/lib/announcement-prisma";
 import {servicePricePrisma} from "@/lib/service-price-prisma";
 
 const sizeOptions = [
@@ -57,6 +60,10 @@ export default async function AdminServicesPage() {
     where: {salePrice: {not: null}},
     orderBy: {updatedAt: "desc"}
   });
+  const announcements = await announcementPrisma.announcement.findMany({
+    where: {isActive: true},
+    orderBy: {createdAt: "desc"}
+  });
 
   return (
     <main className="px-6 py-10 lg:px-10">
@@ -71,6 +78,75 @@ export default async function AdminServicesPage() {
           Tukaj nastaviš akcijsko ceno za izbrano velikost, pogostost in trajanje.
           Cena je vedno cena na obisk.
         </p>
+
+        <section className="mt-8 rounded-[32px] bg-white p-6 shadow-sm sm:p-8">
+          <h2 className="text-2xl font-extrabold">Novice, risi in reklame</h2>
+          <p className="mt-2 text-sm text-[#5d716a]">
+            Objavi kratek tekst na spletni strani. Besedilo je omejeno na 500 znakov.
+          </p>
+
+          <form action={createAnnouncementAction} className="mt-6 grid gap-4">
+            <label className="grid gap-2 text-sm font-bold">
+              Naslov
+              <input
+                name="title"
+                maxLength={80}
+                required
+                placeholder="npr. Nova akcija za Ljubljana Center"
+                className="rounded-xl border border-[#dbe7fb] px-4 py-3 outline-none focus:border-[#4d8dff]"
+              />
+            </label>
+
+            <label className="grid gap-2 text-sm font-bold">
+              Kratek opis
+              <textarea
+                name="body"
+                maxLength={500}
+                required
+                rows={5}
+                placeholder="Napisi risi, obvestilo ali reklamo do 500 znakov."
+                className="resize-none rounded-xl border border-[#dbe7fb] px-4 py-3 outline-none focus:border-[#4d8dff]"
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="w-fit rounded-full bg-[#2f6fe4] px-6 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+            >
+              Objavi
+            </button>
+          </form>
+
+          {announcements.length > 0 ? (
+            <div className="mt-7 grid gap-4">
+              {announcements.map((announcement) => (
+                <article
+                  key={announcement.id}
+                  className="grid gap-4 rounded-2xl border border-[#dbe7fb] bg-[#f6f9ff] p-5 md:grid-cols-[1fr_auto]"
+                >
+                  <div>
+                    <h3 className="text-xl font-extrabold text-[#123b7a]">
+                      {announcement.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-[#5d716a]">
+                      {announcement.body}
+                    </p>
+                  </div>
+
+                  <form action={deleteAnnouncementAction}>
+                    <input type="hidden" name="id" value={announcement.id} />
+                    <button
+                      type="submit"
+                      className="rounded-full border border-red-200 px-5 py-2 text-sm font-extrabold text-red-700 transition hover:bg-red-50"
+                    >
+                      Fshije
+                    </button>
+                  </form>
+                </article>
+              ))}
+            </div>
+          ) : null}
+        </section>
 
         <section className="mt-8 rounded-[32px] bg-white p-6 shadow-sm sm:p-8">
           <h2 className="text-2xl font-extrabold">Dodaj ali uredi akcijo</h2>
