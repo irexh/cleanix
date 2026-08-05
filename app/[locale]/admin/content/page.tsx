@@ -1,23 +1,9 @@
-const contentBlocks = [
-  {
-    title: "Homepage hero",
-    text: "Več časa za lepe stvari."
-  },
-  {
-    title: "Cleanix Business",
-    text: "Profesionalno čiščenje za poslovne prostore."
-  },
-  {
-    title: "Storitve",
-    text: "Redno čiščenje, generalno čiščenje in poslovni prostori."
-  },
-  {
-    title: "Kontakt",
-    text: "Telefon, e-pošta in povpraševanja."
-  }
-];
+import {updateSiteContentAction} from "@/app/[locale]/admin/content/actions";
+import {getSiteContentItems} from "@/lib/site-content";
 
-export default function AdminContentPage() {
+export default async function AdminContentPage() {
+  const contentItems = await getSiteContentItems();
+
   return (
     <main className="px-6 py-10 lg:px-10">
       <div className="mx-auto max-w-7xl">
@@ -28,20 +14,37 @@ export default function AdminContentPage() {
           Content
         </h1>
         <p className="mt-4 max-w-3xl text-lg leading-8 text-[#5d716a]">
-          Pregled glavnih tekstov. V naslednji fazi dodamo urejanje brez VS Code.
+          Tukaj urejas glavne tekste na spletni strani brez VS Code.
         </p>
 
-        <section className="mt-8 grid gap-5 md:grid-cols-2">
-          {contentBlocks.map((block) => (
-            <article key={block.title} className="rounded-[28px] bg-white p-6 shadow-sm">
-              <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[#4d8dff]">
-                Sekcija
-              </p>
-              <h2 className="text-2xl font-extrabold">{block.title}</h2>
-              <p className="mt-3 leading-7 text-[#5d716a]">{block.text}</p>
-            </article>
-          ))}
-        </section>
+        <form
+          action={updateSiteContentAction}
+          className="mt-8 rounded-[32px] bg-white p-6 shadow-sm sm:p-8"
+        >
+          <div className="grid gap-5">
+            {contentItems.map((item) => (
+              <label key={item.key} className="grid gap-2">
+                <span className="text-sm font-extrabold text-[#123b7a]">
+                  {item.label}
+                </span>
+                <textarea
+                  name={item.key}
+                  defaultValue={item.value}
+                  rows={item.key.endsWith("_text") ? 4 : 2}
+                  maxLength={item.key.endsWith("_text") ? 500 : 120}
+                  className="resize-none rounded-2xl border border-[#dbe7fb] px-4 py-3 text-[#123b7a] outline-none focus:border-[#4d8dff]"
+                />
+              </label>
+            ))}
+          </div>
+
+          <button
+            type="submit"
+            className="mt-7 rounded-full bg-[#2f6fe4] px-7 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+          >
+            Shrani spremembe
+          </button>
+        </form>
       </div>
     </main>
   );

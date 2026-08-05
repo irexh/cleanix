@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import {getActiveHomepageSales} from "@/lib/sale-pricing";
 import {announcementPrisma} from "@/lib/announcement-prisma";
+import {getSiteContentMap} from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
 
@@ -78,6 +79,7 @@ export default async function Home() {
     where: {isActive: true},
     orderBy: {createdAt: "desc"}
   });
+  const content = await getSiteContentMap();
 
   return (
     <main>
@@ -101,7 +103,7 @@ export default async function Home() {
         </nav>
 
         <a className="header-cta" href="/booking">
-          Naroči čiščenje <span>→</span>
+          {content.home_hero_primary_button} <span>→</span>
         </a>
 
         {activeSales.length > 0 ? (
@@ -114,24 +116,26 @@ export default async function Home() {
 
       <section className="hero" id="domov">
         <div className="hero-copy">
-          <p className="hero-animate-kicker">PROFESIONALNO ČIŠČENJE DOMA</p>
+          <p className="hero-animate-kicker">{content.home_hero_kicker}</p>
 
-          <h1 className="hero-animate-title">Več časa za lepe stvari.</h1>
+          <h1 className="hero-animate-title">{content.home_hero_title}</h1>
 
           <p className="hero-animate-text">
-            Zanesljivo čiščenje doma po vaši meri. Izberite termin, mi pa
-            poskrbimo,
-            <br />
-            da bo vaš dom zasijal.
+            {content.home_hero_text.split("\n").map((line, index) => (
+              <span key={`${line}-${index}`}>
+                {index > 0 ? <br /> : null}
+                {line}
+              </span>
+            ))}
           </p>
 
           <div className="hero-actions hero-animate-actions">
             <a className="primary-button" href="/booking">
-              Naroči čiščenje <span>→</span>
+              {content.home_hero_primary_button} <span>→</span>
             </a>
 
             <a className="text-link" href="#kako-poteka">
-              Poglej, kako poteka <span>↓</span>
+              {content.home_hero_secondary_button} <span>↓</span>
             </a>
           </div>
 
@@ -144,9 +148,9 @@ export default async function Home() {
 
             <div>
               <strong>
-                4,9 <span>★★★★★</span>
+                {content.home_rating_score} <span>★★★★★</span>
               </strong>
-              <p>več kot 2.000 zadovoljnih domov</p>
+              <p>{content.home_rating_text}</p>
             </div>
           </div>
         </div>
@@ -250,24 +254,29 @@ export default async function Home() {
       <section className="quick-book" id="narocilo">
         <div className="quick-book-heading">
           <p className="eyebrow">
-            <span /> ZAČNIMO
+            <span /> {content.home_quick_kicker}
           </p>
-          <h2>Naročite v manj kot minuti.</h2>
+          <h2>{content.home_quick_title}</h2>
         </div>
 
         <a className="book-button" href="/booking">
-          Začni rezervacijo <span>→</span>
+          {content.home_quick_button} <span>→</span>
         </a>
       </section>
 
       <section className="process-section" id="kako-poteka">
         <div className="section-intro">
           <p className="eyebrow">
-            <span /> KAKO POTEKA
+            <span /> {content.home_process_kicker}
           </p>
           <h2>
-            Preprost postopek od povpraševanja do <br />
-            <em>brezhibno čistega doma.</em>
+            {content.home_process_title.split("\n").map((line, index) =>
+              index === 0 ? (
+                <span key={`${line}-${index}`}>{line} </span>
+              ) : (
+                <em key={`${line}-${index}`}>{line}</em>
+              )
+            )}
           </h2>
         </div>
 
@@ -310,11 +319,16 @@ export default async function Home() {
       <section className="steps" id="kako-deluje">
         <div className="section-intro">
           <p className="eyebrow">
-            <span /> KAKO DELUJE
+            <span /> {content.home_steps_kicker}
           </p>
           <h2>
-            Do čistega doma v <br />
-            <em>treh preprostih korakih.</em>
+            {content.home_steps_title.split("\n").map((line, index) =>
+              index === 0 ? (
+                <span key={`${line}-${index}`}>{line} </span>
+              ) : (
+                <em key={`${line}-${index}`}>{line}</em>
+              )
+            )}
           </h2>
         </div>
 
@@ -356,14 +370,13 @@ export default async function Home() {
       <section className="service-section" id="storitve">
         <div className="section-intro">
           <p className="eyebrow">
-            <span /> NAŠE STORITVE
+            <span /> {content.home_services_kicker}
           </p>
           <h2>
-            cleanix po <em>vaše.</em>
+            {content.home_services_title}
           </h2>
           <p className="intro-copy">
-            Naj bo to reden obisk ali temeljita osvežitev, izberite pomoč, ki
-            jo potrebujete danes.
+            {content.home_services_text}
           </p>
         </div>
 
@@ -401,15 +414,14 @@ export default async function Home() {
 
         <div className="trust-copy">
           <p className="eyebrow">
-            <span /> ZAKAJ CLEANIX
+            <span /> {content.home_trust_kicker}
           </p>
           <h2 className="trust-title">
-            <span>Dober občutek se začne</span>
-            <em>doma.</em>
+            <span>{content.home_trust_title_1}</span>
+            <em>{content.home_trust_title_2}</em>
           </h2>
           <p>
-            Čiščenje je osebna stvar. Zato gradimo storitev, ki je prijazna,
-            pregledna in ji lahko zaupate.
+            {content.home_trust_text}
           </p>
 
           <div className="feature-list">
@@ -427,10 +439,10 @@ export default async function Home() {
       </section>
 
       <section className="bottom-cta">
-        <p>PRIPRAVLJENI NA VEČ PROSTEGA ČASA?</p>
-        <h2>Naj vaš dom zasije.</h2>
+        <p>{content.home_bottom_kicker}</p>
+        <h2>{content.home_bottom_title}</h2>
         <a href="/booking" className="light-button">
-          Naroči čiščenje <span>→</span>
+          {content.home_bottom_button} <span>→</span>
         </a>
       </section>
     </main>

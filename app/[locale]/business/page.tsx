@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import {getActiveBusinessSale} from "@/lib/sale-pricing";
+import {getSiteContentMap} from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
 
@@ -33,24 +34,24 @@ const reasons = [
 
 export default async function BusinessPage() {
   const activeBusinessSale = await getActiveBusinessSale().catch(() => null);
+  const content = await getSiteContentMap();
 
   return (
     <main className="min-h-screen bg-[#f6f9ff] text-[#123b7a]">
       <section className="px-6 py-16">
         <div className="mx-auto max-w-7xl">
           <p className="eyebrow hero-animate-kicker">
-            <span /> CLEANIX BUSINESS
+            <span /> {content.business_hero_kicker}
           </p>
 
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
             <div>
               <h1 className="hero-animate-title mb-6 max-w-3xl text-6xl font-bold leading-none">
-                Profesionalno čiščenje za poslovne prostore.
+                {content.business_hero_title}
               </h1>
 
               <p className="hero-animate-text max-w-2xl text-xl leading-8 text-[#5d716a]">
-                Za pisarne, salone, lokale, ordinacije in druge poslovne
-                prostore, kjer sta urejenost in zanesljivost del prvega vtisa.
+                {content.business_hero_text}
               </p>
 
               <div className="hero-animate-actions mt-8 flex flex-wrap gap-4">
