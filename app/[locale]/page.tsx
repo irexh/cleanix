@@ -172,8 +172,10 @@ export default async function Home() {
         </div>
       </section>
 
+      {activeSales.length > 0 ? <div id="akcija" className="sale-anchor" /> : null}
+
       {homeCleaningSales.length > 0 ? (
-        <section className="sale-banner sale-banner-list" id="akcija">
+        <section className="sale-banner sale-banner-list">
           <div className="sale-banner-heading">
             <p className="sale-kicker">AKCIJA</p>
             <h2>Trenutne akcije za čiščenje doma</h2>
