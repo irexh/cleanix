@@ -16,6 +16,14 @@ const statusColors: Record<string, string> = {
   CANCELLED: "bg-red-100 text-red-800"
 };
 
+function isToday(date: string) {
+  return date === new Date().toISOString().slice(0, 10);
+}
+
+function isUpcoming(date: string) {
+  return date >= new Date().toISOString().slice(0, 10);
+}
+
 function formatDateLabel(date: string) {
   const parsedDate = new Date(`${date}T00:00:00`);
 
@@ -49,6 +57,13 @@ export default async function AdminCalendarPage() {
   );
 
   const bookingDates = Object.keys(groupedBookings);
+  const todayBookings = bookings.filter((booking) => isToday(booking.selectedDate));
+  const upcomingBookings = bookings.filter((booking) =>
+    isUpcoming(booking.selectedDate)
+  );
+  const pendingBookings = bookings.filter(
+    (booking) => booking.bookingStatus === "PENDING"
+  );
 
   return (
     <main className="px-6 py-10 lg:px-10">
@@ -67,9 +82,10 @@ export default async function AdminCalendarPage() {
             </p>
           </div>
 
-          <div className="rounded-3xl bg-white px-6 py-4 text-right shadow-sm">
-            <p className="text-sm font-bold text-[#5d716a]">Vseh terminov</p>
-            <p className="mt-1 text-4xl font-extrabold">{bookings.length}</p>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <CalendarStat label="Danes" value={String(todayBookings.length)} />
+            <CalendarStat label="Prihajajoči" value={String(upcomingBookings.length)} />
+            <CalendarStat label="Čaka potrditev" value={String(pendingBookings.length)} />
           </div>
         </div>
 
@@ -149,5 +165,14 @@ export default async function AdminCalendarPage() {
         )}
       </div>
     </main>
+  );
+}
+
+function CalendarStat({label, value}: {label: string; value: string}) {
+  return (
+    <div className="rounded-3xl bg-white px-6 py-4 text-right shadow-sm">
+      <p className="text-sm font-bold text-[#5d716a]">{label}</p>
+      <p className="mt-1 text-4xl font-extrabold">{value}</p>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 
 import {auth} from "@/auth";
+import {sendBookingStatusEmail} from "@/lib/booking-email";
 import {prisma} from "@/lib/prisma";
 
 const allowedStatuses = [
@@ -38,10 +39,29 @@ export async function PATCH(
     return NextResponse.json({error: "Neveljaven status."}, {status: 400});
   }
 
+  const existingBooking = await prisma.booking.findUnique({
+    where: {id}
+  });
+
+  if (!existingBooking) {
+    return NextResponse.json({error: "Rezervacija ne obstaja."}, {status: 404});
+  }
+
   const updatedBooking = await prisma.booking.update({
     where: {id},
     data: {bookingStatus: nextStatus}
   });
+
+  if (
+    existingBooking.bookingStatus !== nextStatus &&
+    (nextStatus === "CONFIRMED" || nextStatus === "CANCELLED")
+  ) {
+    try {
+      await sendBookingStatusEmail(nextStatus, updatedBooking);
+    } catch (error) {
+      console.error("BOOKING STATUS EMAIL ERROR:", error);
+    }
+  }
 
   return NextResponse.json({
     success: true,
