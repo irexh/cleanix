@@ -44,7 +44,8 @@ export default async function AdminCalendarPage() {
     orderBy: [
       {selectedDate: "asc"},
       {selectedTime: "asc"}
-    ]
+    ],
+    include: {employee: true}
   });
 
   const groupedBookings = bookings.reduce<Record<string, typeof bookings>>(
@@ -135,6 +136,9 @@ export default async function AdminCalendarPage() {
                         <p className="font-bold">{booking.address}</p>
                         <p className="mt-1 text-sm text-[#5d716a]">
                           {booking.city} · {booking.propertyType} · {booking.propertySize}
+                        </p>
+                        <p className="mt-2 text-sm font-bold text-[#123b7a]">
+                          Ekipa: {booking.employee?.name ?? "Ni dodeljeno"}
                         </p>
                       </div>
 

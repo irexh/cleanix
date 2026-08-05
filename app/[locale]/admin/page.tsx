@@ -48,7 +48,8 @@ export default async function AdminPage({searchParams}: AdminPageProps) {
           }
         : {})
     },
-    orderBy: {createdAt: "desc"}
+    orderBy: {createdAt: "desc"},
+    include: {employee: true}
   });
 
   const paidBookings = bookings.filter(
@@ -154,6 +155,9 @@ export default async function AdminPage({searchParams}: AdminPageProps) {
                         </p>
                         <p className="mt-1 text-sm text-[#5d716a]">
                           Kopalnice: {booking.bathrooms}
+                        </p>
+                        <p className="mt-2 text-sm font-bold text-[#123b7a]">
+                          Ekipa: {booking.employee?.name ?? "Ni dodeljeno"}
                         </p>
                       </td>
 

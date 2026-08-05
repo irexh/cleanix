@@ -25,6 +25,8 @@ model Booking {
   paymentStatus   String   @default("PENDING")
   bookingStatus   String   @default("PENDING")
   stripeSessionId String?  @unique
+  employeeId      String?
+  employee        Employee? @relation(fields: [employeeId], references: [id])
   createdAt       DateTime @default(now())
 }
 
@@ -80,4 +82,16 @@ model GalleryImage {
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Employee {
+  id        String    @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  role      String    @default("EMPLOYEE")
+  isActive  Boolean   @default(true)
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

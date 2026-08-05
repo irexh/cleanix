@@ -1,6 +1,8 @@
 import {notFound} from "next/navigation";
 
+import {assignEmployeeToBookingAction} from "@/app/[locale]/admin/bookings/[id]/actions";
 import AdminBookingActions from "@/components/admin/AdminBookingActions";
+import {employeePrisma} from "@/lib/employee-prisma";
 import {prisma} from "@/lib/prisma";
 
 const statusLabels: Record<string, string> = {
@@ -31,7 +33,8 @@ export default async function BookingDetailsPage({
   const {id} = await params;
 
   const booking = await prisma.booking.findUnique({
-    where: {id}
+    where: {id},
+    include: {employee: true}
   });
 
   if (!booking) {
@@ -39,6 +42,10 @@ export default async function BookingDetailsPage({
   }
 
   const extras = safeParseExtras(booking.extras);
+  const employees = await employeePrisma.employee.findMany({
+    where: {isActive: true},
+    orderBy: {name: "asc"}
+  });
 
   return (
     <main className="min-h-screen bg-[#f8f5ef] px-6 py-10 text-[#173e35]">
@@ -123,6 +130,33 @@ export default async function BookingDetailsPage({
                 bookingId={booking.id}
                 currentStatus={booking.bookingStatus}
               />
+            </Card>
+
+            <Card title="Dodeljeni zaposleni">
+              <form action={assignEmployeeToBookingAction} className="space-y-4">
+                <input type="hidden" name="bookingId" value={booking.id} />
+                <label className="grid gap-2 text-sm font-bold">
+                  Pasterus / ekipa
+                  <select
+                    name="employeeId"
+                    defaultValue={booking.employeeId ?? "UNASSIGNED"}
+                    className="rounded-xl border border-[#dbe7fb] px-4 py-3 outline-none focus:border-[#4d8dff]"
+                  >
+                    <option value="UNASSIGNED">Ni dodeljeno</option>
+                    {employees.map((employee) => (
+                      <option key={employee.id} value={employee.id}>
+                        {employee.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  type="submit"
+                  className="rounded-full bg-[#2f6fe4] px-5 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+                >
+                  Shrani zaposlenega
+                </button>
+              </form>
             </Card>
 
             <Card title="Sistem">
