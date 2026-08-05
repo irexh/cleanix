@@ -67,6 +67,12 @@ function saleFrequencyLabel(frequency: string) {
 
 export default async function Home() {
   const activeSales = await getActiveHomepageSales().catch(() => []);
+  const homeCleaningSales = activeSales.filter(
+    (sale) => sale.serviceKey !== "BUSINESS_CONTRACT"
+  );
+  const businessSales = activeSales.filter(
+    (sale) => sale.serviceKey === "BUSINESS_CONTRACT"
+  );
 
   return (
     <main>
@@ -152,7 +158,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {activeSales.length > 0 ? (
+      {homeCleaningSales.length > 0 ? (
         <section className="sale-banner sale-banner-list" id="akcija">
           <div className="sale-banner-heading">
             <p className="sale-kicker">AKCIJA</p>
@@ -160,7 +166,7 @@ export default async function Home() {
           </div>
 
           <div className="sale-card-grid">
-            {activeSales.map((sale) => (
+            {homeCleaningSales.map((sale) => (
               <article className="sale-card" key={sale.id}>
                 {sale.serviceKey === "BUSINESS_CONTRACT" ? (
                   <>
@@ -187,6 +193,31 @@ export default async function Home() {
 
           <a className="sale-banner-cta" href="/booking">
             Izkoristi akcijo <span>→</span>
+          </a>
+        </section>
+      ) : null}
+
+      {businessSales.length > 0 ? (
+        <section className="sale-banner sale-banner-list sale-banner-business">
+          <div className="sale-banner-heading">
+            <p className="sale-kicker">AKCIJA ZA PODJETJA</p>
+            <h2>Cleanix Business akcije</h2>
+          </div>
+
+          <div className="sale-card-grid">
+            {businessSales.map((sale) => (
+              <article className="sale-card" key={sale.id}>
+                <h3>Cleanix Business · {sale.salePrice}% popust</h3>
+                <p>
+                  Prvi 3 meseci ob 12-mesečnem sodelovanju
+                  {sale.saleEndsAt ? ` do ${sale.saleEndsAt}` : ""}.
+                </p>
+              </article>
+            ))}
+          </div>
+
+          <a className="sale-banner-cta" href="/business">
+            Poglej Business <span>→</span>
           </a>
         </section>
       ) : null}

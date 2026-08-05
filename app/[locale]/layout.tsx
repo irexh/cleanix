@@ -10,6 +10,11 @@ import {routing} from "@/i18n/routing";import SiteFooter from "@/components/Site
 
 export const metadata: Metadata = {
   title: "Cleanix",
+  icons: {
+    icon: "/images/cisto-logo-transparent.png?v=2",
+    shortcut: "/images/cisto-logo-transparent.png?v=2",
+    apple: "/images/cisto-logo-transparent.png?v=2"
+  },
   description: "Profesionalno čiščenje doma po vaši meri"
 };
 
