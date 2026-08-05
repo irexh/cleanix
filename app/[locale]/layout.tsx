@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/images/cisto-logo-transparent.png?v=2",
     shortcut: "/images/cisto-logo-transparent.png?v=2",
-    apple: "/images/cisto-logo-transparent.png?v=2"
+    apple: "/apple-icon.png?v=2"
   },
   description: "Profesionalno čiščenje doma po vaši meri"
 };
