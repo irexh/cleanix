@@ -1,6 +1,6 @@
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#f8f5ef] px-6 py-16 text-[#173e35]">
+    <main className="min-h-screen bg-[#f6f9ff] px-6 py-16 text-[#123b7a]">
       <div className="mx-auto max-w-6xl">
         <div className="mb-12 max-w-2xl">
           <p className="eyebrow">
@@ -18,44 +18,44 @@ export default function ContactPage() {
             <h2 className="mb-6 text-2xl font-bold">Kontaktni podatki</h2>
 
             <div className="grid gap-5">
-              <div className="rounded-2xl bg-[#f8f5ef] p-5">
-                <p className="mb-2 text-sm font-bold uppercase tracking-[0.14em] text-[#6b8178]">
+              <div className="rounded-2xl bg-[#eaf2ff] p-5">
+                <p className="mb-2 text-sm font-bold uppercase tracking-[0.14em] text-[#5d716a]">
                   Telefon
                 </p>
                 <a
                   href="tel:069665229"
-                  className="text-xl font-bold text-[#173e35] hover:text-[#2b8c73]"
+                  className="text-xl font-bold text-[#123b7a] hover:text-[#2f6fe4]"
                 >
                   069 665 229
                 </a>
               </div>
 
-              <div className="rounded-2xl bg-[#f8f5ef] p-5">
-                <p className="mb-2 text-sm font-bold uppercase tracking-[0.14em] text-[#6b8178]">
+              <div className="rounded-2xl bg-[#eaf2ff] p-5">
+                <p className="mb-2 text-sm font-bold uppercase tracking-[0.14em] text-[#5d716a]">
                   E-pošta
                 </p>
                 <a
                   href="mailto:info@cleanix.si"
-                  className="text-xl font-bold text-[#173e35] hover:text-[#2b8c73]"
+                  className="text-xl font-bold text-[#123b7a] hover:text-[#2f6fe4]"
                 >
                   info@cleanix.si
                 </a>
               </div>
 
-              <div className="rounded-2xl bg-[#f8f5ef] p-5">
-                <p className="mb-2 text-sm font-bold uppercase tracking-[0.14em] text-[#6b8178]">
+              <div className="rounded-2xl bg-[#eaf2ff] p-5">
+                <p className="mb-2 text-sm font-bold uppercase tracking-[0.14em] text-[#5d716a]">
                   Lokacija
                 </p>
-                <p className="text-xl font-bold text-[#173e35]">
+                <p className="text-xl font-bold text-[#123b7a]">
                   Ljubljana, Slovenija
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-[#f8f5ef] p-5">
-                <p className="mb-2 text-sm font-bold uppercase tracking-[0.14em] text-[#6b8178]">
+              <div className="rounded-2xl bg-[#eaf2ff] p-5">
+                <p className="mb-2 text-sm font-bold uppercase tracking-[0.14em] text-[#5d716a]">
                   Delovni čas
                 </p>
-                <div className="space-y-2 text-[#173e35]">
+                <div className="space-y-2 text-[#123b7a]">
                   <p>Pon - Pet: 08:00 - 18:00</p>
                   <p>Sobota: 09:00 - 14:00</p>
                   <p>Nedelja: po dogovoru</p>
@@ -64,14 +64,14 @@ export default function ContactPage() {
             </div>
           </section>
 
-          <section className="rounded-[32px] bg-[#173e35] p-8 text-white shadow-sm sm:p-10">
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#9fcabd]">
+          <section className="rounded-[32px] bg-[#123b7a] p-8 text-white shadow-sm sm:p-10">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c8dbff]">
               Hitra rezervacija
             </p>
             <h2 className="mb-4 text-4xl font-bold">
               Potrebujete čiščenje čim prej?
             </h2>
-            <p className="mb-8 max-w-md leading-8 text-[#c7ddd5]">
+            <p className="mb-8 max-w-md leading-8 text-[#eaf2ff]">
               Najhitrejša pot je spletna rezervacija. Izberite storitev, termin
               in oddajte naročilo v nekaj minutah.
             </p>
@@ -79,14 +79,14 @@ export default function ContactPage() {
             <div className="flex flex-wrap gap-4">
               <a
                 href="/booking"
-                className="rounded-full bg-[#ef856d] px-6 py-3 font-bold text-white transition hover:bg-[#d9735d]"
+                className="rounded-full bg-[#2f6fe4] px-6 py-3 font-bold !text-white transition hover:bg-white hover:!text-[#123b7a]"
               >
                 Rezerviraj zdaj
               </a>
 
               <a
                 href="/"
-                className="rounded-full border border-white/30 px-6 py-3 font-bold text-white transition hover:bg-white hover:text-[#173e35]"
+                className="rounded-full border border-white/40 bg-white px-6 py-3 font-bold !text-[#123b7a] transition hover:bg-[#2f6fe4] hover:!text-white"
               >
                 Nazaj domov
               </a>
