@@ -37,7 +37,7 @@ export async function sendBusinessInquiryEmail(
 
   const resend = new Resend(resendApiKey);
 
-  await resend.emails.send({
+  const {data, error} = await resend.emails.send({
     from: fromEmail,
     to: businessInquiryToEmail,
     replyTo: inquiry.email,
@@ -45,5 +45,9 @@ export async function sendBusinessInquiryEmail(
     text: businessInquiryText(inquiry)
   });
 
-  return {sent: true};
+  if (error) {
+    throw error;
+  }
+
+  return {sent: true, id: data?.id};
 }
