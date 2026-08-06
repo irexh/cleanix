@@ -1,4 +1,4 @@
-import {Resend} from "resend";
+import nodemailer from "nodemailer";
 
 type BusinessInquiryEmailData = {
   fullName: string;
@@ -7,8 +7,11 @@ type BusinessInquiryEmailData = {
   message: string;
 };
 
-const resendApiKey = process.env.RESEND_API_KEY;
-const fromEmail = process.env.RESEND_FROM_EMAIL || "Cleanix <info@cleanix.si>";
+const smtpHost = process.env.SMTP_HOST;
+const smtpPort = Number(process.env.SMTP_PORT || 465);
+const smtpUser = process.env.SMTP_USER;
+const smtpPassword = process.env.SMTP_PASSWORD;
+const smtpFrom = process.env.SMTP_FROM || "Cleanix <info@cleanix.si>";
 const businessInquiryToEmail =
   process.env.BUSINESS_INQUIRY_TO_EMAIL || "info@cleanix.si";
 
@@ -30,24 +33,28 @@ Povpraševanje je shranjeno tudi v admin inboxu.
 export async function sendBusinessInquiryEmail(
   inquiry: BusinessInquiryEmailData
 ) {
-  if (!resendApiKey) {
-    console.warn("RESEND_API_KEY is missing. Business inquiry email was skipped.");
-    return {sent: false, reason: "missing_api_key"};
+  if (!smtpHost || !smtpUser || !smtpPassword) {
+    console.warn("SMTP settings are missing. Business inquiry email was skipped.");
+    return {sent: false, reason: "missing_smtp_settings"};
   }
 
-  const resend = new Resend(resendApiKey);
+  const transporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpPort === 465,
+    auth: {
+      user: smtpUser,
+      pass: smtpPassword
+    }
+  });
 
-  const {data, error} = await resend.emails.send({
-    from: fromEmail,
+  const info = await transporter.sendMail({
+    from: smtpFrom,
     to: businessInquiryToEmail,
     replyTo: inquiry.email,
     subject: `Novo Business povpraševanje: ${inquiry.fullName}`,
     text: businessInquiryText(inquiry)
   });
 
-  if (error) {
-    throw error;
-  }
-
-  return {sent: true, id: data?.id};
+  return {sent: true, id: info.messageId};
 }
