@@ -110,12 +110,11 @@ export default async function Home() {
         <nav className="desktop-nav" aria-label="Glavna navigacija">
           <a href="#kako-deluje">Kako deluje</a>
           <a href="#storitve">Storitve</a>
-          <a href="/storitve/steklene-povrsine">Stekla</a>
           <a href="/business">Cleanix Business</a>
           <a href="#o-nas">Zakaj cleanix</a>
         </nav>
 
-        <a className="header-cta" href="/booking">
+        <a className="hidden" href="/booking">
           {content.home_hero_primary_button} <span>→</span>
         </a>
 
