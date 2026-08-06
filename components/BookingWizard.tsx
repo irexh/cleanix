@@ -51,6 +51,21 @@ const times = [
   "16:00"
 ];
 
+function formatDateInputValue(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function getEarliestBookingDate() {
+  const date = new Date();
+  date.setDate(date.getDate() + 3);
+
+  return formatDateInputValue(date);
+}
+
 type FrequencyValue = (typeof frequencyOptions)[number]["value"];
 
 export default function BookingWizard() {
@@ -78,6 +93,7 @@ export default function BookingWizard() {
   const showDuration = frequency !== "ENKRATNO";
   const frequencyLabel =
     frequencyOptions.find((item) => item.value === frequency)?.label ?? "";
+  const earliestBookingDate = useMemo(() => getEarliestBookingDate(), []);
 
   const fallbackPrice = useMemo(
     () => calculatePrice(propertySize, bathrooms, extras, frequency, duration),
@@ -138,7 +154,10 @@ export default function BookingWizard() {
     step === 4 ||
     step === 5 ||
     (step === 6 && Boolean(frequency) && (!showDuration || Boolean(duration))) ||
-    (step === 7 && Boolean(selectedDate) && Boolean(selectedTime)) ||
+    (step === 7 &&
+      Boolean(selectedDate) &&
+      selectedDate >= earliestBookingDate &&
+      Boolean(selectedTime)) ||
     (step === 8 &&
       Boolean(fullName.trim()) &&
       Boolean(email.trim()) &&
@@ -435,7 +454,7 @@ export default function BookingWizard() {
                 <label className="mb-2 block text-sm font-bold">Datum</label>
                 <input
                   type="date"
-                  min={new Date().toISOString().slice(0, 10)}
+                  min={earliestBookingDate}
                   value={selectedDate}
                   onChange={(event) => setSelectedDate(event.target.value)}
                   className="w-full rounded-xl border p-4 outline-none focus:border-[#2f6fe4]"
