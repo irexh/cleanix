@@ -77,14 +77,14 @@ export default async function BusinessPage() {
               <div className="hero-animate-actions mt-8 flex flex-wrap gap-4">
                 <a
                   href="#business-povprasevanje"
-                  className="rounded-full bg-[#2f6fe4] px-6 py-3 font-bold !text-white transition hover:bg-[#215ac0]"
+                  className="rounded-full bg-[#2f6fe4] px-6 py-3 font-bold !text-white transition hover:bg-[#17498f] hover:!text-white"
                 >
                   Pošljite povpraševanje
                 </a>
 
                 <a
                   href="/"
-                  className="rounded-full border border-[#123b7a] px-6 py-3 font-bold text-[#123b7a] transition hover:bg-[#123b7a] hover:text-white"
+                  className="rounded-full border border-[#123b7a] px-6 py-3 font-bold text-[#123b7a] transition hover:bg-[#17498f] hover:!text-white"
                 >
                   Nazaj domov
                 </a>
@@ -259,14 +259,14 @@ export default async function BusinessPage() {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
               href="#business-povprasevanje"
-              className="rounded-full bg-white px-6 py-3 font-bold text-[#123b7a] transition hover:bg-[#eef4ff]"
+              className="rounded-full bg-white px-6 py-3 font-bold text-[#123b7a] transition hover:bg-[#17498f] hover:!text-white"
             >
               Kontaktirajte nas
             </a>
 
             <a
               href="/"
-              className="rounded-full border border-white/40 px-6 py-3 font-bold text-white transition hover:bg-white hover:text-[#123b7a]"
+              className="rounded-full border border-white/40 px-6 py-3 font-bold !text-white transition hover:bg-[#17498f] hover:!text-white"
             >
               Nazaj domov
             </a>
