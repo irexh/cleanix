@@ -39,7 +39,7 @@ export default async function BusinessPage() {
 
   return (
     <main className="min-h-screen bg-[#f6f9ff] text-[#123b7a]">
-      <section id="business-povprasevanje" className="px-6 py-12">
+      <section className="hidden">
         <div className="mx-auto grid max-w-7xl gap-8 rounded-[36px] bg-white p-8 shadow-sm sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <p className="eyebrow">
@@ -77,7 +77,7 @@ export default async function BusinessPage() {
               <div className="hero-animate-actions mt-8 flex flex-wrap gap-4">
                 <a
                   href="#business-povprasevanje"
-                  className="rounded-full bg-[#2f6fe4] px-6 py-3 font-bold text-white transition hover:bg-[#215ac0]"
+                  className="rounded-full bg-[#2f6fe4] px-6 py-3 font-bold !text-white transition hover:bg-[#215ac0]"
                 >
                   Pošljite povpraševanje
                 </a>
@@ -221,6 +221,25 @@ export default async function BusinessPage() {
               partnerstvo, ki podjetju olajša vsakdan.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section id="business-povprasevanje" className="px-6 py-12">
+        <div className="mx-auto grid max-w-7xl gap-8 rounded-[36px] bg-white p-8 shadow-sm sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div>
+            <p className="eyebrow">
+              <span /> POVPRAŠEVANJE
+            </p>
+            <h2 className="mb-5 text-4xl font-bold">
+              Povejte nam, kaj potrebuje vaš poslovni prostor.
+            </h2>
+            <p className="max-w-xl text-lg leading-8 text-[#5d716a]">
+              Vnesite svoje podatke in kratko sporočilo. Kontaktirali vas bomo
+              za dogovor o terminu, obsegu dela in pripravo ponudbe.
+            </p>
+          </div>
+
+          <BusinessInquiryForm />
         </div>
       </section>
 
