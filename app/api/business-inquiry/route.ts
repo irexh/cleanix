@@ -1,5 +1,6 @@
 import {NextResponse} from "next/server";
 
+import {sendBusinessInquiryEmail} from "@/lib/business-inquiry-email";
 import {businessInquiryPrisma} from "@/lib/business-inquiry-prisma";
 
 export async function POST(request: Request) {
@@ -39,6 +40,15 @@ export async function POST(request: Request) {
         phone,
         message
       }
+    });
+
+    await sendBusinessInquiryEmail({
+      fullName,
+      email,
+      phone,
+      message
+    }).catch((error) => {
+      console.error("Business inquiry email error:", error);
     });
 
     return NextResponse.json({success: true});
