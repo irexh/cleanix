@@ -1,8 +1,17 @@
 "use client";
 
 import {FormEvent, useState} from "react";
+import {useSearchParams} from "next/navigation";
 
-export default function BusinessInquiryForm() {
+type BusinessInquiryFormProps = {
+  defaultService?: string;
+};
+
+export default function BusinessInquiryForm({
+  defaultService = ""
+}: BusinessInquiryFormProps) {
+  const searchParams = useSearchParams();
+  const service = searchParams.get("service") ?? defaultService;
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,7 +29,7 @@ export default function BusinessInquiryForm() {
     const response = await fetch("/api/business-inquiry", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({fullName, email, phone, message})
+      body: JSON.stringify({fullName, email, phone, service, message})
     });
 
     const result = await response.json().catch(() => ({}));
@@ -41,6 +50,19 @@ export default function BusinessInquiryForm() {
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-4">
+      {service ? (
+        <label className="block">
+          <span className="mb-2 block text-sm font-bold text-[#123b7a]">
+            Storitev
+          </span>
+          <input
+            readOnly
+            value={service}
+            className="w-full rounded-2xl border border-[#cfe0ff] bg-[#eaf2ff] px-5 py-4 font-bold text-[#123b7a] outline-none"
+          />
+        </label>
+      ) : null}
+
       <label className="block">
         <span className="mb-2 block text-sm font-bold text-[#123b7a]">
           Ime in priimek

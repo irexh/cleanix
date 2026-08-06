@@ -4,6 +4,7 @@ type BusinessInquiryEmailData = {
   fullName: string;
   email: string;
   phone: string;
+  service?: string;
   message: string;
 };
 
@@ -17,11 +18,12 @@ const businessInquiryToEmail =
 
 function businessInquiryText(inquiry: BusinessInquiryEmailData) {
   return `
-Novo Cleanix Business povpraševanje
+Novo Cleanix povpraševanje
 
 Ime in priimek: ${inquiry.fullName}
 E-pošta: ${inquiry.email}
 Telefon: ${inquiry.phone}
+Storitev: ${inquiry.service || "Ni izbrano"}
 
 Sporočilo:
 ${inquiry.message}
@@ -52,7 +54,7 @@ export async function sendBusinessInquiryEmail(
     from: smtpFrom,
     to: businessInquiryToEmail,
     replyTo: inquiry.email,
-    subject: `Novo Business povpraševanje: ${inquiry.fullName}`,
+    subject: `Novo povpraševanje: ${inquiry.service || inquiry.fullName}`,
     text: businessInquiryText(inquiry)
   });
 

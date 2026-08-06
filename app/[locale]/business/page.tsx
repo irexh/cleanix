@@ -1,4 +1,5 @@
 import Image from "next/image";
+import {Suspense} from "react";
 
 import BusinessInquiryForm from "@/components/BusinessInquiryForm";
 import {getActiveBusinessSale} from "@/lib/sale-pricing";
@@ -54,7 +55,9 @@ export default async function BusinessPage() {
             </p>
           </div>
 
-          <BusinessInquiryForm />
+          <Suspense fallback={null}>
+            <BusinessInquiryForm defaultService="Cleanix Business" />
+          </Suspense>
         </div>
       </section>
 
@@ -239,7 +242,9 @@ export default async function BusinessPage() {
             </p>
           </div>
 
-          <BusinessInquiryForm />
+          <Suspense fallback={null}>
+            <BusinessInquiryForm defaultService="Cleanix Business" />
+          </Suspense>
         </div>
       </section>
 

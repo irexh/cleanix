@@ -5,6 +5,7 @@ export type BusinessInquiryRecord = {
   fullName: string;
   email: string;
   phone: string;
+  service: string | null;
   message: string;
   status: string;
   createdAt: Date;

@@ -66,7 +66,7 @@ export default function ContactPage() {
 
           <section className="rounded-[32px] bg-[#123b7a] p-8 text-white shadow-sm sm:p-10">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c8dbff]">
-              Hitra rezervacija
+              HITRA REZERVACIJA
             </p>
             <h2 className="mb-4 text-4xl font-bold">
               Potrebujete čiščenje čim prej?

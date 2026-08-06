@@ -78,6 +78,11 @@ export default async function AdminInboxPage() {
                       <p className="mt-2 text-sm text-[#5d716a]">
                         {inquiry.email} · {inquiry.phone}
                       </p>
+                      {inquiry.service ? (
+                        <p className="mt-2 text-sm font-bold text-[#123b7a]">
+                          Storitev: {inquiry.service}
+                        </p>
+                      ) : null}
                     </div>
 
                     <div className="text-right text-sm text-[#5d716a]">

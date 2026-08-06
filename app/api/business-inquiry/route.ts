@@ -10,6 +10,7 @@ export async function POST(request: Request) {
     const fullName = String(body.fullName ?? "").trim();
     const email = String(body.email ?? "").trim().toLowerCase();
     const phone = String(body.phone ?? "").trim();
+    const service = String(body.service ?? "").trim();
     const message = String(body.message ?? "").trim();
 
     if (!fullName || !email || !phone || !message) {
@@ -38,6 +39,7 @@ export async function POST(request: Request) {
         fullName,
         email,
         phone,
+        service: service || null,
         message
       }
     });
@@ -47,6 +49,7 @@ export async function POST(request: Request) {
         fullName,
         email,
         phone,
+        service,
         message
       });
     } catch (error) {

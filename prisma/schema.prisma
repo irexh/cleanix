@@ -101,6 +101,7 @@ model BusinessInquiry {
   fullName  String
   email     String
   phone     String
+  service   String?
   message   String
   status    String   @default("NEW")
   createdAt DateTime @default(now())
