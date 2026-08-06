@@ -42,14 +42,24 @@ export async function POST(request: Request) {
       }
     });
 
-    await sendBusinessInquiryEmail({
-      fullName,
-      email,
-      phone,
-      message
-    }).catch((error) => {
+    try {
+      await sendBusinessInquiryEmail({
+        fullName,
+        email,
+        phone,
+        message
+      });
+    } catch (error) {
       console.error("Business inquiry email error:", error);
-    });
+
+      return NextResponse.json(
+        {
+          error:
+            "Povpraševanje je shranjeno, vendar e-pošte trenutno ni mogoče poslati."
+        },
+        {status: 502}
+      );
+    }
 
     return NextResponse.json({success: true});
   } catch (error) {
