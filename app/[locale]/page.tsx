@@ -27,10 +27,17 @@ const services = [
     title: "Pomoč v gospodinjstvu",
     text: "Kmalu na voljo.",
     href: "",
-    status: "soon"
+    status: "hidden"
   },
   {
     number: "04",
+    title: "Pranje steklenih površin",
+    text: "Čiščenje steklenih vrat, ogledal, pregrad in izložbenih površin.",
+    href: "/storitve/steklene-povrsine",
+    status: "active"
+  },
+  {
+    number: "05",
     title: "Globinsko čiščenje",
     text: "Globinsko čiščenje kavčev, stolov, sedežev in preprog.",
     href: "/storitve/globinsko-ciscenje",
@@ -103,6 +110,7 @@ export default async function Home() {
         <nav className="desktop-nav" aria-label="Glavna navigacija">
           <a href="#kako-deluje">Kako deluje</a>
           <a href="#storitve">Storitve</a>
+          <a href="/storitve/steklene-povrsine">Stekla</a>
           <a href="/business">Cleanix Business</a>
           <a href="#o-nas">Zakaj cleanix</a>
         </nav>
@@ -388,7 +396,7 @@ export default async function Home() {
         </div>
 
         <div className="service-grid">
-          {services.map((service) => (
+          {services.filter((service) => service.status !== "hidden").map((service) => (
             <article className="service-card" key={service.number}>
               <p>{service.number}</p>
               <div className="service-icon">✦</div>
