@@ -259,14 +259,14 @@ export default async function BusinessPage() {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
               href="#business-povprasevanje"
-              className="rounded-full bg-[#2f6fe4] px-6 py-3 font-bold !text-white transition hover:bg-[#17498f] hover:!text-white"
+              className="inline-flex min-w-[220px] items-center justify-center rounded-full bg-[#2f6fe4] px-6 py-3 font-bold !text-white no-underline transition hover:bg-[#17498f] hover:!text-white"
             >
               Kontaktirajte nas
             </a>
 
             <a
               href="/"
-              className="rounded-full border border-[#123b7a] bg-white px-6 py-3 font-bold text-[#123b7a] transition hover:bg-[#17498f] hover:!text-white"
+              className="inline-flex min-w-[170px] items-center justify-center rounded-full border border-[#123b7a] bg-white px-6 py-3 font-bold !text-[#123b7a] no-underline transition hover:bg-[#17498f] hover:!text-white"
             >
               Nazaj domov
             </a>
