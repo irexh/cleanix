@@ -77,15 +77,22 @@ export default async function AdminPage({searchParams}: AdminPageProps) {
           </div>
 
           <div className="flex flex-wrap gap-3">
-  <a
-    href="/"
-    className="rounded-full border border-[#173e35] px-5 py-3 text-sm font-bold transition hover:bg-[#173e35] hover:text-white"
-  >
-    Nazaj na spletno stran
-  </a>
+            <a
+              href="/sl/admin/inbox"
+              className="rounded-full bg-[#2f6fe4] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#215ac0]"
+            >
+              Inbox
+            </a>
 
-  <AdminLogoutButton />
-</div>
+            <a
+              href="/"
+              className="rounded-full border border-[#173e35] px-5 py-3 text-sm font-bold transition hover:bg-[#173e35] hover:text-white"
+            >
+              Nazaj na spletno stran
+            </a>
+
+            <AdminLogoutButton />
+          </div>
         </header>
 
         <section className="mb-10 grid gap-5 sm:grid-cols-3">

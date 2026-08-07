@@ -928,3 +928,6 @@ em { font-family: Georgia, serif; font-weight: 400; }
     grid-template-columns: 1fr;
   }
 }
+.booking-success-button {
+  color: #ffffff;
+}

@@ -68,3 +68,37 @@ export async function PATCH(
     booking: updatedBooking
   });
 }
+
+export async function DELETE(
+  request: NextRequest,
+  context: {params: Promise<{id: string}>}
+) {
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    return NextResponse.json({error: "Niste prijavljeni."}, {status: 401});
+  }
+
+  const adminUser = await prisma.user.findUnique({
+    where: {email: session.user.email},
+    select: {role: true}
+  });
+
+  if (adminUser?.role !== "ADMIN") {
+    return NextResponse.json({error: "Nimate dovoljenja."}, {status: 403});
+  }
+
+  const {id} = await context.params;
+
+  const existingBooking = await prisma.booking.findUnique({
+    where: {id}
+  });
+
+  if (!existingBooking) {
+    return NextResponse.json({error: "Rezervacija ne obstaja."}, {status: 404});
+  }
+
+  await prisma.booking.delete({where: {id}});
+
+  return NextResponse.json({success: true});
+}

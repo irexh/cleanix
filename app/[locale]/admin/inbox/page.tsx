@@ -1,5 +1,6 @@
 import {businessInquiryPrisma} from "@/lib/business-inquiry-prisma";
 import {prisma} from "@/lib/prisma";
+import DeleteInboxButton from "@/components/admin/DeleteInboxButton";
 
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat("sl-SI", {
@@ -96,6 +97,13 @@ export default async function AdminInboxPage() {
                   <p className="rounded-2xl bg-[#f6f9ff] p-4 leading-7 text-[#123b7a]">
                     {inquiry.message}
                   </p>
+
+                  <div className="mt-4 flex justify-end">
+                    <DeleteInboxButton
+                      id={inquiry.id}
+                      type="business-inquiry"
+                    />
+                  </div>
                 </article>
               ))}
             </div>
@@ -148,12 +156,17 @@ export default async function AdminInboxPage() {
                     </p>
                   </div>
 
-                  <a
-                    href={`/sl/admin/bookings/${booking.id}`}
-                    className="inline-flex items-center justify-center rounded-full bg-[#2f6fe4] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#215ac0]"
-                  >
-                    Odpri
-                  </a>
+                  <div className="space-y-3">
+                    <a
+                      href={`/sl/admin/bookings/${booking.id}`}
+                      className="inline-flex items-center justify-center rounded-full bg-[#2f6fe4] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#215ac0]"
+                    >
+                      Odpri
+                    </a>
+                    <div className="flex justify-end">
+                      <DeleteInboxButton id={booking.id} type="booking" />
+                    </div>
+                  </div>
                 </article>
               ))}
             </section>

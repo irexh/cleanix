@@ -1,4 +1,5 @@
 import {prisma} from "@/lib/prisma";
+import {deleteBookingAction} from "@/app/[locale]/admin/actions";
 
 const statusLabels: Record<string, string> = {
   PENDING: "Čaka na potrditev",
@@ -154,12 +155,24 @@ export default async function AdminCalendarPage() {
                         <p className="mt-2 text-sm font-bold">EUR {booking.totalPrice}</p>
                       </div>
 
-                      <a
-                        href={`/sl/admin/bookings/${booking.id}`}
-                        className="inline-flex justify-center rounded-full border border-[#123b7a] px-4 py-2 text-sm font-bold transition hover:bg-[#123b7a] hover:text-white"
-                      >
-                        Odpri
-                      </a>
+                      <div className="flex flex-wrap gap-2">
+                        <a
+                          href={`/sl/admin/bookings/${booking.id}`}
+                          className="inline-flex justify-center rounded-full border border-[#123b7a] px-4 py-2 text-sm font-bold transition hover:bg-[#123b7a] hover:text-white"
+                        >
+                          Odpri
+                        </a>
+
+                        <form action={deleteBookingAction} method="post">
+                          <input type="hidden" name="id" value={booking.id} />
+                          <button
+                            type="submit"
+                            className="inline-flex justify-center rounded-full border border-red-600 bg-white px-4 py-2 text-sm font-bold text-red-600 transition hover:bg-red-600 hover:text-white"
+                          >
+                            Izbriši
+                          </button>
+                        </form>
+                      </div>
                     </div>
                   ))}
                 </div>
