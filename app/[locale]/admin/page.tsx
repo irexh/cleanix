@@ -117,7 +117,7 @@ export default async function AdminPage({searchParams}: AdminPageProps) {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[1200px] text-left">
+              <table className="w-full text-left">
                 <thead className="bg-[#e8f4ed] text-sm">
                   <tr>
                     <th className="px-6 py-4 font-bold">Stranka</th>
