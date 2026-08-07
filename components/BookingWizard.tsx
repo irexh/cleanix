@@ -243,14 +243,14 @@ export default function BookingWizard() {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
               href="/"
-              className="inline-flex items-center justify-center rounded-full bg-[#123b7a] px-7 py-3 font-bold text-white shadow-sm transition hover:bg-[#0d2f63]"
+              className="inline-flex items-center justify-center rounded-full bg-[#4e7fcb] px-7 py-3 font-bold text-white shadow-sm transition hover:bg-white hover:text-[#123b7a]"
             >
               Nazaj domov
             </a>
 
             <a
               href="/contact"
-              className="inline-flex items-center justify-center rounded-full border border-[#123b7a] px-7 py-3 font-bold text-[#123b7a] transition hover:bg-[#123b7a] hover:text-white"
+              className="inline-flex items-center justify-center rounded-full border border-[#123b7a] px-7 py-3 font-bold text-[#123b7a] transition hover:bg-[#4e7fcb] hover:text-white"
             >
               Kontakt
             </a>
