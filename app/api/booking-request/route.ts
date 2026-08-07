@@ -2,6 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 
 import {prisma} from "@/lib/prisma";
 import {getBookingPrice} from "@/lib/sale-pricing";
+import {sendBookingRequestEmail} from "@/lib/booking-request-email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
       selectedDate
     });
 
-    await prisma.booking.create({
+    const booking = await prisma.booking.create({
       data: {
         fullName,
         email,
@@ -58,6 +59,27 @@ export async function POST(request: NextRequest) {
         bookingStatus: "PENDING"
       }
     });
+
+    try {
+      await sendBookingRequestEmail({
+        fullName,
+        email,
+        phone,
+        address,
+        city,
+        propertyType,
+        propertySize,
+        bathrooms: Number(bathrooms),
+        extras: extras ?? [],
+        frequency,
+        duration,
+        selectedDate,
+        selectedTime,
+        notes
+      });
+    } catch (emailError) {
+      console.error("BOOKING REQUEST EMAIL ERROR:", emailError);
+    }
 
     return NextResponse.json({success: true});
   } catch (error) {
