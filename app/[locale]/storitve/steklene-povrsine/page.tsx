@@ -3,10 +3,10 @@ import {Suspense} from "react";
 import BusinessInquiryForm from "@/components/BusinessInquiryForm";
 
 const glassCleaningPrices = [
-  {item: "Steklene pregrade", unit: "m²", price: "po dogovoru"},
-  {item: "Izložbena stekla", unit: "m²", price: "po dogovoru"},
-  {item: "Steklena vrata", unit: "kos", price: "po dogovoru"},
-  {item: "Ogledala", unit: "m²", price: "po dogovoru"}
+  {item: "Steklene pregrade", unit: "m²", price: "3,50 EUR"},
+  {item: "Izložbena stekla", unit: "m²", price: "2,50 EUR"},
+  {item: "Steklena vrata", unit: "kos", price: "6 EUR"},
+  {item: "Ogledala", unit: "m²", price: "3,50 EUR"}
 ];
 
 export default function SteklenePovrsinePage() {
