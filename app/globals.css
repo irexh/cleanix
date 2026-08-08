@@ -78,7 +78,7 @@ em { font-family: Georgia, serif; font-weight: 400; }
   overflow: hidden;
   align-self: end;
   background: linear-gradient(180deg, #eef5ff 0%, #dfeaff 100%);
-  box-shadow: 0 30px 60px rgba(18, 59, 122, 0.12);
+  box-shadow: none;
   width: min(58vw, 720px);
   margin-left: 0;
   z-index: 1;
