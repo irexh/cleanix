@@ -1,9 +1,11 @@
 "use client";
 
 import {FormEvent, useState} from "react";
-import {signIn} from "next-auth/react";
+import {getSession, signIn} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,73 +24,100 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError("Napačen e-poštni naslov ali geslo.");
+        setError("Napacen e-postni naslov ali geslo.");
         setIsLoading(false);
         return;
       }
 
-      window.location.href = "/sl/admin";
-    } catch (error) {
-      console.error(error);
+      const session = await getSession();
+      const role =
+        (
+          session?.user as
+            | (NonNullable<typeof session>["user"] & {role?: string})
+            | undefined
+        )?.role ?? "CUSTOMER";
+
+      if (role === "ADMIN") {
+        router.replace("/sl/admin");
+      } else {
+        router.replace("/sl");
+      }
+
+      router.refresh();
+    } catch (submissionError) {
+      console.error(submissionError);
       setError("Prijava trenutno ni uspela. Poskusite znova.");
       setIsLoading(false);
     }
   };
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#f8f5ef] p-6 text-[#173e35]">
-      <section className="w-full max-w-md rounded-3xl bg-white p-8 shadow-xl sm:p-10">
-        <a href="/" className="mb-10 inline-flex items-center gap-2 text-2xl font-extrabold tracking-tight">
-          <span className="text-[#ef856d]">✦</span>
-          cleanix
-        </a>
-
-        <p className="mb-3 text-sm font-bold tracking-wider text-[#2b8c73]">
-          ADMINISTRACIJA
-        </p>
-        <h1 className="text-3xl font-bold">Prijava</h1>
-        <p className="mb-8 mt-3 text-sm leading-6 text-slate-500">
-          Prijavite se za upravljanje rezervacij.
-        </p>
-
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <label className="block">
-            <span className="mb-2 block text-sm font-bold">E-poštni naslov</span>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded-xl border p-4 outline-none focus:border-[#2b8c73]"
-              placeholder="admin@cleanix.si"
-            />
-          </label>
-
-          <label className="block">
-            <span className="mb-2 block text-sm font-bold">Geslo</span>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="w-full rounded-xl border p-4 outline-none focus:border-[#2b8c73]"
-              placeholder="••••••••"
-            />
-          </label>
-
-          {error && (
-            <p className="rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>
-          )}
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full rounded-full bg-[#2b8c73] px-5 py-3 font-bold text-white transition hover:bg-[#1d6c58] disabled:opacity-50"
+    <main className="min-h-screen bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_42%,#f8fbff_100%)] px-6 py-8 text-[#123b7a]">
+      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center">
+        <section className="mx-auto w-full max-w-md rounded-[36px] border border-[#dbe7fb] bg-white p-8 shadow-[0_30px_80px_rgba(47,111,228,0.10)] sm:p-10">
+          <a
+            href="/"
+            className="mb-10 inline-flex items-center gap-2 text-2xl font-extrabold tracking-tight text-[#123b7a]"
           >
-            {isLoading ? "Prijavljanje ..." : "Prijava"}
-          </button>
-        </form>
-      </section>
+            <span className="text-[#4d8dff]">✦</span>
+            cleanix
+          </a>
+
+          <p className="mb-1 text-sm font-bold uppercase tracking-[0.22em] text-[#2f6fe4]">
+            Prijava
+          </p>
+          <h1 className="text-1xl font-bold tracking-tight text-[#123b7a]">
+            Dobrodošli
+          </h1>
+          <p className="mb-1 mt-4 text-sm  text-[#5d716a]">
+            Vpisite svoj email in geslo za dostop do sistema.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <label className="block">
+              <span className="mb-1 block text-sm font-bold text-[#123b7a]">
+                E-postni naslov
+              </span>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className="w-full rounded-2xl border border-[#dbe7fb] bg-[#f8fbff] px-4 py-4 outline-none transition focus:border-[#4d8dff] focus:bg-white"
+                placeholder="ime@cleanix.si"
+              />
+            </label>
+
+            <label className="block">
+              <span className="mb-2 block text-sm font-bold text-[#123b7a]">
+                Geslo
+              </span>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="w-full rounded-2xl border border-[#dbe7fb] bg-[#f8fbff] px-4 py-4 outline-none transition focus:border-[#4d8dff] focus:bg-white"
+                placeholder="••••••••"
+              />
+            </label>
+
+            {error ? (
+              <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                {error}
+              </p>
+            ) : null}
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full rounded-full bg-[#2f6fe4] px-5 py-3.5 font-bold text-white transition hover:bg-[#123b7a] disabled:opacity-50"
+            >
+              {isLoading ? "Prijavljanje ..." : "Prijava"}
+            </button>
+          </form>
+        </section>
+      </div>
     </main>
   );
 }

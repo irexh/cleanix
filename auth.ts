@@ -76,10 +76,19 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
           select: {role: true}
         });
 
-        token.role = databaseUser?.role ?? "CUSTOMER";
+      token.role = databaseUser?.role ?? "CUSTOMER";
       }
 
       return token;
+    },
+
+    async session({session, token}) {
+      if (session.user) {
+        (session.user as typeof session.user & {role?: string}).role =
+          (token.role as string) ?? "CUSTOMER";
+      }
+
+      return session;
     }
   },
 
