@@ -28,10 +28,13 @@ export default async function AdminEmployeesPage() {
           Upravljaj ekipo, kontakte, vloge in aktivnost zaposlenih.
         </p>
 
-        <section className="mt-8 rounded-[32px] bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="text-2xl font-extrabold">Dodaj zaposlenega</h2>
+        <section className="mt-8 rounded-[32px] bg-white p-8 shadow-sm sm:p-10">
+          <h2 className="mb-6 text-2xl font-extrabold">Dodaj zaposlenega</h2>
 
-          <form action={createEmployeeAction} className="mt-6 grid gap-4 lg:grid-cols-[1fr_1fr_1fr_180px_auto] lg:items-end">
+          <form
+            action={createEmployeeAction}
+            className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,1fr)_180px_auto] lg:items-end"
+          >
             <label className="grid gap-2 text-sm font-bold">
               Ime
               <input
