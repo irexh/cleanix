@@ -33,7 +33,7 @@ export default async function AdminEmployeesPage() {
 
           <form
             action={createEmployeeAction}
-            className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,1fr)_180px_auto] lg:items-end"
+            className="grid gap-4 lg:grid-cols-4 lg:gap-x-5 lg:items-start"
           >
             <label className="grid gap-2 text-sm font-bold">
               Ime
@@ -64,12 +64,22 @@ export default async function AdminEmployeesPage() {
               />
             </label>
 
+            <div className="hidden lg:block lg:col-start-4 lg:row-start-1">
+              <div className="h-7" />
+              <button
+                type="submit"
+                className="mt-8 w-full rounded-full bg-[#2f6fe4] px-7 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+              >
+                Dodaj
+              </button>
+            </div>
+
             <label className="grid gap-2 text-sm font-bold">
               Role
               <select
                 name="role"
                 defaultValue="EMPLOYEE"
-                className="rounded-xl border border-[#dbe7fb] px-4 py-3 outline-none focus:border-[#4d8dff]"
+                className="rounded-xl border border-[#dbe7fb] px-4 py-3 outline-none focus:border-[#4d8dff] lg:col-start-4 lg:row-start-2"
               >
                 <option value="EMPLOYEE">Employee</option>
                 <option value="MANAGER">Manager</option>
@@ -79,7 +89,7 @@ export default async function AdminEmployeesPage() {
 
             <button
               type="submit"
-              className="rounded-full bg-[#2f6fe4] px-7 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+              className="rounded-full bg-[#2f6fe4] px-7 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a] lg:hidden"
             >
               Dodaj
             </button>
