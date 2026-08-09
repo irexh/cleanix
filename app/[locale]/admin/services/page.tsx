@@ -139,7 +139,7 @@ export default async function AdminServicesPage() {
                       type="submit"
                       className="rounded-full border border-red-200 px-5 py-2 text-sm font-extrabold text-red-700 transition hover:bg-red-50"
                     >
-                      Fshije
+                      Izbriši
                     </button>
                   </form>
                 </article>
