@@ -6,6 +6,8 @@ export type EmployeeRecord = {
   email: string | null;
   phone: string | null;
   role: string;
+  availability: string | null;
+  notes: string | null;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;

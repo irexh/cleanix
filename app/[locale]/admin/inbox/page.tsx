@@ -1,4 +1,5 @@
 import {businessInquiryPrisma} from "@/lib/business-inquiry-prisma";
+import type {BusinessInquiryRecord} from "@/lib/business-inquiry-prisma";
 import PrioritySelector from "@/components/admin/PrioritySelector";
 import SendCustomerEmailForm from "@/components/admin/SendCustomerEmailForm";
 import {prisma} from "@/lib/prisma";
@@ -16,6 +17,22 @@ const priorityStyles: Record<string, string> = {
   HIGH: "bg-red-100 text-red-800"
 };
 
+type InboxBookingRecord = {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  city: string;
+  address: string;
+  propertyType: string;
+  selectedDate: string;
+  selectedTime: string;
+  totalPrice: number;
+  priority: string;
+  bookingStatus: string;
+  createdAt: Date;
+};
+
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat("sl-SI", {
     day: "2-digit",
@@ -27,7 +44,7 @@ function formatDate(date: Date) {
 }
 
 export default async function AdminInboxPage() {
-  const [bookings, businessInquiries] = await Promise.all([
+  const [bookings, businessInquiries] = (await Promise.all([
     prisma.booking.findMany({
       where: {bookingStatus: "PENDING"},
       orderBy: {createdAt: "desc"}
@@ -35,7 +52,7 @@ export default async function AdminInboxPage() {
     businessInquiryPrisma.businessInquiry.findMany({
       orderBy: {createdAt: "desc"}
     })
-  ]);
+  ])) as [InboxBookingRecord[], BusinessInquiryRecord[]];
 
   const totalInbox = bookings.length + businessInquiries.length;
 

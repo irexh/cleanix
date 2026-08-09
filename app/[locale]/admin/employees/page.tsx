@@ -1,8 +1,12 @@
 import {
   createEmployeeAction,
+  createEmployeeLoginAction,
+  deleteEmployeeAction,
   toggleEmployeeAction
 } from "@/app/[locale]/admin/employees/actions";
 import {employeePrisma} from "@/lib/employee-prisma";
+import type {EmployeeRecord} from "@/lib/employee-prisma";
+import {prisma} from "@/lib/prisma";
 
 const roleLabels: Record<string, string> = {
   ADMIN: "Admin",
@@ -11,9 +15,23 @@ const roleLabels: Record<string, string> = {
 };
 
 export default async function AdminEmployeesPage() {
-  const employees = await employeePrisma.employee.findMany({
-    orderBy: [{isActive: "desc"}, {createdAt: "desc"}]
-  });
+  const [employees, bookings] = (await Promise.all([
+    employeePrisma.employee.findMany({
+      orderBy: [{isActive: "desc"}, {createdAt: "desc"}]
+    }),
+    prisma.booking.findMany({
+      where: {employeeId: {not: null}},
+      select: {employeeId: true}
+    })
+  ])) as [EmployeeRecord[], Array<{employeeId: string | null}>];
+
+  const bookingCounts = bookings.reduce<Record<string, number>>((acc, booking) => {
+    if (booking.employeeId) {
+      acc[booking.employeeId] = (acc[booking.employeeId] ?? 0) + 1;
+    }
+
+    return acc;
+  }, {});
 
   return (
     <main className="px-6 py-10 lg:px-10">
@@ -64,6 +82,24 @@ export default async function AdminEmployeesPage() {
               />
             </label>
 
+            <label className="grid gap-2 text-sm font-bold lg:col-span-2">
+              Razpolozljivost
+              <input
+                name="availability"
+                placeholder="npr. Pon-Pet 08:00-16:00"
+                className="rounded-xl border border-[#dbe7fb] px-4 py-3 outline-none focus:border-[#4d8dff]"
+              />
+            </label>
+
+            <label className="grid gap-2 text-sm font-bold lg:col-span-2">
+              Notes
+              <input
+                name="notes"
+                placeholder="npr. Dela samo Ljubljana"
+                className="rounded-xl border border-[#dbe7fb] px-4 py-3 outline-none focus:border-[#4d8dff]"
+              />
+            </label>
+
             <div className="hidden lg:block lg:col-start-4 lg:row-start-1">
               <div className="h-7" />
               <button
@@ -106,7 +142,7 @@ export default async function AdminEmployeesPage() {
               {employees.map((employee) => (
                 <article
                   key={employee.id}
-                  className="grid gap-4 rounded-2xl border border-[#dbe7fb] bg-[#f6f9ff] p-5 lg:grid-cols-[1.3fr_1fr_1fr_180px_170px]"
+                  className="grid gap-4 rounded-2xl border border-[#dbe7fb] bg-[#f6f9ff] p-5 lg:grid-cols-[1.2fr_1fr_1fr_180px_260px]"
                 >
                   <div>
                     <h3 className="text-xl font-extrabold text-[#123b7a]">
@@ -133,6 +169,12 @@ export default async function AdminEmployeesPage() {
                     <p className="mt-1 text-sm font-bold">
                       {employee.phone || "Ni podatka"}
                     </p>
+                    <p className="mt-3 text-xs font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+                      Rezervacije
+                    </p>
+                    <p className="mt-1 text-sm font-bold text-[#123b7a]">
+                      {bookingCounts[employee.id] ?? 0}
+                    </p>
                   </div>
 
                   <div>
@@ -150,23 +192,93 @@ export default async function AdminEmployeesPage() {
                     </span>
                   </div>
 
-                  <form action={toggleEmployeeAction} className="flex items-center gap-3">
-                    <input type="hidden" name="id" value={employee.id} />
-                    <label className="flex items-center gap-2 text-sm font-bold">
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+                        Razpolozljivost
+                      </p>
+                      <p className="mt-1 text-sm font-semibold text-[#123b7a]">
+                        {employee.availability || "Ni nastavljeno"}
+                      </p>
+                      <p className="mt-3 text-xs font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+                        Notes
+                      </p>
+                      <p className="mt-1 text-sm text-[#123b7a]">
+                        {employee.notes || "Ni opomb"}
+                      </p>
+                    </div>
+
+                    <form action={toggleEmployeeAction} className="flex items-center gap-3">
+                      <input type="hidden" name="id" value={employee.id} />
+                      <label className="flex items-center gap-2 text-sm font-bold">
+                        <input
+                          name="isActive"
+                          type="checkbox"
+                          defaultChecked={employee.isActive}
+                        />
+                        Aktivno
+                      </label>
+                      <button
+                        type="submit"
+                        className="rounded-full border border-[#123b7a] px-4 py-2 text-sm font-extrabold text-[#123b7a] transition hover:bg-[#123b7a] hover:text-white"
+                      >
+                        Shrani
+                      </button>
+                    </form>
+
+                    <form action={toggleEmployeeAction} className="flex items-center gap-3">
+                      <input type="hidden" name="id" value={employee.id} />
                       <input
+                        type="hidden"
                         name="isActive"
-                        type="checkbox"
-                        defaultChecked={employee.isActive}
+                        value={employee.isActive ? "" : "on"}
                       />
-                      Aktivno
-                    </label>
-                    <button
-                      type="submit"
-                      className="rounded-full border border-[#123b7a] px-4 py-2 text-sm font-extrabold text-[#123b7a] transition hover:bg-[#123b7a] hover:text-white"
-                    >
-                      Shrani
-                    </button>
-                  </form>
+                      <button
+                        type="submit"
+                        className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${
+                          employee.isActive
+                            ? "bg-amber-100 text-amber-800 hover:bg-amber-200"
+                            : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
+                        }`}
+                      >
+                        {employee.isActive ? "Deaktiviraj" : "Aktiviraj"}
+                      </button>
+                    </form>
+
+                    <form action={createEmployeeLoginAction} className="grid gap-2">
+                      <input type="hidden" name="id" value={employee.id} />
+                      <label className="grid gap-1 text-xs font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+                        Geslo za login
+                        <input
+                          name="password"
+                          type="password"
+                          required
+                          placeholder="npr. Cleanix123!"
+                          className="rounded-xl border border-[#dbe7fb] px-4 py-3 text-sm font-normal outline-none focus:border-[#4d8dff]"
+                        />
+                      </label>
+                      <label className="flex items-center gap-2 text-sm font-bold text-[#123b7a]">
+                        <input name="sendEmail" type="checkbox" defaultChecked />
+                        Pošlji geslo na e-mail
+                      </label>
+                      <button
+                        type="submit"
+                        className="rounded-full bg-[#2f6fe4] px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+                      >
+                        Ustvari login
+                      </button>
+                    </form>
+
+                    <form action={deleteEmployeeAction}>
+                      <input type="hidden" name="id" value={employee.id} />
+                      <button
+                        type="submit"
+                        className="rounded-full border border-red-600 bg-white px-4 py-2 text-sm font-extrabold text-red-600 transition hover:bg-red-600 hover:text-white"
+                      >
+                        Izbriši
+                      </button>
+                    </form>
+                  </div>
                 </article>
               ))}
             </div>

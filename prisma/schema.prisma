@@ -91,6 +91,8 @@ model Employee {
   email     String?
   phone     String?
   role      String    @default("EMPLOYEE")
+  availability String?
+  notes     String?
   isActive  Boolean   @default(true)
   bookings  Booking[]
   createdAt DateTime  @default(now())
