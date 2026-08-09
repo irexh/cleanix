@@ -1,6 +1,20 @@
 import {businessInquiryPrisma} from "@/lib/business-inquiry-prisma";
+import PrioritySelector from "@/components/admin/PrioritySelector";
+import SendCustomerEmailForm from "@/components/admin/SendCustomerEmailForm";
 import {prisma} from "@/lib/prisma";
 import DeleteInboxButton from "@/components/admin/DeleteInboxButton";
+
+const priorityLabels: Record<string, string> = {
+  LOW: "Nizka",
+  NORMAL: "Normalna",
+  HIGH: "Visoka"
+};
+
+const priorityStyles: Record<string, string> = {
+  LOW: "bg-emerald-100 text-emerald-800",
+  NORMAL: "bg-blue-100 text-blue-800",
+  HIGH: "bg-red-100 text-red-800"
+};
 
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat("sl-SI", {
@@ -91,6 +105,13 @@ export default async function AdminInboxPage() {
                       <p className="mt-2 inline-flex rounded-full bg-[#eaf2ff] px-3 py-1 font-bold text-[#123b7a]">
                         {inquiry.status}
                       </p>
+                      <p
+                        className={`mt-2 inline-flex rounded-full px-3 py-1 font-bold ${
+                          priorityStyles[inquiry.priority] ?? "bg-gray-100 text-gray-700"
+                        }`}
+                      >
+                        {priorityLabels[inquiry.priority] ?? inquiry.priority}
+                      </p>
                     </div>
                   </div>
 
@@ -98,11 +119,44 @@ export default async function AdminInboxPage() {
                     {inquiry.message}
                   </p>
 
-                  <div className="mt-4 flex justify-end">
-                    <DeleteInboxButton
-                      id={inquiry.id}
-                      type="business-inquiry"
+                  <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_420px]">
+                    <SendCustomerEmailForm
+                      to={inquiry.email}
+                      replyTo={inquiry.email}
+                      customerName={inquiry.fullName}
+                      defaultSubject={`Cleanix odgovor - ${inquiry.service || "povpraševanje"}`}
+                      templates={[
+                        {
+                          label: "Odgovor",
+                          subject: "Cleanix - odgovor na povpraševanje",
+                          text: `Pozdravljeni {customerName},\n\nhvala za vaše povpraševanje.\n\nVaše sporočilo smo prejeli in vam bomo čim prej odgovorili.\n\nLep pozdrav,\nCleanix`
+                        },
+                        {
+                          label: "Ponudba",
+                          subject: "Cleanix - ponudba",
+                          text: `Pozdravljeni {customerName},\n\npošiljamo vam našo ponudbo glede vašega povpraševanja.\n\nStoritev: ${inquiry.service || "ni izbrano"}\n\nČe želite, lahko skupaj uskladimo termin.\n\nLep pozdrav,\nCleanix`
+                        },
+                        {
+                          label: "Dodatno",
+                          subject: "Cleanix - dodatne informacije",
+                          text: `Pozdravljeni {customerName},\n\nprosimo, odgovorite nam še z nekaj dodatnimi informacijami, da vam pripravimo najboljšo rešitev.\n\nLep pozdrav,\nCleanix`
+                        }
+                      ]}
                     />
+
+                    <div className="space-y-3 rounded-3xl border border-[#dbe7fb] bg-white p-6">
+                      <PrioritySelector
+                        currentPriority={inquiry.priority}
+                        endpoint={`/api/admin/business-inquiries/${inquiry.id}`}
+                        compact
+                      />
+                      <div className="flex justify-end">
+                        <DeleteInboxButton
+                          id={inquiry.id}
+                          type="business-inquiry"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -163,6 +217,34 @@ export default async function AdminInboxPage() {
                     >
                       Odpri
                     </a>
+                    <PrioritySelector
+                      currentPriority={booking.priority}
+                      endpoint={`/api/admin/bookings/${booking.id}`}
+                      compact
+                    />
+                    <SendCustomerEmailForm
+                      to={booking.email}
+                      replyTo={booking.email}
+                      customerName={booking.fullName}
+                      defaultSubject={`Cleanix odgovor - ${booking.selectedDate}`}
+                      templates={[
+                        {
+                          label: "Potrditev",
+                          subject: "Cleanix - potrditev termina",
+                          text: `Pozdravljeni {customerName},\n\nvaš termin je potrjen.\n\nDatum: ${booking.selectedDate}\nUra: ${booking.selectedTime}\nNaslov: ${booking.city}, ${booking.address}\n\nLep pozdrav,\nCleanix`
+                        },
+                        {
+                          label: "Prestavi",
+                          subject: "Cleanix - prestavitev termina",
+                          text: `Pozdravljeni {customerName},\n\nprosimo, da nam sporočite nov predlog termina za prestavitev.\n\nLep pozdrav,\nCleanix`
+                        },
+                        {
+                          label: "Ponudba",
+                          subject: "Cleanix - ponudba",
+                          text: `Pozdravljeni {customerName},\n\npošiljamo vam ponudbo za rezervacijo.\n\nStoritev: ${booking.propertyType}\nCena: EUR ${booking.totalPrice}\nDatum: ${booking.selectedDate}\nUra: ${booking.selectedTime}\n\nLep pozdrav,\nCleanix`
+                        }
+                      ]}
+                    />
                     <div className="flex justify-end">
                       <DeleteInboxButton id={booking.id} type="booking" />
                     </div>

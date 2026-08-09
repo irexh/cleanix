@@ -24,6 +24,7 @@ model Booking {
   notes           String?
   paymentStatus   String   @default("PENDING")
   bookingStatus   String   @default("PENDING")
+  priority       String   @default("NORMAL")
   stripeSessionId String?  @unique
   employeeId      String?
   employee        Employee? @relation(fields: [employeeId], references: [id])
@@ -104,6 +105,7 @@ model BusinessInquiry {
   service   String?
   message   String
   status    String   @default("NEW")
+  priority  String   @default("NORMAL")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

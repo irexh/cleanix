@@ -12,6 +12,8 @@ const allowedStatuses = [
   "CANCELLED"
 ] as const;
 
+const allowedPriorities = ["LOW", "NORMAL", "HIGH"] as const;
+
 export async function PATCH(
   request: NextRequest,
   context: {params: Promise<{id: string}>}
@@ -34,9 +36,21 @@ export async function PATCH(
   const {id} = await context.params;
   const body = await request.json();
   const nextStatus = body?.status;
+  const nextPriority = body?.priority;
 
-  if (!allowedStatuses.includes(nextStatus)) {
+  if (nextStatus == null && nextPriority == null) {
+    return NextResponse.json(
+      {error: "Ni podatkov za posodobitev."},
+      {status: 400}
+    );
+  }
+
+  if (nextStatus != null && !allowedStatuses.includes(nextStatus)) {
     return NextResponse.json({error: "Neveljaven status."}, {status: 400});
+  }
+
+  if (nextPriority != null && !allowedPriorities.includes(nextPriority)) {
+    return NextResponse.json({error: "Neveljavna prioriteta."}, {status: 400});
   }
 
   const existingBooking = await prisma.booking.findUnique({
@@ -49,10 +63,14 @@ export async function PATCH(
 
   const updatedBooking = await prisma.booking.update({
     where: {id},
-    data: {bookingStatus: nextStatus}
+    data: {
+      ...(nextStatus != null ? {bookingStatus: nextStatus} : {}),
+      ...(nextPriority != null ? {priority: nextPriority} : {})
+    }
   });
 
   if (
+    nextStatus &&
     existingBooking.bookingStatus !== nextStatus &&
     (nextStatus === "CONFIRMED" || nextStatus === "CANCELLED")
   ) {

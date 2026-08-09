@@ -1,3 +1,5 @@
+import PrioritySelector from "@/components/admin/PrioritySelector";
+import SendCustomerEmailForm from "@/components/admin/SendCustomerEmailForm";
 import {notFound} from "next/navigation";
 
 import {assignEmployeeToBookingAction} from "@/app/[locale]/admin/bookings/[id]/actions";
@@ -19,6 +21,18 @@ const statusColors: Record<string, string> = {
   IN_PROGRESS: "bg-orange-100 text-orange-800",
   COMPLETED: "bg-emerald-100 text-emerald-800",
   CANCELLED: "bg-red-100 text-red-800"
+};
+
+const priorityLabels: Record<string, string> = {
+  LOW: "Nizka",
+  NORMAL: "Normalna",
+  HIGH: "Visoka"
+};
+
+const priorityColors: Record<string, string> = {
+  LOW: "bg-emerald-100 text-emerald-800",
+  NORMAL: "bg-blue-100 text-blue-800",
+  HIGH: "bg-red-100 text-red-800"
 };
 
 type BookingDetailsPageProps = {
@@ -61,16 +75,25 @@ export default async function BookingDetailsPage({
             </p>
           </div>
 
-          <span
-            className={`inline-flex rounded-full px-4 py-2 text-sm font-bold ${
-              statusColors[booking.bookingStatus] ?? "bg-gray-100 text-gray-700"
-            }`}
-          >
-            {statusLabels[booking.bookingStatus] ?? booking.bookingStatus}
-          </span>
+          <div className="flex flex-wrap items-center gap-3">
+            <span
+              className={`inline-flex rounded-full px-4 py-2 text-sm font-bold ${
+                statusColors[booking.bookingStatus] ?? "bg-gray-100 text-gray-700"
+              }`}
+            >
+              {statusLabels[booking.bookingStatus] ?? booking.bookingStatus}
+            </span>
+            <span
+              className={`inline-flex rounded-full px-4 py-2 text-sm font-bold ${
+                priorityColors[booking.priority] ?? "bg-gray-100 text-gray-700"
+              }`}
+            >
+              Prioriteta: {priorityLabels[booking.priority] ?? booking.priority}
+            </span>
+          </div>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
+        <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] xl:grid-cols-[1.05fr_0.95fr]">
           <section className="space-y-6">
             <Card title="Podatki o stranki">
               <InfoRow label="Ime in priimek" value={booking.fullName} />
@@ -157,6 +180,39 @@ export default async function BookingDetailsPage({
                   Shrani zaposlenega
                 </button>
               </form>
+            </Card>
+
+            <Card title="Prioriteta">
+              <PrioritySelector
+                currentPriority={booking.priority}
+                endpoint={`/api/admin/bookings/${booking.id}`}
+              />
+            </Card>
+
+            <Card title="Pošlji email stranki">
+              <SendCustomerEmailForm
+                to={booking.email}
+                replyTo={booking.email}
+                customerName={booking.fullName}
+                defaultSubject={`Cleanix - rezervacija ${booking.selectedDate} ${booking.selectedTime}`}
+                templates={[
+                  {
+                    label: "Potrditev",
+                    subject: `Potrditev termina - Cleanix`,
+                    text: `Pozdravljeni {customerName},\n\nvaš termin je potrjen.\n\nDatum: ${booking.selectedDate}\nUra: ${booking.selectedTime}\nNaslov: ${booking.address}, ${booking.city}\nZnesek: EUR ${booking.totalPrice}\n\nLep pozdrav,\nCleanix`
+                  },
+                  {
+                    label: "Prestavi",
+                    subject: `Predlog za prestavitev termina - Cleanix`,
+                    text: `Pozdravljeni {customerName},\n\nzaradi organizacije vas prosimo, da nam predlagate nov termin ali pokličete nazaj, da uskladimo prestavitev.\n\nLep pozdrav,\nCleanix`
+                  },
+                  {
+                    label: "Ponudba",
+                    subject: `Ponudba - Cleanix`,
+                    text: `Pozdravljeni {customerName},\n\npošiljamo vam ponudbo za rezervacijo.\n\nTermin: ${booking.selectedDate} ob ${booking.selectedTime}\nNaslov: ${booking.address}, ${booking.city}\nStoritev: ${booking.propertyType}\nCena: EUR ${booking.totalPrice}\n\nČe imate vprašanja, smo vam na voljo.\n\nLep pozdrav,\nCleanix`
+                  }
+                ]}
+              />
             </Card>
 
             <Card title="Sistem">

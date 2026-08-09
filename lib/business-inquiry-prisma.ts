@@ -8,6 +8,7 @@ export type BusinessInquiryRecord = {
   service: string | null;
   message: string;
   status: string;
+  priority: string;
   createdAt: Date;
   updatedAt: Date;
 };
