@@ -1,6 +1,9 @@
 import Image from "next/image";
 
 export default function SiteFooter() {
+  const facebookUrl =
+    process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://www.facebook.com/cleanix.si";
+
   return (
     <footer className="site-footer">
       <div className="site-footer-shell">
@@ -42,6 +45,16 @@ export default function SiteFooter() {
                 <a href="tel:069665229">069 665 229</a>
                 <a href="mailto:info@cleanix.si">info@cleanix.si</a>
                 <span>Ljubljana, Slovenija</span>
+              </div>
+              <div className="mt-4">
+                <a
+                  href={facebookUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#123b7a] bg-[#123b7a] px-4 py-2 text-sm font-bold text-white transition hover:bg-white hover:text-[#123b7a]"
+                >
+                  Facebook stran
+                </a>
               </div>
             </section>
 

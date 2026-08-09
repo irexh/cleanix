@@ -33,7 +33,7 @@ export default async function AdminEmployeesPage() {
 
           <form
             action={createEmployeeAction}
-            className="grid gap-4 lg:grid-cols-4 lg:gap-x-5 lg:items-start"
+            className="grid gap-y-5 gap-x-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_160px] lg:items-start"
           >
             <label className="grid gap-2 text-sm font-bold">
               Ime
@@ -68,7 +68,7 @@ export default async function AdminEmployeesPage() {
               <div className="h-7" />
               <button
                 type="submit"
-                className="mt-8 w-full rounded-full bg-[#2f6fe4] px-7 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+                className="mt-8 w-full rounded-full bg-[#2f6fe4] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
               >
                 Dodaj
               </button>
@@ -89,7 +89,7 @@ export default async function AdminEmployeesPage() {
 
             <button
               type="submit"
-              className="rounded-full bg-[#2f6fe4] px-7 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a] lg:hidden"
+              className="rounded-full bg-[#2f6fe4] px-6 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a] lg:hidden"
             >
               Dodaj
             </button>
