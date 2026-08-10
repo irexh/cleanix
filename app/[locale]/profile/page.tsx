@@ -1,0 +1,252 @@
+import {redirect} from "next/navigation";
+
+import {auth} from "@/auth";
+import {prisma} from "@/lib/prisma";
+import LogoutButton from "@/components/customer/LogoutButton";
+
+const statusLabels: Record<string, string> = {
+  PENDING: "Čaka na potrditev",
+  CONFIRMED: "Potrjeno",
+  IN_PROGRESS: "V teku",
+  COMPLETED: "Zaključeno",
+  CANCELLED: "Preklicano"
+};
+
+const statusStyles: Record<string, string> = {
+  PENDING: "bg-amber-100 text-amber-800",
+  CONFIRMED: "bg-blue-100 text-blue-800",
+  IN_PROGRESS: "bg-orange-100 text-orange-800",
+  COMPLETED: "bg-emerald-100 text-emerald-800",
+  CANCELLED: "bg-red-100 text-red-800"
+};
+
+type BookingItem = {
+  id: string;
+  selectedDate: string;
+  selectedTime: string;
+  propertyType: string;
+  propertySize: string;
+  city: string;
+  address: string;
+  totalPrice: number;
+  bookingStatus: string;
+  paymentStatus: string;
+  createdAt: Date;
+};
+
+export default async function ProfilePage() {
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    redirect("/sl/login");
+  }
+
+  if (session.user.role === "ADMIN") {
+    redirect("/sl/admin");
+  }
+
+  const [user, bookings] = await Promise.all([
+    prisma.user.findUnique({
+      where: {email: session.user.email},
+      select: {
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true
+      }
+    }),
+    prisma.booking.findMany({
+      where: {email: session.user.email},
+      orderBy: {createdAt: "desc"},
+      select: {
+        id: true,
+        selectedDate: true,
+        selectedTime: true,
+        propertyType: true,
+        propertySize: true,
+        city: true,
+        address: true,
+        totalPrice: true,
+        bookingStatus: true,
+        paymentStatus: true,
+        createdAt: true
+      }
+    })
+  ]);
+
+  const typedBookings = bookings as BookingItem[];
+  const upcomingBookings = typedBookings.filter(
+    (booking) =>
+      booking.bookingStatus !== "CANCELLED" && booking.bookingStatus !== "COMPLETED"
+  );
+
+  return (
+    <main className="min-h-screen bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_42%,#f8fbff_100%)] px-6 py-10 text-[#123b7a]">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[#4d8dff]">
+              CLEANIX PROFILE
+            </p>
+            <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl">
+              Moj račun
+            </h1>
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-[#5d716a]">
+              Tukaj so tvoji termini, podatki in nastavitve računa.
+            </p>
+          </div>
+
+          <LogoutButton />
+        </div>
+
+        <section className="grid gap-4 lg:grid-cols-3">
+          <Card title="Moj račun">
+            <InfoRow label="Ime in priimek" value={user?.name || "Ni podatka"} />
+            <InfoRow label="E-pošta" value={user?.email || "Ni podatka"} />
+            <InfoRow
+              label="Vloga"
+              value={user?.role === "EMPLOYEE" ? "Čistilka" : "Stranka"}
+            />
+            <InfoRow
+              label="Ustvarjen"
+              value={formatDate(user?.createdAt ?? new Date())}
+            />
+          </Card>
+
+          <Card title="Moji termini">
+            <InfoRow label="Skupaj terminov" value={String(typedBookings.length)} />
+            <InfoRow label="Aktivni termini" value={String(upcomingBookings.length)} />
+            <InfoRow
+              label="Zadnji termin"
+              value={typedBookings[0] ? `${typedBookings[0].selectedDate} ob ${typedBookings[0].selectedTime}` : "Ni termina"}
+            />
+          </Card>
+
+          <Card title="Nastavitve">
+            <p className="text-sm leading-7 text-[#5d716a]">
+              Na začetku bo ta del vseboval nastavitve za geslo, kontaktne podatke
+              in obvestila.
+            </p>
+            <div className="mt-4 space-y-3">
+              <SettingPill label="Obvestila po e-pošti" value="Vklopljeno" />
+              <SettingPill label="SMS opozorila" value="Po želji" />
+              <SettingPill label="Jezik" value="Slovenščina" />
+            </div>
+          </Card>
+        </section>
+
+        <section className="mt-8 rounded-[32px] bg-white p-6 shadow-sm sm:p-8">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-2xl font-extrabold">Moji termini</h2>
+              <p className="mt-2 text-[#5d716a]">
+                Pregled prihodnjih in preteklih rezervacij.
+              </p>
+            </div>
+          </div>
+
+          {typedBookings.length === 0 ? (
+            <p className="rounded-2xl bg-[#f6f9ff] p-6 text-center text-[#5d716a]">
+              Trenutno nimaš še nobenega termina.
+            </p>
+          ) : (
+            <div className="grid gap-4">
+              {typedBookings.map((booking) => (
+                <article
+                  key={booking.id}
+                  className="grid gap-4 rounded-2xl border border-[#dbe7fb] bg-[#f6f9ff] p-5 lg:grid-cols-[1.1fr_1fr_220px]"
+                >
+                  <div>
+                    <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+                      Termin
+                    </p>
+                    <h3 className="mt-1 text-xl font-extrabold text-[#123b7a]">
+                      {booking.selectedDate} ob {booking.selectedTime}
+                    </h3>
+                    <p className="mt-2 text-sm text-[#5d716a]">
+                      {booking.city}, {booking.address}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+                      Storitev
+                    </p>
+                    <p className="mt-1 text-sm font-bold text-[#123b7a]">
+                      {booking.propertyType}
+                    </p>
+                    <p className="mt-2 text-sm text-[#5d716a]">
+                      {booking.propertySize}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+                    <span
+                      className={`inline-flex w-fit rounded-full px-3 py-1 text-xs font-extrabold ${
+                        statusStyles[booking.bookingStatus] ??
+                        "bg-gray-100 text-gray-700"
+                      }`}
+                    >
+                      {statusLabels[booking.bookingStatus] ?? booking.bookingStatus}
+                    </span>
+                    <p className="text-sm font-bold text-[#123b7a]">
+                      EUR {booking.totalPrice}
+                    </p>
+                    <p className="text-xs text-[#5d716a]">
+                      Plačilo: {booking.paymentStatus}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
+    </main>
+  );
+}
+
+function Card({
+  title,
+  children
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="rounded-[32px] bg-white p-6 shadow-sm sm:p-8">
+      <h2 className="text-2xl font-extrabold">{title}</h2>
+      <div className="mt-5 space-y-4">{children}</div>
+    </section>
+  );
+}
+
+function InfoRow({label, value}: {label: string; value: string}) {
+  return (
+    <div className="border-b border-[#ece7dc] pb-3 last:border-b-0 last:pb-0">
+      <p className="text-sm font-semibold text-[#5d716a]">{label}</p>
+      <p className="mt-1 break-words text-base font-medium text-[#123b7a]">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+function SettingPill({label, value}: {label: string; value: string}) {
+  return (
+    <div className="rounded-2xl border border-[#dbe7fb] bg-[#f8fbff] px-4 py-3">
+      <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+        {label}
+      </p>
+      <p className="mt-1 text-sm font-bold text-[#123b7a]">{value}</p>
+    </div>
+  );
+}
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("sl-SI", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  }).format(date);
+}

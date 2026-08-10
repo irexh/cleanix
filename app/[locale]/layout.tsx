@@ -5,7 +5,7 @@ import {notFound} from "next/navigation";
 import {ReactNode} from "react";
 
 import "../globals.css";
-import {routing} from "@/i18n/routing";import SiteFooter from "@/components/SiteFooter";
+import {routing} from "@/i18n/routing";
 
 
 export const metadata: Metadata = {
@@ -46,9 +46,8 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full">
         <NextIntlClientProvider messages={messages}>
-         {children}
-         <SiteFooter />
-         </NextIntlClientProvider>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

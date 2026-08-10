@@ -1,15 +1,24 @@
 "use client";
 
-import {FormEvent, useState} from "react";
+import Link from "next/link";
+import {FormEvent, useEffect, useState} from "react";
 import {getSession, signIn} from "next-auth/react";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    if (searchParams.get("registered") === "1") {
+      setSuccessMessage("Račun je ustvarjen. Zdaj se lahko prijaviš.");
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,7 +49,7 @@ export default function LoginPage() {
       if (role === "ADMIN") {
         router.replace("/sl/admin");
       } else {
-        router.replace("/sl");
+        router.replace("/sl/profile");
       }
 
       router.refresh();
@@ -72,6 +81,12 @@ export default function LoginPage() {
           <p className="mb-1 mt-4 text-sm  text-[#5d716a]">
             Vpisite svoj email in geslo za dostop do sistema.
           </p>
+
+          {successMessage ? (
+            <p className="mb-5 rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800">
+              {successMessage}
+            </p>
+          ) : null}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <label className="block">
@@ -115,6 +130,13 @@ export default function LoginPage() {
             >
               {isLoading ? "Prijavljanje ..." : "Prijava"}
             </button>
+
+            <p className="text-center text-sm text-[#5d716a]">
+              Če nimaš računa,{" "}
+              <Link href="/sl/register" className="font-bold text-[#2f6fe4]">
+                registriraj se
+              </Link>
+            </p>
           </form>
         </section>
       </div>

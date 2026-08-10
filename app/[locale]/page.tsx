@@ -4,6 +4,7 @@ import {getActiveHomepageSales} from "@/lib/sale-pricing";
 import {announcementPrisma} from "@/lib/announcement-prisma";
 import {galleryPrisma} from "@/lib/gallery-prisma";
 import {getSiteContentMap} from "@/lib/site-content";
+import SiteFooter from "@/components/SiteFooter";
 
 export const dynamic = "force-dynamic";
 
@@ -485,6 +486,8 @@ export default async function Home() {
           {content.home_bottom_button} <span>→</span>
         </a>
       </section>
+
+      <SiteFooter />
     </main>
   );
 }
