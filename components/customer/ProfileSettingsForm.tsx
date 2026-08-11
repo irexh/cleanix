@@ -45,7 +45,7 @@ export default function ProfileSettingsForm({
 
       <label className="grid gap-1.5">
         <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#5d716a]">
-          E-posta
+          E-pošta
         </span>
         <input
           type="email"
@@ -58,7 +58,7 @@ export default function ProfileSettingsForm({
 
       <label className="grid gap-1.5">
         <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#5d716a]">
-          Telefonska stevilka
+          Telefonska številka
         </span>
         <input
           type="text"

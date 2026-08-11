@@ -38,7 +38,7 @@ export async function updateProfileSettings(
   if (!name || !email) {
     return {
       success: false,
-      message: "Ime in e-posta sta obvezna."
+      message: "Ime in e-pošta sta obvezna."
     };
   }
 
@@ -49,7 +49,7 @@ export async function updateProfileSettings(
   if (existingUser && existingUser.email !== currentEmail) {
     return {
       success: false,
-      message: "Ta e-postni naslov je ze v uporabi."
+      message: "Ta e-poštni naslov je že v uporabi."
     };
   }
 
@@ -78,7 +78,7 @@ export async function updateProfileSettings(
     success: true,
     message:
       email !== currentEmail
-        ? "Podatki so shranjeni. Po spremembi e-poste se za vsak primer prijavite znova."
-        : "Podatki so uspesno shranjeni."
+        ? "Podatki so shranjeni. Po spremembi e-pošte se za vsak primer prijavite znova."
+        : "Podatki so uspešno shranjeni."
   };
 }

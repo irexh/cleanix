@@ -66,7 +66,7 @@ export async function claimBookingAction(formData: FormData) {
       text: [
         `Pozdravljeni ${booking.fullName},`,
         "",
-        `vas termin ${booking.selectedDate} ob ${booking.selectedTime} je prevzela cistilka ${employee.name}.`,
+        `vaš termin ${booking.selectedDate} ob ${booking.selectedTime} je prevzela čistilka ${employee.name}.`,
         `${booking.city}, ${booking.address}`,
         "",
         "Hvala za zaupanje.",
@@ -98,7 +98,7 @@ export async function cancelClaimedBookingAction(formData: FormData) {
   }
 
   if (reason.length < 10) {
-    throw new Error("Vpisite jasen razlog preklica.");
+    throw new Error("Vpišite jasen razlog preklica.");
   }
 
   const employee = await prisma.employee.findFirst({
@@ -110,7 +110,7 @@ export async function cancelClaimedBookingAction(formData: FormData) {
   });
 
   if (!employee) {
-    throw new Error("Zaposleni profil ni povezan s tem racunom.");
+    throw new Error("Zaposleni profil ni povezan s tem računom.");
   }
 
   const booking = await prisma.booking.findUnique({
@@ -139,8 +139,10 @@ export async function cancelClaimedBookingAction(formData: FormData) {
   const hoursUntil = (bookingDateTime.getTime() - Date.now()) / 36e5;
   const shortNotice = hoursUntil <= 24;
   const cancelNote = [
-    `[${new Date().toISOString()}] Preklic cistilke: ${employee.name}`,
-    shortNotice ? "Opozorilo: manj kot 24 ur do termina." : "Preklic vec kot 24 ur pred terminom.",
+    `[${new Date().toISOString()}] Preklic čistilke: ${employee.name}`,
+    shortNotice
+      ? "Opozorilo: manj kot 24 ur do termina."
+      : "Preklic več kot 24 ur pred terminom.",
     `Razlog: ${reason}`
   ].join(" ");
 
@@ -159,9 +161,9 @@ export async function cancelClaimedBookingAction(formData: FormData) {
 
   await sendAdminEmail({
     to: adminEmail,
-    subject: "Cleanix - cistilka je preklicala nalog",
+    subject: "Cleanix - čistilka je preklicala nalog",
     text: [
-      `Cistilka: ${employee.name} (${employee.email ?? "brez e-poste"})`,
+      `Čistilka: ${employee.name} (${employee.email ?? "brez e-pošte"})`,
       `Stranka: ${booking.fullName} (${booking.email})`,
       `Termin: ${booking.selectedDate} ob ${booking.selectedTime}`,
       `Lokacija: ${booking.city}, ${booking.address}`,

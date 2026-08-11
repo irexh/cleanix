@@ -31,7 +31,7 @@ export default function ProfileMenu({
       <button
         type="button"
         className="profile-menu-trigger"
-        aria-label="Uporabniski meni"
+        aria-label="Uporabniški meni"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((value) => !value)}
       >
@@ -42,7 +42,7 @@ export default function ProfileMenu({
       {isOpen ? (
         <div className="profile-menu-dropdown">
           <a href={profileHref} onClick={() => setIsOpen(false)}>
-            Racun
+            Račun
           </a>
           <a href={settingsHref} onClick={() => setIsOpen(false)}>
             Nastavitve

@@ -6,10 +6,10 @@ import ProfileSettingsForm from "@/components/customer/ProfileSettingsForm";
 import {prisma} from "@/lib/prisma";
 
 const statusLabels: Record<string, string> = {
-  PENDING: "Caka na potrditev",
+  PENDING: "Čaka na potrditev",
   CONFIRMED: "Potrjeno",
   IN_PROGRESS: "V teku",
-  COMPLETED: "Zakljuceno",
+  COMPLETED: "Zaključeno",
   CANCELLED: "Preklicano"
 };
 
@@ -100,10 +100,10 @@ export default async function ProfilePage() {
               CLEANIX PROFILE
             </p>
             <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-              Moj racun
+              Moj račun
             </h1>
             <p className="mt-2 max-w-2xl text-sm text-[#5d716a] sm:text-base">
-              Tukaj so tvoji termini, podatki in nastavitve racuna.
+              Tukaj so tvoji termini, podatki in nastavitve računa.
             </p>
           </div>
 
@@ -125,13 +125,13 @@ export default async function ProfilePage() {
         </div>
 
         <section className="grid gap-3 lg:grid-cols-3">
-          <Card title="Moj racun" id="racun">
+          <Card title="Moj račun" id="racun">
             <InfoRow label="Ime" value={user?.name || "Ni podatka"} />
             <InfoRow label="E-posta" value={user?.email || "Ni podatka"} />
             <InfoRow label="Telefon" value={latestBooking?.phone || "Ni podatka"} />
             <InfoRow
               label="Vloga"
-              value={user?.role === "EMPLOYEE" ? "Cistilka" : "Stranka"}
+              value={user?.role === "EMPLOYEE" ? "Čistilka" : "Stranka"}
             />
           </Card>
 
@@ -156,8 +156,8 @@ export default async function ProfilePage() {
             />
             <div className="grid gap-2">
               <SettingPill label="Obvestila po e-posti" value="Vklopljeno" />
-              <SettingPill label="SMS opozorila" value="Po zelji" />
-              <SettingPill label="Jezik" value="Slovenscina" />
+              <SettingPill label="SMS opozorila" value="Po želji" />
+              <SettingPill label="Jezik" value="Slovenščina" />
             </div>
           </Card>
         </section>
@@ -172,7 +172,7 @@ export default async function ProfilePage() {
 
           {typedBookings.length === 0 ? (
             <p className="rounded-xl bg-[#f6f9ff] p-4 text-center text-sm text-[#5d716a]">
-              Trenutno nimas se nobenega termina.
+              Trenutno nimaš še nobenega termina.
             </p>
           ) : (
             <div className="grid gap-3">
@@ -204,7 +204,7 @@ export default async function ProfilePage() {
                       {booking.propertySize}
                     </p>
                     <p className="mt-1 text-xs text-[#5d716a]">
-                      Cistilka: {booking.employee?.name ?? "Ni dodeljena"}
+                      Čistilka: {booking.employee?.name ?? "Ni dodeljena"}
                     </p>
                   </div>
 
@@ -220,7 +220,7 @@ export default async function ProfilePage() {
                       EUR {booking.totalPrice}
                     </p>
                     <p className="text-[11px] text-[#5d716a]">
-                      Placilo: {booking.paymentStatus}
+                      Plačilo: {booking.paymentStatus}
                     </p>
                   </div>
                 </article>
