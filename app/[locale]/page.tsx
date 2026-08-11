@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import {auth} from "@/auth";
 import {getActiveHomepageSales} from "@/lib/sale-pricing";
 import {announcementPrisma} from "@/lib/announcement-prisma";
 import {galleryPrisma} from "@/lib/gallery-prisma";
@@ -77,6 +78,7 @@ function saleFrequencyLabel(frequency: string) {
 }
 
 export default async function Home() {
+  const session = await auth();
   const activeSales = await getActiveHomepageSales().catch(() => []);
   const homeCleaningSales = activeSales.filter(
     (sale) => sale.serviceKey !== "BUSINESS_CONTRACT"
@@ -93,6 +95,16 @@ export default async function Home() {
     orderBy: {createdAt: "desc"}
   });
   const content = await getSiteContentMap();
+  const profileHref =
+    session?.user?.role === "ADMIN"
+      ? "/sl/admin"
+      : session?.user?.role === "EMPLOYEE" || session?.user?.role === "MANAGER"
+        ? "/sl/employee"
+        : "/sl/profile";
+  const profileInitial =
+    session?.user?.name?.trim().charAt(0) ||
+    session?.user?.email?.trim().charAt(0) ||
+    "P";
 
   return (
     <main>
@@ -125,6 +137,16 @@ export default async function Home() {
             Akcija
           </a>
         ) : null}
+
+        {session?.user?.email ? (
+          <a className="profile-mini-link" href={profileHref} aria-label="Moj profil">
+            {profileInitial.toUpperCase()}
+          </a>
+        ) : (
+          <a className="profile-mini-link" href="/sl/login" aria-label="Prijava">
+            P
+          </a>
+        )}
       </header>
 
       <section className="hero" id="domov">

@@ -4,7 +4,7 @@ import {auth} from "@/auth";
 import LogoutButton from "@/components/customer/LogoutButton";
 import {prisma} from "@/lib/prisma";
 
-import {claimBookingAction} from "./actions";
+import {cancelClaimedBookingAction, claimBookingAction} from "./actions";
 
 const statusLabels: Record<string, string> = {
   PENDING: "Caka na potrditev",
@@ -156,7 +156,7 @@ export default async function EmployeePage() {
               {availableBookings.map((booking) => (
                 <article
                   key={booking.id}
-                  className="grid gap-3 rounded-xl border border-[#dbe7fb] bg-[#f6f9ff] p-4 lg:grid-cols-[1.1fr_1fr_170px]"
+                  className="grid gap-3 rounded-xl border border-[#dbe7fb] bg-[#f6f9ff] p-4 lg:grid-cols-[1.1fr_1fr_230px]"
                 >
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#5d716a]">
@@ -267,6 +267,26 @@ export default async function EmployeePage() {
                     <p className="text-sm font-bold text-[#123b7a]">
                       EUR {booking.totalPrice}
                     </p>
+                    <form action={cancelClaimedBookingAction} className="mt-1 grid gap-2">
+                      <input type="hidden" name="bookingId" value={booking.id} />
+                      <p className="rounded-xl bg-amber-50 px-3 py-2 text-[11px] leading-5 text-amber-800">
+                        Ce preklices manj kot 24 ur pred terminom, je to v nasprotju s pravili Cleanix.
+                      </p>
+                      <textarea
+                        name="cancelReason"
+                        required
+                        minLength={10}
+                        rows={2}
+                        placeholder="Razlog preklica"
+                        className="w-full rounded-xl border border-[#cfe0ff] bg-white px-3 py-2 text-xs font-medium text-[#123b7a] outline-none focus:border-[#2f6fe4]"
+                      />
+                      <button
+                        type="submit"
+                        className="w-fit rounded-full border border-red-500 px-3 py-2 text-xs font-bold text-red-600 transition hover:bg-red-600 hover:text-white"
+                      >
+                        Preklici nalog
+                      </button>
+                    </form>
                   </div>
                 </article>
               ))}

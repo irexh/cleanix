@@ -32,6 +32,9 @@ type BookingItem = {
   bookingStatus: string;
   paymentStatus: string;
   createdAt: Date;
+  employee: {
+    name: string;
+  } | null;
 };
 
 export default async function ProfilePage() {
@@ -68,7 +71,12 @@ export default async function ProfilePage() {
         totalPrice: true,
         bookingStatus: true,
         paymentStatus: true,
-        createdAt: true
+        createdAt: true,
+        employee: {
+          select: {
+            name: true
+          }
+        }
       }
     })
   ]);
@@ -95,7 +103,21 @@ export default async function ProfilePage() {
             </p>
           </div>
 
-          <LogoutButton />
+          <div className="flex flex-wrap items-center gap-2">
+            <a
+              href="/sl"
+              className="rounded-full border border-[#123b7a] px-4 py-2 text-xs font-bold text-[#123b7a] transition hover:bg-[#123b7a] hover:text-white"
+            >
+              Domov
+            </a>
+            <a
+              href="/sl/booking"
+              className="rounded-full bg-[#2f6fe4] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#123b7a]"
+            >
+              Rezerviraj
+            </a>
+            <LogoutButton />
+          </div>
         </div>
 
         <section className="grid gap-3 lg:grid-cols-3">
@@ -170,6 +192,9 @@ export default async function ProfilePage() {
                     </p>
                     <p className="mt-1 text-sm text-[#5d716a]">
                       {booking.propertySize}
+                    </p>
+                    <p className="mt-1 text-xs text-[#5d716a]">
+                      Cistilka: {booking.employee?.name ?? "Ni dodeljena"}
                     </p>
                   </div>
 
