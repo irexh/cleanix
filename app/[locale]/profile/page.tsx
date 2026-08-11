@@ -1,6 +1,9 @@
+import type {ReactNode} from "react";
+
 import {redirect} from "next/navigation";
 
 import {auth} from "@/auth";
+import BookingActions from "@/components/customer/BookingActions";
 import LogoutButton from "@/components/customer/LogoutButton";
 import ProfileSettingsForm from "@/components/customer/ProfileSettingsForm";
 import {prisma} from "@/lib/prisma";
@@ -32,6 +35,7 @@ type BookingItem = {
   totalPrice: number;
   bookingStatus: string;
   paymentStatus: string;
+  createdAt: Date;
   employee: {
     name: string;
   } | null;
@@ -71,6 +75,7 @@ export default async function ProfilePage() {
         totalPrice: true,
         bookingStatus: true,
         paymentStatus: true,
+        createdAt: true,
         employee: {
           select: {
             name: true
@@ -127,7 +132,7 @@ export default async function ProfilePage() {
         <section className="grid gap-3 lg:grid-cols-3">
           <Card title="Moj račun" id="racun">
             <InfoRow label="Ime" value={user?.name || "Ni podatka"} />
-            <InfoRow label="E-posta" value={user?.email || "Ni podatka"} />
+            <InfoRow label="E-pošta" value={user?.email || "Ni podatka"} />
             <InfoRow label="Telefon" value={latestBooking?.phone || "Ni podatka"} />
             <InfoRow
               label="Vloga"
@@ -155,7 +160,7 @@ export default async function ProfilePage() {
               initialPhone={latestBooking?.phone || ""}
             />
             <div className="grid gap-2">
-              <SettingPill label="Obvestila po e-posti" value="Vklopljeno" />
+              <SettingPill label="Obvestila po e-pošti" value="Vklopljeno" />
               <SettingPill label="SMS opozorila" value="Po želji" />
               <SettingPill label="Jezik" value="Slovenščina" />
             </div>
@@ -191,6 +196,9 @@ export default async function ProfilePage() {
                     <p className="mt-1 text-sm text-[#5d716a]">
                       {booking.city}, {booking.address}
                     </p>
+                    <p className="mt-1 text-[11px] text-[#5d716a]">
+                      Ustvarjen: {formatDateTime(booking.createdAt)}
+                    </p>
                   </div>
 
                   <div>
@@ -222,6 +230,16 @@ export default async function ProfilePage() {
                     <p className="text-[11px] text-[#5d716a]">
                       Plačilo: {booking.paymentStatus}
                     </p>
+
+                    {booking.bookingStatus !== "CANCELLED" &&
+                    booking.bookingStatus !== "COMPLETED" ? (
+                      <BookingActions
+                        bookingId={booking.id}
+                        selectedDate={booking.selectedDate}
+                        selectedTime={booking.selectedTime}
+                        bookingStatus={booking.bookingStatus}
+                      />
+                    ) : null}
                   </div>
                 </article>
               ))}
@@ -240,7 +258,7 @@ function Card({
 }: {
   title: string;
   id?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <section id={id} className="rounded-[24px] bg-white p-4 shadow-sm sm:p-5">
@@ -268,4 +286,11 @@ function SettingPill({label, value}: {label: string; value: string}) {
       <p className="mt-1 text-sm font-bold text-[#123b7a]">{value}</p>
     </div>
   );
+}
+
+function formatDateTime(value: Date) {
+  return new Intl.DateTimeFormat("sl-SI", {
+    dateStyle: "medium",
+    timeStyle: "short"
+  }).format(value);
 }
