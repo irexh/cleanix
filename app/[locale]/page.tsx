@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import {auth} from "@/auth";
+import ProfileMenu from "@/components/customer/ProfileMenu";
 import {getActiveHomepageSales} from "@/lib/sale-pricing";
 import {announcementPrisma} from "@/lib/announcement-prisma";
 import {galleryPrisma} from "@/lib/gallery-prisma";
@@ -101,11 +102,6 @@ export default async function Home() {
       : session?.user?.role === "EMPLOYEE" || session?.user?.role === "MANAGER"
         ? "/sl/employee"
         : "/sl/profile";
-  const profileInitial =
-    session?.user?.name?.trim().charAt(0) ||
-    session?.user?.email?.trim().charAt(0) ||
-    "P";
-
   return (
     <main>
       <header className="site-header">
@@ -139,14 +135,11 @@ export default async function Home() {
         ) : null}
 
         {session?.user?.email ? (
-          <a className="profile-mini-link" href={profileHref} aria-label="Moj profil">
-            {profileInitial.toUpperCase()}
-          </a>
-        ) : (
-          <a className="profile-mini-link" href="/sl/login" aria-label="Prijava">
-            P
-          </a>
-        )}
+          <ProfileMenu
+            profileHref={profileHref}
+            settingsHref="/sl/profile#nastavitve"
+          />
+        ) : null}
       </header>
 
       <section className="hero" id="domov">

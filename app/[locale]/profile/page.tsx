@@ -2,6 +2,7 @@ import {redirect} from "next/navigation";
 
 import {auth} from "@/auth";
 import LogoutButton from "@/components/customer/LogoutButton";
+import ProfileSettingsForm from "@/components/customer/ProfileSettingsForm";
 import {prisma} from "@/lib/prisma";
 
 const statusLabels: Record<string, string> = {
@@ -31,7 +32,6 @@ type BookingItem = {
   totalPrice: number;
   bookingStatus: string;
   paymentStatus: string;
-  createdAt: Date;
   employee: {
     name: string;
   } | null;
@@ -52,7 +52,7 @@ export default async function ProfilePage() {
     redirect("/sl/employee");
   }
 
-  const [user, bookings] = await Promise.all([
+  const [user, bookings, latestBooking] = await Promise.all([
     prisma.user.findUnique({
       where: {email: session.user.email},
       select: {name: true, email: true, role: true, createdAt: true}
@@ -71,13 +71,17 @@ export default async function ProfilePage() {
         totalPrice: true,
         bookingStatus: true,
         paymentStatus: true,
-        createdAt: true,
         employee: {
           select: {
             name: true
           }
         }
       }
+    }),
+    prisma.booking.findFirst({
+      where: {email: session.user.email},
+      orderBy: {createdAt: "desc"},
+      select: {phone: true}
     })
   ]);
 
@@ -92,14 +96,14 @@ export default async function ProfilePage() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#4d8dff]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#4d8dff]">
               CLEANIX PROFILE
             </p>
-            <h1 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl">
-              Moj račun
+            <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
+              Moj racun
             </h1>
             <p className="mt-2 max-w-2xl text-sm text-[#5d716a] sm:text-base">
-              Tukaj so tvoji termini, podatki in nastavitve računa.
+              Tukaj so tvoji termini, podatki in nastavitve racuna.
             </p>
           </div>
 
@@ -121,12 +125,13 @@ export default async function ProfilePage() {
         </div>
 
         <section className="grid gap-3 lg:grid-cols-3">
-          <Card title="Moj račun">
+          <Card title="Moj racun" id="racun">
             <InfoRow label="Ime" value={user?.name || "Ni podatka"} />
-            <InfoRow label="E-pošta" value={user?.email || "Ni podatka"} />
+            <InfoRow label="E-posta" value={user?.email || "Ni podatka"} />
+            <InfoRow label="Telefon" value={latestBooking?.phone || "Ni podatka"} />
             <InfoRow
               label="Vloga"
-              value={user?.role === "EMPLOYEE" ? "Čistilka" : "Stranka"}
+              value={user?.role === "EMPLOYEE" ? "Cistilka" : "Stranka"}
             />
           </Card>
 
@@ -143,26 +148,31 @@ export default async function ProfilePage() {
             />
           </Card>
 
-          <Card title="Nastavitve">
-            <SettingPill label="Obvestila po e-pošti" value="Vklopljeno" />
-            <SettingPill label="SMS opozorila" value="Po želji" />
-            <SettingPill label="Jezik" value="Slovenščina" />
+          <Card title="Nastavitve" id="nastavitve">
+            <ProfileSettingsForm
+              initialName={user?.name || ""}
+              initialEmail={user?.email || ""}
+              initialPhone={latestBooking?.phone || ""}
+            />
+            <div className="grid gap-2">
+              <SettingPill label="Obvestila po e-posti" value="Vklopljeno" />
+              <SettingPill label="SMS opozorila" value="Po zelji" />
+              <SettingPill label="Jezik" value="Slovenscina" />
+            </div>
           </Card>
         </section>
 
         <section className="mt-4 rounded-[24px] bg-white p-4 shadow-sm sm:p-5">
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <div>
-              <h2 className="text-xl font-extrabold">Moji termini</h2>
-              <p className="mt-1 text-sm text-[#5d716a]">
-                Pregled prihodnjih in preteklih rezervacij.
-              </p>
-            </div>
+          <div className="mb-4">
+            <h2 className="text-lg font-bold sm:text-xl">Moji termini</h2>
+            <p className="mt-1 text-sm text-[#5d716a]">
+              Pregled prihodnjih in preteklih rezervacij.
+            </p>
           </div>
 
           {typedBookings.length === 0 ? (
             <p className="rounded-xl bg-[#f6f9ff] p-4 text-center text-sm text-[#5d716a]">
-              Trenutno nimaš še nobenega termina.
+              Trenutno nimas se nobenega termina.
             </p>
           ) : (
             <div className="grid gap-3">
@@ -172,10 +182,10 @@ export default async function ProfilePage() {
                   className="grid gap-3 rounded-xl border border-[#dbe7fb] bg-[#f6f9ff] p-4 lg:grid-cols-[1.1fr_1fr_180px]"
                 >
                   <div>
-                    <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#5d716a]">
                       Termin
                     </p>
-                    <h3 className="mt-1 text-lg font-extrabold text-[#123b7a]">
+                    <h3 className="mt-1 text-base font-bold text-[#123b7a]">
                       {booking.selectedDate} ob {booking.selectedTime}
                     </h3>
                     <p className="mt-1 text-sm text-[#5d716a]">
@@ -184,7 +194,7 @@ export default async function ProfilePage() {
                   </div>
 
                   <div>
-                    <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#5d716a]">
                       Storitev
                     </p>
                     <p className="mt-1 text-sm font-bold text-[#123b7a]">
@@ -200,9 +210,8 @@ export default async function ProfilePage() {
 
                   <div className="flex flex-col gap-2">
                     <span
-                      className={`inline-flex w-fit rounded-full px-2.5 py-1 text-[11px] font-extrabold ${
-                        statusStyles[booking.bookingStatus] ??
-                        "bg-gray-100 text-gray-700"
+                      className={`inline-flex w-fit rounded-full px-2.5 py-1 text-[11px] font-bold ${
+                        statusStyles[booking.bookingStatus] ?? "bg-gray-100 text-gray-700"
                       }`}
                     >
                       {statusLabels[booking.bookingStatus] ?? booking.bookingStatus}
@@ -211,7 +220,7 @@ export default async function ProfilePage() {
                       EUR {booking.totalPrice}
                     </p>
                     <p className="text-[11px] text-[#5d716a]">
-                      Plačilo: {booking.paymentStatus}
+                      Placilo: {booking.paymentStatus}
                     </p>
                   </div>
                 </article>
@@ -226,14 +235,16 @@ export default async function ProfilePage() {
 
 function Card({
   title,
+  id,
   children
 }: {
   title: string;
+  id?: string;
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-[24px] bg-white p-4 shadow-sm sm:p-5">
-      <h2 className="text-lg font-extrabold sm:text-xl">{title}</h2>
+    <section id={id} className="rounded-[24px] bg-white p-4 shadow-sm sm:p-5">
+      <h2 className="text-lg font-bold sm:text-xl">{title}</h2>
       <div className="mt-4 space-y-3">{children}</div>
     </section>
   );
@@ -251,7 +262,7 @@ function InfoRow({label, value}: {label: string; value: string}) {
 function SettingPill({label, value}: {label: string; value: string}) {
   return (
     <div className="rounded-xl border border-[#dbe7fb] bg-[#f8fbff] px-3 py-2.5">
-      <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#5d716a]">
+      <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#5d716a]">
         {label}
       </p>
       <p className="mt-1 text-sm font-bold text-[#123b7a]">{value}</p>
