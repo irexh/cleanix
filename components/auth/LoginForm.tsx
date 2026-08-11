@@ -48,6 +48,8 @@ export default function LoginForm() {
 
       if (role === "ADMIN") {
         router.replace("/sl/admin");
+      } else if (role === "EMPLOYEE" || role === "MANAGER") {
+        router.replace("/sl/employee");
       } else {
         router.replace("/sl/profile");
       }

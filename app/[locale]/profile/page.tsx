@@ -45,6 +45,10 @@ export default async function ProfilePage() {
     redirect("/sl/admin");
   }
 
+  if (session.user.role === "EMPLOYEE" || session.user.role === "MANAGER") {
+    redirect("/sl/employee");
+  }
+
   const [user, bookings] = await Promise.all([
     prisma.user.findUnique({
       where: {email: session.user.email},
