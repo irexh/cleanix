@@ -3,6 +3,7 @@ import {Suspense} from "react";
 
 import BusinessInquiryForm from "@/components/BusinessInquiryForm";
 import BusinessIncludes from "@/components/business/BusinessIncludes";
+import Header from "@/components/Header";
 import {getActiveBusinessSale} from "@/lib/sale-pricing";
 import {getSiteContentMap} from "@/lib/site-content";
 
@@ -33,6 +34,7 @@ export default async function BusinessPage() {
 
   return (
     <main className="min-h-screen bg-[#f6f9ff] text-[#123b7a]">
+      <Header hasSale={Boolean(activeBusinessSale)} showProfile={false} profileHref="/sl/profile" />
       <section className="hidden">
         <div className="mx-auto grid max-w-7xl gap-8 rounded-[36px] bg-white p-8 shadow-sm sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>

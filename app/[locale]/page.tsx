@@ -1,12 +1,12 @@
 import Image from "next/image";
 
 import {auth} from "@/auth";
-import ProfileMenu from "@/components/customer/ProfileMenu";
 import {getActiveHomepageSales} from "@/lib/sale-pricing";
 import {announcementPrisma} from "@/lib/announcement-prisma";
 import {galleryPrisma} from "@/lib/gallery-prisma";
 import {getSiteContentMap} from "@/lib/site-content";
 import SiteFooter from "@/components/SiteFooter";
+import Header from "@/components/Header";
 
 export const dynamic = "force-dynamic";
 
@@ -104,43 +104,11 @@ export default async function Home() {
         : "/sl/profile";
   return (
     <main>
-      <header className="site-header">
-        <a href="#domov" className="brand" aria-label="cleanix domov">
-          <Image
-            src="/images/cisto-logo-transparent.png"
-            alt="cleanix logo"
-            width={38}
-            height={38}
-            className="brand-logo"
-          />
-          <span>cleanix</span>
-        </a>
-
-        <nav className="desktop-nav" aria-label="Glavna navigacija">
-          <a href="#kako-deluje">Kako deluje</a>
-          <a href="#storitve">Storitve</a>
-          <a href="/business">Cleanix Business</a>
-          <a href="#o-nas">Zakaj cleanix</a>
-        </nav>
-
-        <a className="hidden" href="/booking">
-          {content.home_hero_primary_button} <span>→</span>
-        </a>
-
-        {activeSales.length > 0 ? (
-          <a className="sale-gift-link" href="#akcija" aria-label="Poglej akcijo">
-            <span>🎁</span>
-            Akcija
-          </a>
-        ) : null}
-
-        {session?.user?.email ? (
-          <ProfileMenu
-            profileHref={profileHref}
-            settingsHref="/sl/profile#nastavitve"
-          />
-        ) : null}
-      </header>
+      <Header
+        hasSale={activeSales.length > 0}
+        showProfile={Boolean(session?.user?.email)}
+        profileHref={profileHref}
+      />
 
       <section className="hero" id="domov">
         <div className="hero-copy">
