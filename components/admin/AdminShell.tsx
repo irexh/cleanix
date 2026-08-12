@@ -1,19 +1,18 @@
 import AdminLogoutButton from "@/components/admin/AdminLogoutButton";
 
 const adminLinks = [
-  {href: "/sl/admin", label: "Nadzorna plošča"},
-  {href: "/sl/admin/inbox", label: "Prejeta sporočila"},
-  {href: "/sl/admin/clients", label: "Stranke"},
-  {href: "/sl/admin/companies", label: "Podjetja"},
-  {href: "/sl/admin/properties", label: "Nepremičnine"},
-  {href: "/sl/admin/services", label: "Storitve"},
-  {href: "/sl/admin/offers", label: "Ponudbe"},
-  {href: "/sl/admin/calendar", label: "Koledar"},
-  {href: "/sl/admin/employees", label: "Zaposleni"},
-  {href: "/sl/admin/gallery", label: "Galerija"},
-  {href: "/sl/admin/content", label: "Vsebina"},
-  {href: "/sl/admin/analytics", label: "Analitika"},
-  {href: "/sl/admin/settings", label: "Nastavitve"}
+  {href: "/sl/admin", label: "Dashboard"},
+  {href: "/sl/admin/inbox", label: "Inbox"},
+  {href: "/sl/admin/clients", label: "Clients"},
+  {href: "/sl/admin/companies", label: "Companies"},
+  {href: "/sl/admin/properties", label: "Properties"},
+  {href: "/sl/admin/services", label: "Services"},
+  {href: "/sl/admin/offers", label: "Offers"},
+  {href: "/sl/admin/calendar", label: "Calendar"},
+  {href: "/sl/admin/employees", label: "Employees"},
+  {href: "/sl/admin/gallery", label: "Gallery"},
+  {href: "/sl/admin/content", label: "Content"},
+  {href: "/sl/admin/settings", label: "Settings"}
 ];
 
 export default function AdminShell({children}: {children: React.ReactNode}) {
