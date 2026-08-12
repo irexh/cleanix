@@ -2,18 +2,11 @@ import Image from "next/image";
 import {Suspense} from "react";
 
 import BusinessInquiryForm from "@/components/BusinessInquiryForm";
+import BusinessIncludes from "@/components/business/BusinessIncludes";
 import {getActiveBusinessSale} from "@/lib/sale-pricing";
 import {getSiteContentMap} from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
-
-const businessServices = [
-  "Redno čiščenje pisarn",
-  "Čiščenje lokalov in salonov",
-  "Jutranje ali večerno čiščenje",
-  "Čiščenje skupnih prostorov",
-  "Prilagojeni termini za podjetja"
-];
 
 const reasons = [
   {
@@ -145,28 +138,7 @@ export default async function BusinessPage() {
         </div>
       </section>
 
-      <section className="px-6 py-12">
-        <div className="mx-auto max-w-7xl rounded-[36px] bg-white p-8 shadow-sm sm:p-10">
-          <p className="eyebrow">
-            <span /> KAJ PONUJAMO
-          </p>
-
-          <h2 className="mb-8 text-4xl font-bold">
-            Storitve za urejeno in brezhibno poslovno okolje.
-          </h2>
-
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {businessServices.map((service) => (
-              <div
-                key={service}
-                className="rounded-2xl bg-[#eaf2ff] px-5 py-4 font-semibold text-[#123b7a]"
-              >
-                {service}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <BusinessIncludes />
 
       <section className="px-6 py-12">
         <div className="mx-auto max-w-7xl rounded-[36px] bg-[#123b7a] p-8 text-white shadow-sm sm:p-10">
