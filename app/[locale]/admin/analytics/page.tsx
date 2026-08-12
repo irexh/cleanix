@@ -256,8 +256,8 @@ function topEntries(values: string[], limit: number) {
     .map(([label, count]) => ({label, count}));
 }
 
-function uniqueCount<T extends Record<string, string>>(items: T[], key: keyof T) {
-  return new Set(items.map((item) => item[key])).size;
+function uniqueCount<T, K extends keyof T>(items: T[], key: K) {
+  return new Set(items.map((item) => String(item[key]))).size;
 }
 
 function startOfDay(date: Date) {
