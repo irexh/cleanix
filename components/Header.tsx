@@ -76,6 +76,21 @@ export default function Header({hasSale, showProfile, profileHref}: HeaderProps)
       <div className={`mobile-menu-backdrop ${open ? "open" : ""}`} onClick={closeMenu} />
 
       <div id="mobile-menu" className={`mobile-menu ${open ? "open" : ""}`}>
+        <div className="mobile-menu-top">
+          <div className="mobile-menu-brand">
+            <Image
+              src="/images/cisto-logo-transparent.png"
+              alt="cleanix logo"
+              width={28}
+              height={28}
+            />
+            <div>
+              <strong>cleanix</strong>
+              <span>Menu</span>
+            </div>
+          </div>
+        </div>
+
         <a href="#kako-deluje" onClick={closeMenu}>
           Kako deluje
         </a>
