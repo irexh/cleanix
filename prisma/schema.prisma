@@ -111,3 +111,24 @@ model BusinessInquiry {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model WebAnalyticsEvent {
+  id         String   @id @default(cuid())
+  visitorId  String
+  sessionId  String
+  path       String
+  eventType  String
+  eventName  String
+  referrer   String?
+  source     String?
+  deviceType String?
+  country    String?
+  city       String?
+  userAgent  String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([eventType, createdAt])
+  @@index([path, createdAt])
+}

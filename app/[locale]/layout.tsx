@@ -5,6 +5,7 @@ import {notFound} from "next/navigation";
 import {ReactNode} from "react";
 
 import "../globals.css";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 import {routing} from "@/i18n/routing";
 
 
@@ -46,6 +47,7 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full">
         <NextIntlClientProvider messages={messages}>
+          <AnalyticsTracker />
           {children}
         </NextIntlClientProvider>
       </body>
