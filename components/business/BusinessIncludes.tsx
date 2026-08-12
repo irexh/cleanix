@@ -85,7 +85,7 @@ export default function BusinessIncludes() {
           </div>
         </div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+        <div>
           <div className="overflow-hidden rounded-[20px] border border-[#dbe7fb] bg-[#f8fbff]">
             <div className="grid grid-cols-2 gap-px bg-[#dbe7fb] text-center text-[11px] font-bold text-[#2f6fe4] sm:grid-cols-4">
               {tabs.map((tab) => {
@@ -137,27 +137,6 @@ export default function BusinessIncludes() {
             </div>
           </div>
 
-          <div className="grid gap-3">
-            <div className="rounded-[20px] bg-[#eaf2ff] p-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#5d716a]">
-                Kaj je to?
-              </p>
-              <p className="mt-1 text-sm leading-6 text-[#123b7a]">
-                Kratek in jasen pregled, kaj Cleanix Business redno pokriva v
-                poslovnih prostorih. Brez velikih blokov, samo bistvo.
-              </p>
-            </div>
-
-            <div className="rounded-[20px] bg-[#123b7a] p-4 text-white">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#c8dbff]">
-                Cleanix stil
-              </p>
-              <p className="mt-1 text-sm leading-6 text-[#eaf2ff]">
-                Vse je narejeno XS: majhni naslovi, jasne točke, urejena kartica
-                in hiter pregled.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
