@@ -148,7 +148,7 @@ export default async function AdminAnalyticsPage() {
 function MetricCard({label, value, hint}: {label: string; value: string; hint: string}) {
   return (
     <div className="rounded-[20px] border border-[#dbe7fb] bg-white px-4 py-4 shadow-sm">
-      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#5d716a]">{label}</p>
+      <p className="text-xs font-semibold leading-4 text-[#5d716a]">{label}</p>
       <p className="mt-2 text-2xl font-bold text-[#123b7a]">{value}</p>
       <p className="mt-2 text-xs text-[#5d716a]">{hint}</p>
     </div>

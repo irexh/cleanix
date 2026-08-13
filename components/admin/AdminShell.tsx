@@ -19,29 +19,29 @@ const adminLinks = [
 export default function AdminShell({children}: {children: React.ReactNode}) {
   return (
     <div className="min-h-screen bg-[#f6f9ff] text-[#123b7a]">
-      <div className="grid min-h-screen lg:grid-cols-[280px_1fr]">
-        <aside className="border-r border-[#dbe7fb] bg-white px-5 py-6">
-          <a href="/sl/admin" className="mb-8 inline-flex items-center gap-2 text-2xl font-extrabold tracking-tight">
+      <div className="grid min-h-screen lg:grid-cols-[220px_1fr]">
+        <aside className="border-r border-[#dbe7fb] bg-white px-4 py-5">
+          <a href="/sl/admin" className="mb-5 inline-flex items-center gap-2 text-2xl font-extrabold tracking-tight">
             <span className="text-[#4d8dff]">✦</span>
             cleanix
           </a>
 
-          <nav className="grid gap-1">
+          <nav className="grid gap-0.5">
             {adminLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="rounded-2xl px-4 py-3 text-sm font-bold text-[#123b7a] transition hover:bg-[#eaf2ff]"
+                className="rounded-xl px-3 py-2 text-[13px] font-bold leading-[1.15] text-[#123b7a] transition hover:bg-[#eaf2ff]"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          <div className="mt-8 grid gap-3">
+          <div className="mt-5 grid gap-2">
             <a
               href="/"
-              className="rounded-full border border-[#123b7a] px-4 py-3 text-center text-sm font-bold transition hover:bg-[#123b7a] hover:text-white"
+              className="rounded-full border border-[#123b7a] px-4 py-2.5 text-center text-[13px] font-bold transition hover:bg-[#123b7a] hover:text-white"
             >
               Nazaj na spletno stran
             </a>
