@@ -1,4 +1,5 @@
 import AdminLogoutButton from "@/components/admin/AdminLogoutButton";
+import AdminSidebarNav from "@/components/admin/AdminSidebarNav";
 
 const adminLinks = [
   {href: "/sl/admin", label: "Nadzorna plošča"},
@@ -26,17 +27,7 @@ export default function AdminShell({children}: {children: React.ReactNode}) {
             cleanix
           </a>
 
-          <nav className="grid gap-0.5">
-            {adminLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="rounded-xl px-3 py-2 text-[13px] font-bold leading-[1.15] text-[#123b7a] transition hover:bg-[#eaf2ff]"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
+          <AdminSidebarNav links={adminLinks} />
 
           <div className="mt-5 grid gap-2">
             <a
