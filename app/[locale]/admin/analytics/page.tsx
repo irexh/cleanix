@@ -39,9 +39,8 @@ export default async function AdminAnalyticsPage() {
   const topButtons = topCounts(buttonClicks.map((event) => event.eventName), 6);
   const topPages = topCounts(pageViews.map((event) => humanizePath(event.path)), 6);
   const topDevices = topCounts(pageViews.map((event) => event.deviceType || "Neznano"), 3);
-  const topSources = topCounts(
-    pageViews.map((event) => normalizeSource(event.source)),
-    6
+  const topSources = withDefaultSources(
+    topCounts(pageViews.map((event) => normalizeSource(event.source)), 20)
   );
   const topCountries = topCounts(pageViews.map((event) => event.country || "Neznano"), 6);
   const topCities = topCounts(
@@ -255,6 +254,26 @@ function topCounts(values: string[], limit: number) {
     .sort((a, b) => b[1] - a[1])
     .slice(0, limit)
     .map(([label, count]) => ({label, count}));
+}
+
+function withDefaultSources(items: Array<{label: string; count: number}>) {
+  const defaults = [
+    "Google",
+    "Facebook",
+    "Instagram",
+    "Direktno na spletno stran",
+    "LinkedIn",
+    "TikTok",
+    "Bing",
+    "Drugo"
+  ];
+
+  const counts = new Map(items.map((item) => [item.label, item.count]));
+
+  return defaults.map((label) => ({
+    label,
+    count: counts.get(label) ?? 0
+  }));
 }
 
 function normalizeSource(source: string | null | undefined) {
