@@ -80,7 +80,8 @@ export default async function AdminInboxPage() {
 
         <section className="mb-5">
           <div className="mb-3 flex items-center justify-between gap-3">
-            <h2 className="text-lg font-bold text-[#123b7a]">
+            <h2 className="mb-2 text-sm font-bold leading-tight text-[#123b7a]"
+              style={{letterSpacing: "0.02em"}}>
               Cleanix Business povpraševanja
             </h2>
             <span className="rounded-full bg-[#eaf2ff] px-3 py-1 text-xs font-bold text-[#123b7a]">
@@ -182,7 +183,8 @@ export default async function AdminInboxPage() {
 
         <section>
           <div className="mb-3 flex items-center justify-between gap-3">
-            <h2 className="text-lg font-bold text-[#123b7a]">
+            <h2 className="mb-2 text-sm font-bold leading-tight text-[#123b7a]"
+              style={{letterSpacing: "0.02em"}}>
               Rezervacije, ki čakajo na potrditev
             </h2>
             <span className="rounded-full bg-[#eaf2ff] px-3 py-1 text-xs font-bold text-[#123b7a]">

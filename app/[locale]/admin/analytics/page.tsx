@@ -166,7 +166,12 @@ function Panel({
 }) {
   return (
     <section className="rounded-xl border border-[#dbe7fb] bg-white p-3 shadow-sm">
-      <h2 className="mb-2 text-sm font-bold tracking-normal leading-tight text-[#123b7a]">{title}</h2>
+      <h2
+  className="mb-2 text-sm font-bold leading-tight text-[#123b7a]"
+  style={{letterSpacing: "0.01em"}}
+>
+  {title}
+</h2>
       {children}
     </section>
   );

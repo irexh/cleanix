@@ -38,7 +38,8 @@ export default async function AdminGalleryPage() {
         </p>
 
         <section className="mt-8 rounded-[32px] bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="text-2xl font-extrabold">Hero slike</h2>
+          <h2 className="mb-2 text-sm font-bold leading-tight text-[#123b7a]"
+              style={{letterSpacing: "0.01em"}}>Hero slike</h2>
           <p className="mt-2 text-sm text-[#5d716a]">
             Uporabi obstojece poti iz seznama ali javni URL slike.
           </p>
