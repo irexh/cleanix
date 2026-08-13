@@ -24,9 +24,9 @@ export default function AdminSidebarNav({links}: {links: AdminLink[]}) {
             href={link.href}
             aria-current={isActive ? "page" : undefined}
             className={[
-              "rounded-xl px-3 py-2 text-[13px] font-bold leading-[1.15] transition",
+              "relative rounded-xl px-3 py-2 pl-4 text-[13px] font-bold leading-[1.15] transition",
               isActive
-                ? "bg-[#123b7a] text-white shadow-sm"
+                ? "bg-[#eaf2ff] text-[#123b7a] shadow-[inset_4px_0_0_#2f6fe4]"
                 : "text-[#123b7a] hover:bg-[#eaf2ff]"
             ].join(" ")}
           >
