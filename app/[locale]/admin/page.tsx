@@ -144,13 +144,13 @@ export default async function AdminPage() {
           <div className="flex flex-wrap items-center gap-2">
             <a
               href="/sl/admin/inbox"
-              className="rounded-full bg-[#2f6fe4] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#123b7a]"
+              className="admin-blue-button px-3 py-2 text-xs"
             >
               Inbox
             </a>
             <a
               href="/"
-              className="rounded-full border border-[#123b7a] px-3 py-2 text-xs font-bold text-[#123b7a] transition hover:bg-[#123b7a] hover:text-white"
+              className="admin-blue-outline-button px-3 py-2 text-xs"
             >
               Spletna stran
             </a>
@@ -232,7 +232,7 @@ export default async function AdminPage() {
                       </p>
                       <a
                         href={`/sl/admin/bookings/${booking.id}`}
-                        className="rounded-full border border-[#123b7a] px-3 py-1.5 text-[11px] font-bold text-[#123b7a] transition hover:bg-[#123b7a] hover:text-white"
+                        className="admin-blue-outline-button px-3 py-1.5 text-[11px]"
                       >
                         Odpri
                       </a>

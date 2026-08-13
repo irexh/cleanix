@@ -40,7 +40,7 @@ export default async function AdminContentPage() {
 
           <button
             type="submit"
-            className="mt-7 rounded-full bg-[#2f6fe4] px-7 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+            className="admin-blue-button mt-7 px-7 py-3 text-sm"
           >
             Shrani spremembe
           </button>

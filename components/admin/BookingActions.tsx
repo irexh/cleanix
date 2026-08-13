@@ -22,7 +22,7 @@ export default function BookingActions({ id }: Props) {
     <div className="flex flex-wrap gap-2">
       <Link
         href={`/admin/bookings/${id}`}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm"
+        className="admin-blue-button px-3 py-2 text-sm"
       >
         {t("view")}
       </Link>

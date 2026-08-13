@@ -175,7 +175,7 @@ export default async function BookingDetailsPage({
                 </label>
                 <button
                   type="submit"
-                  className="rounded-full bg-[#2f6fe4] px-5 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+                  className="admin-blue-button px-5 py-3 text-sm"
                 >
                   Shrani zaposlenega
                 </button>

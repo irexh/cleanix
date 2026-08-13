@@ -87,7 +87,7 @@ export default function PrioritySelector({
           type="button"
           onClick={handleSave}
           disabled={isPending}
-          className="rounded-full bg-[#2f6fe4] px-5 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a] disabled:cursor-not-allowed disabled:opacity-50"
+          className="admin-blue-button px-5 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
         >
           Shrani prioriteto
         </button>

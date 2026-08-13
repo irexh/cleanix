@@ -78,7 +78,7 @@ export default async function AdminPage({searchParams}: AdminPageProps) {
           <div className="flex flex-wrap gap-3">
             <a
               href="/"
-              className="rounded-full border border-[#173e35] px-5 py-3 text-sm font-bold transition hover:bg-[#173e35] hover:text-white"
+              className="admin-blue-outline-button px-5 py-3 text-sm"
             >
               Nazaj na spletno stran
             </a>
@@ -188,7 +188,7 @@ export default async function AdminPage({searchParams}: AdminPageProps) {
                       <td className="px-6 py-5">
                         <a
                           href={`/admin/bookings/${booking.id}`}
-                          className="inline-flex rounded-full border border-[#173e35] px-4 py-2 text-sm font-bold text-[#173e35] transition hover:bg-[#173e35] hover:text-white"
+                          className="admin-blue-outline-button px-4 py-2 text-sm"
                         >
                           Odpri
                         </a>

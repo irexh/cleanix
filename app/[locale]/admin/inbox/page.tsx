@@ -233,7 +233,7 @@ export default async function AdminInboxPage() {
                       <div className="flex justify-start">
                         <a
                           href={`/sl/admin/bookings/${booking.id}`}
-                          className="inline-flex items-center justify-center rounded-full bg-[#2f6fe4] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#215ac0]"
+                          className="admin-blue-button px-4 py-2 text-xs"
                         >
                           Odpri
                         </a>

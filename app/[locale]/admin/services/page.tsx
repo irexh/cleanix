@@ -111,7 +111,7 @@ export default async function AdminServicesPage() {
 
             <button
               type="submit"
-              className="w-fit rounded-full bg-[#2f6fe4] px-6 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+              className="admin-blue-button w-fit px-6 py-3 text-sm"
             >
               Objavi
             </button>

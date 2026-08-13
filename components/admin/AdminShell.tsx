@@ -41,7 +41,7 @@ export default function AdminShell({children}: {children: React.ReactNode}) {
           <div className="mt-5 grid gap-2">
             <a
               href="/"
-              className="rounded-full border border-[#123b7a] px-4 py-2.5 text-center text-[13px] font-bold transition hover:bg-[#123b7a] hover:text-white"
+              className="admin-blue-outline-button px-4 py-2.5 text-center text-[13px]"
             >
               Nazaj na spletno stran
             </a>

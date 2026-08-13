@@ -18,7 +18,7 @@ const actions: Array<{
   {
     label: "Potrdi",
     status: "CONFIRMED",
-    className: "bg-blue-600 text-white hover:bg-blue-700"
+    className: "admin-blue-button"
   },
   {
     label: "V teku",

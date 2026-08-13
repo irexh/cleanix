@@ -98,7 +98,7 @@ export default function SendCustomerEmailForm({
         <button
           type="button"
           onClick={() => setIsOpen((value) => !value)}
-          className="rounded-full bg-[#2f6fe4] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#123b7a]"
+          className="admin-blue-button px-4 py-2 text-sm"
         >
           {isOpen ? "Zapri" : "Odpri"}
         </button>
@@ -149,7 +149,7 @@ export default function SendCustomerEmailForm({
             <button
               type="submit"
               disabled={isPending}
-              className="rounded-full bg-[#2f6fe4] px-5 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a] disabled:cursor-not-allowed disabled:opacity-50"
+              className="admin-blue-button px-5 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
             >
               Pošlji email
             </button>

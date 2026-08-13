@@ -108,7 +108,7 @@ export default function ServiceSaleForm({
         <input name="saleEndsAt" type="date" className="rounded-xl border border-[#dbe7fb] px-4 py-3 outline-none focus:border-[#2f6fe4]" />
       </label>
 
-      <button type="submit" className="rounded-full bg-[#2f6fe4] px-6 py-3 text-sm font-extrabold text-white transition hover:bg-[#215ac0] lg:mt-7">
+      <button type="submit" className="admin-blue-button px-6 py-3 text-sm lg:mt-7">
         Shrani akcijo
       </button>
     </form>

@@ -58,7 +58,7 @@ export default async function AdminGalleryPage() {
             <div className="lg:col-span-2">
               <button
                 type="submit"
-                className="rounded-full bg-[#2f6fe4] px-7 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+                className="admin-blue-button px-7 py-3 text-sm"
               >
                 Shrani slike
               </button>
@@ -89,7 +89,7 @@ export default async function AdminGalleryPage() {
             </label>
             <button
               type="submit"
-              className="rounded-full bg-[#2f6fe4] px-7 py-3 text-sm font-extrabold text-white transition hover:bg-[#123b7a]"
+              className="admin-blue-button px-7 py-3 text-sm"
             >
               Dodaj
             </button>

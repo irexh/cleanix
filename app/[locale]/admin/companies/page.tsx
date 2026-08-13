@@ -64,7 +64,7 @@ export default async function AdminCompaniesPage() {
 
                 <a
                   href={`/sl/admin/bookings/${booking.id}`}
-                  className="inline-flex items-center justify-center rounded-full border border-[#123b7a] px-4 py-2 text-sm font-bold transition hover:bg-[#123b7a] hover:text-white"
+                  className="admin-blue-outline-button px-4 py-2 text-sm"
                 >
                   Odpri
                 </a>

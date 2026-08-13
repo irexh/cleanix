@@ -87,7 +87,7 @@ export default async function AdminEmployeesPage() {
             <div className="hidden lg:flex lg:items-end">
               <button
                 type="submit"
-                className="w-full rounded-full bg-[#2f6fe4] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#123b7a]"
+                className="admin-blue-button w-full px-4 py-2.5 text-sm"
               >
                 Dodaj
               </button>
@@ -126,7 +126,7 @@ export default async function AdminEmployeesPage() {
 
             <button
               type="submit"
-              className="rounded-full bg-[#2f6fe4] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#123b7a] lg:hidden"
+              className="admin-blue-button px-4 py-2.5 text-sm lg:hidden"
             >
               Dodaj
             </button>
@@ -220,7 +220,7 @@ export default async function AdminEmployeesPage() {
                       </label>
                       <button
                         type="submit"
-                        className="rounded-full border border-[#123b7a] px-3 py-1.5 text-xs font-bold text-[#123b7a] transition hover:bg-[#123b7a] hover:text-white"
+                        className="admin-blue-outline-button px-3 py-1.5 text-xs"
                       >
                         Shrani
                       </button>
@@ -274,7 +274,7 @@ export default async function AdminEmployeesPage() {
                     </label>
                     <button
                       type="submit"
-                      className="rounded-full bg-[#2f6fe4] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#123b7a]"
+                      className="admin-blue-button px-3 py-2 text-xs"
                     >
                       Ustvari login
                     </button>
