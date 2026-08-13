@@ -164,7 +164,7 @@ function Panel({
 }) {
   return (
     <section className="rounded-[22px] border border-[#dbe7fb] bg-white p-4 shadow-sm">
-      <h2 className="mb-4 text-base font-bold text-[#123b7a]">{title}</h2>
+      <h2 className="mb-4 text-base font-bold tracking-normal leading-tight text-[#123b7a]">{title}</h2>
       {children}
     </section>
   );

@@ -382,7 +382,7 @@ function Card({
   return (
     <section className="rounded-[20px] bg-white p-4 shadow-sm">
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h2 className="text-base font-bold text-[#123b7a]">{title}</h2>
+        <h2 className="text-base font-bold tracking-normal leading-tight text-[#123b7a]">{title}</h2>
         {badge ? (
           <span className="rounded-full bg-[#eaf2ff] px-2.5 py-1 text-[10px] font-bold text-[#2f6fe4]">
             {badge}
