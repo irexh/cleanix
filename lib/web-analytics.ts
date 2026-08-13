@@ -53,7 +53,7 @@ export async function getAnalyticsEventsSince(date: Date) {
 }
 
 export function detectSource(referrer: string | null | undefined) {
-  if (!referrer) return "Direktno";
+  if (!referrer) return "Direktno na spletno stran";
 
   const value = referrer.toLowerCase();
 

@@ -39,7 +39,10 @@ export default async function AdminAnalyticsPage() {
   const topButtons = topCounts(buttonClicks.map((event) => event.eventName), 6);
   const topPages = topCounts(pageViews.map((event) => humanizePath(event.path)), 6);
   const topDevices = topCounts(pageViews.map((event) => event.deviceType || "Neznano"), 3);
-  const topSources = topCounts(pageViews.map((event) => event.source || "Direktno"), 6);
+  const topSources = topCounts(
+    pageViews.map((event) => normalizeSource(event.source)),
+    6
+  );
   const topCountries = topCounts(pageViews.map((event) => event.country || "Neznano"), 6);
   const topCities = topCounts(
     pageViews.map((event) => {
@@ -50,45 +53,45 @@ export default async function AdminAnalyticsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#f4f8ff] px-4 py-4 text-[#123b7a] sm:px-5">
+    <main className="min-h-screen bg-[#f4f8ff] px-3 py-3 text-[#123b7a] sm:px-4">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+        <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#4d8dff]">
+            <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-[#4d8dff]">
               CLEANIX ANALITIKA
             </p>
-            <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
+            <h1 className="mt-1 text-xl font-bold tracking-normal leading-tight sm:text-2xl">
               Spletna analitika
             </h1>
-            <p className="mt-2 max-w-3xl text-sm text-[#5d716a]">
+            <p className="mt-1.5 max-w-3xl text-xs leading-5 text-[#5d716a]">
               Pregled obiska spletne strani, klikov na gumbe, najbolj gledanih strani,
               virov prometa, naprav in konverzij rezervacij.
             </p>
           </div>
 
-          <div className="rounded-[18px] border border-[#dbe7fb] bg-white px-4 py-3 text-right shadow-sm">
-            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#5d716a]">
+          <div className="rounded-xl border border-[#dbe7fb] bg-white px-3 py-2 text-right shadow-sm">
+            <p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#5d716a]">
               Obdobje
             </p>
-            <p className="mt-1 text-sm font-bold text-[#123b7a]">Zadnjih 30 dni</p>
+            <p className="mt-1 text-xs font-bold text-[#123b7a]">Zadnjih 30 dni</p>
           </div>
         </div>
 
-        <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <section className="grid gap-2 md:grid-cols-2 xl:grid-cols-4">
           <MetricCard label="Skupaj obiskovalcev" value={String(allVisitors)} hint="Unikatni obiskovalci" />
           <MetricCard label="Obiskovalci danes" value={String(visitorsToday)} hint="Današnji obisk" />
           <MetricCard label="Obiskovalci ta teden" value={String(visitorsWeek)} hint="Tedenski obisk" />
           <MetricCard label="Obiskovalci ta mesec" value={String(visitorsMonth)} hint="Mesečni obisk" />
         </section>
 
-        <section className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <section className="mt-2 grid gap-2 md:grid-cols-2 xl:grid-cols-4">
           <MetricCard label="Ogledi strani" value={String(pageViews.length)} hint="Skupni ogledi strani" />
           <MetricCard label="Kliki na gumbe" value={String(buttonClicks.length)} hint="Gumbi in povezave" />
           <MetricCard label="Povprečen čas" value={formatDuration(averageStaySeconds)} hint="Ocena trajanja obiska" />
           <MetricCard label="Stopnja konverzije" value={`${conversionRate.toFixed(1)}%`} hint="Zaključena / začeta naročila" />
         </section>
 
-        <section className="mt-4 grid gap-3 xl:grid-cols-[1.05fr_0.95fr]">
+        <section className="mt-2 grid gap-2 xl:grid-cols-[1.05fr_0.95fr]">
           <Panel title="Najbolj obiskane strani">
             <TableList
               headerLeft="Stran"
@@ -108,12 +111,12 @@ export default async function AdminAnalyticsPage() {
           </Panel>
         </section>
 
-        <section className="mt-4 grid gap-3 xl:grid-cols-3">
+        <section className="mt-2 grid gap-2 xl:grid-cols-3">
           <Panel title="Obiskovalci po napravah">
             <BarList items={topDevices} />
           </Panel>
 
-          <Panel title="Najpogostejši viri prometa">
+          <Panel title="Od kod prihajajo obiskovalci">
             <BarList items={topSources} />
           </Panel>
 
@@ -131,7 +134,7 @@ export default async function AdminAnalyticsPage() {
           </Panel>
         </section>
 
-        <section className="mt-4 grid gap-3 xl:grid-cols-2">
+        <section className="mt-2 grid gap-2 xl:grid-cols-2">
           <Panel title="Države obiskovalcev">
             <BarList items={topCountries} />
           </Panel>
@@ -147,10 +150,10 @@ export default async function AdminAnalyticsPage() {
 
 function MetricCard({label, value, hint}: {label: string; value: string; hint: string}) {
   return (
-    <div className="rounded-[20px] border border-[#dbe7fb] bg-white px-4 py-4 shadow-sm">
-      <p className="text-xs font-semibold leading-4 text-[#5d716a]">{label}</p>
-      <p className="mt-2 text-2xl font-bold text-[#123b7a]">{value}</p>
-      <p className="mt-2 text-xs text-[#5d716a]">{hint}</p>
+    <div className="rounded-xl border border-[#dbe7fb] bg-white px-3 py-2.5 shadow-sm">
+      <p className="text-[11px] font-semibold leading-4 text-[#5d716a]">{label}</p>
+      <p className="mt-1 text-xl font-bold tracking-normal leading-tight text-[#123b7a]">{value}</p>
+      <p className="mt-1 text-[10px] leading-4 text-[#5d716a]">{hint}</p>
     </div>
   );
 }
@@ -163,8 +166,8 @@ function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-[22px] border border-[#dbe7fb] bg-white p-4 shadow-sm">
-      <h2 className="mb-4 text-base font-bold tracking-normal leading-tight text-[#123b7a]">{title}</h2>
+    <section className="rounded-xl border border-[#dbe7fb] bg-white p-3 shadow-sm">
+      <h2 className="mb-2 text-sm font-bold tracking-normal leading-tight text-[#123b7a]">{title}</h2>
       {children}
     </section>
   );
@@ -182,19 +185,19 @@ function TableList({
   emptyText: string;
 }) {
   if (rows.length === 0) {
-    return <div className="rounded-[16px] bg-[#f8fbff] px-3 py-3 text-sm text-[#5d716a]">{emptyText}</div>;
+    return <div className="rounded-lg bg-[#f8fbff] px-2.5 py-2 text-xs text-[#5d716a]">{emptyText}</div>;
   }
 
   return (
-    <div className="overflow-hidden rounded-[16px] border border-[#dbe7fb]">
-      <div className="grid grid-cols-[1fr_auto] bg-[#f8fbff] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#5d716a]">
+    <div className="overflow-hidden rounded-lg border border-[#dbe7fb]">
+      <div className="grid grid-cols-[1fr_auto] bg-[#f8fbff] px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.08em] text-[#5d716a]">
         <span>{headerLeft}</span>
         <span>{headerRight}</span>
       </div>
       {rows.map((row) => (
         <div
           key={row.label}
-          className="grid grid-cols-[1fr_auto] items-center gap-3 border-t border-[#eef4ff] px-3 py-3 text-sm"
+          className="grid grid-cols-[1fr_auto] items-center gap-2 border-t border-[#eef4ff] px-2.5 py-2 text-xs"
         >
           <span className="font-medium text-[#123b7a]">{row.label}</span>
           <span className="font-bold text-[#2f6fe4]">
@@ -211,25 +214,25 @@ function BarList({items}: {items: Array<{label: string; count: number}>}) {
   const total = items.reduce((sum, item) => sum + item.count, 0);
 
   if (items.length === 0) {
-    return <div className="rounded-[16px] bg-[#f8fbff] px-3 py-3 text-sm text-[#5d716a]">Za zdaj še ni podatkov.</div>;
+    return <div className="rounded-lg bg-[#f8fbff] px-2.5 py-2 text-xs text-[#5d716a]">Za zdaj še ni podatkov.</div>;
   }
 
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-2">
       {items.map((item) => {
         const percentage = total > 0 ? (item.count / total) * 100 : 0;
 
         return (
-          <div key={item.label} className="rounded-[16px] bg-[#f8fbff] px-3 py-3">
-            <div className="mb-2 flex items-center justify-between gap-3 text-sm">
+          <div key={item.label} className="rounded-lg bg-[#f8fbff] px-2.5 py-2">
+            <div className="mb-1.5 flex items-center justify-between gap-2 text-xs">
               <span className="font-medium text-[#123b7a]">{item.label}</span>
               <span className="font-bold text-[#2f6fe4]">
                 {item.count} ({percentage.toFixed(1)}%)
               </span>
             </div>
-            <div className="h-2 rounded-full bg-[#dbe7fb]">
+            <div className="h-1.5 rounded-full bg-[#dbe7fb]">
               <div
-                className="h-2 rounded-full bg-[#2f6fe4]"
+                className="h-1.5 rounded-full bg-[#2f6fe4]"
                 style={{width: `${Math.max(percentage, 4)}%`}}
               />
             </div>
@@ -252,6 +255,11 @@ function topCounts(values: string[], limit: number) {
     .sort((a, b) => b[1] - a[1])
     .slice(0, limit)
     .map(([label, count]) => ({label, count}));
+}
+
+function normalizeSource(source: string | null | undefined) {
+  if (!source || source === "Direktno") return "Direktno na spletno stran";
+  return source;
 }
 
 function uniqueVisitors(rows: AnalyticsRow[]) {
