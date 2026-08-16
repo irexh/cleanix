@@ -35,27 +35,31 @@ export default function Header({hasSale, showProfile, profileHref}: HeaderProps)
       </a>
 
       <nav className="desktop-nav" aria-label="Glavna navigacija">
-        <a href="#kako-deluje">Kako deluje</a>
         <a href="#storitve">Storitve</a>
-        <a href="/business">Cleanix Business</a>
-        <a href="#o-nas">Zakaj cleanix</a>
+        <a href="#kako-deluje">Kako deluje</a>
+        <a href="/business">Za podjetja</a>
+        <a href="/cenik">Cenik</a>
+        <a href="#o-nas">O nas</a>
       </nav>
 
       <div className="header-actions">
-        <a className="hidden" href="/booking">
-          Rezerviraj <span>→</span>
-        </a>
-
-        {hasSale ? (
-          <a className="sale-gift-link" href="#akcija" aria-label="Poglej akcijo">
-            <span>🎁</span>
-            Akcija
-          </a>
-        ) : null}
-
         {showProfile ? (
           <a className="header-profile-link" href={profileHref}>
             Profil
+          </a>
+        ) : (
+          <a className="header-login-link" href="/auth/signin">
+            Prijava
+          </a>
+        )}
+
+        <a className="header-primary-cta" href="/booking">
+          Naroči čiščenje
+        </a>
+
+        {hasSale ? (
+          <a className="header-sale-dot" href="#akcija" aria-label="Poglej akcijo">
+            Akcija
           </a>
         ) : null}
 
@@ -86,25 +90,31 @@ export default function Header({hasSale, showProfile, profileHref}: HeaderProps)
             />
             <div>
               <strong>cleanix</strong>
-              <span>Menu</span>
+              <span>Meni</span>
             </div>
           </div>
         </div>
 
-        <a href="#kako-deluje" onClick={closeMenu}>
-          Kako deluje
-        </a>
         <a href="#storitve" onClick={closeMenu}>
           Storitve
         </a>
+        <a href="#kako-deluje" onClick={closeMenu}>
+          Kako deluje
+        </a>
         <a href="/business" onClick={closeMenu}>
-          Cleanix Business
+          Za podjetja
+        </a>
+        <a href="/cenik" onClick={closeMenu}>
+          Cenik
         </a>
         <a href="#o-nas" onClick={closeMenu}>
-          Zakaj cleanix
+          O nas
+        </a>
+        <a href={showProfile ? profileHref : "/auth/signin"} onClick={closeMenu}>
+          {showProfile ? "Profil" : "Prijava"}
         </a>
         <a href="/booking" className="mobile-menu-cta" onClick={closeMenu}>
-          Rezerviraj čiščenje
+          Naroči čiščenje
         </a>
       </div>
     </header>
