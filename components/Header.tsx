@@ -47,11 +47,7 @@ export default function Header({hasSale, showProfile, profileHref}: HeaderProps)
           <a className="header-profile-link" href={profileHref}>
             Profil
           </a>
-        ) : (
-          <a className="header-login-link" href="/auth/signin">
-            Prijava
-          </a>
-        )}
+        ) : null}
 
         <a className="header-primary-cta" href="/booking">
           Naroči čiščenje
@@ -59,6 +55,7 @@ export default function Header({hasSale, showProfile, profileHref}: HeaderProps)
 
         {hasSale ? (
           <a className="header-sale-dot" href="#akcija" aria-label="Poglej akcijo">
+            <span aria-hidden="true">🎁</span>
             Akcija
           </a>
         ) : null}
@@ -110,9 +107,11 @@ export default function Header({hasSale, showProfile, profileHref}: HeaderProps)
         <a href="#o-nas" onClick={closeMenu}>
           O nas
         </a>
-        <a href={showProfile ? profileHref : "/auth/signin"} onClick={closeMenu}>
-          {showProfile ? "Profil" : "Prijava"}
-        </a>
+        {showProfile ? (
+          <a href={profileHref} onClick={closeMenu}>
+            Profil
+          </a>
+        ) : null}
         <a href="/booking" className="mobile-menu-cta" onClick={closeMenu}>
           Naroči čiščenje
         </a>
