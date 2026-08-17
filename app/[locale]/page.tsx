@@ -5,6 +5,7 @@ import {getActiveHomepageSales} from "@/lib/sale-pricing";
 import {announcementPrisma} from "@/lib/announcement-prisma";
 import {galleryPrisma} from "@/lib/gallery-prisma";
 import {getSiteContentMap} from "@/lib/site-content";
+import HomeHeroSlider from "@/components/HomeHeroSlider";
 import SiteFooter from "@/components/SiteFooter";
 import Header from "@/components/Header";
 
@@ -181,16 +182,22 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="hero-art hero-art-premium" aria-hidden="true">
-          <Image
-            src="/images/homepage-hero-reference.png"
-            alt="cleanix ekipa pri čiščenju doma"
-            fill
-            className="hero-art-image"
-            sizes="(max-width: 1024px) 100vw, 56vw"
-            priority
-          />
-        </div>
+        <HomeHeroSlider
+          images={[
+            {
+              src: "/images/homepage-hero-reference.png",
+              alt: "cleanix ekipa pri čiščenju doma"
+            },
+            {
+              src: "/images/homepage-hero-slide-2.png",
+              alt: "cleanix ekipa pri čiščenju steklenih površin"
+            },
+            {
+              src: "/images/homepage-hero-slide-3.png",
+              alt: "cleanix ekipa pri čiščenju dnevnega prostora"
+            }
+          ]}
+        />
       </section>
 
       <section className="hero-trust-strip">

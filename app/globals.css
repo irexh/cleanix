@@ -1380,6 +1380,40 @@ em { font-family: Georgia, serif; font-weight: 400; }
   pointer-events: none;
 }
 
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+.hero-slider-dots {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  z-index: 4;
+  display: flex;
+  gap: 8px;
+}
+
+.hero-slider-dot {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  padding: 0;
+  cursor: pointer;
+}
+
+.hero-slider-dot.active {
+  background: #ffffff;
+}
+
 .hero-trust-strip {
   max-width: 1120px;
   position: relative;
@@ -1673,6 +1707,11 @@ em { font-family: Georgia, serif; font-weight: 400; }
     height: 280px;
     margin: 0 -16px 0 0;
     border-radius: 0;
+  }
+
+  .hero-slider-dots {
+    right: 12px;
+    bottom: 10px;
   }
 
   .hero-trust-strip {
